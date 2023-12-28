@@ -153,326 +153,328 @@ public class MeanOfAccess extends FeatureProcess {
         scrutinyDetail.addColumnHeading(7, REMARKS);
         String rule = ACCESS_WIDTH;
         Boolean valid = false;
-        boolean extemption = Util.isSmallPlot(pl);
-        if (!extemption) {
-            validateAccessWidth(pl);
-            BigDecimal totalFloorAreaOfAllBlocks = pl.getVirtualBuilding().getTotalFloorArea() == null ? BigDecimal.ZERO
-                    : pl.getVirtualBuilding().getTotalFloorArea();
-            List<Map<String, Object>> listOfOccupancyMinimumAccessWidthMap = new ArrayList<>();
-            if (pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
-                if (pl.getVirtualBuilding().getOccupancyTypes().stream()
-                        .anyMatch(occ -> !(occ.getType().getCode().equals(B1)
-                                || occ.getType().getCode().equals(B2)))) {
-                    // occupancies present are other than B1 and B2.
-                    for (OccupancyTypeHelper occupancy : pl.getVirtualBuilding().getOccupancyTypes()) {
-                        // map of occupancy, subrule and minimum access width
-                        Map<String, Object> occupancyMinimumAccessWidthMap = new HashMap<>();
-                        BigDecimal minimumAccessWidth = BigDecimal.ZERO;
-                        if (occupancy.getType().getCode().equals(A1) || occupancy.getType().getCode().equals(A4)
-                                || occupancy.getType().getCode().equals(A5)) {
+		/*
+		 * boolean extemption = Util.isSmallPlot(pl); if (!extemption) {}
+		 */
+        
+        validateAccessWidth(pl);
+        BigDecimal totalFloorAreaOfAllBlocks = pl.getVirtualBuilding().getTotalFloorArea() == null ? BigDecimal.ZERO
+                : pl.getVirtualBuilding().getTotalFloorArea();
+        List<Map<String, Object>> listOfOccupancyMinimumAccessWidthMap = new ArrayList<>();
+        if (pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
+            if (pl.getVirtualBuilding().getOccupancyTypes().stream()
+                    .anyMatch(occ -> !(occ.getType().getCode().equals(B1)
+                            || occ.getType().getCode().equals(B2)))) {
+                // occupancies present are other than B1 and B2.
+                for (OccupancyTypeHelper occupancy : pl.getVirtualBuilding().getOccupancyTypes()) {
+                    // map of occupancy, subrule and minimum access width
+                    Map<String, Object> occupancyMinimumAccessWidthMap = new HashMap<>();
+                    BigDecimal minimumAccessWidth = BigDecimal.ZERO;
+                    if (occupancy.getType().getCode().equals(A1) || occupancy.getType().getCode().equals(A4)
+                            || occupancy.getType().getCode().equals(A5)) {
 
 
-                            BigDecimal totalFloorUnits = BigDecimal.ZERO;
-                            for (Block block : pl.getBlocks()) {
-                                totalFloorUnits = totalFloorUnits.add(block.getBuilding().getTotalFloorUnits());
+                        BigDecimal totalFloorUnits = BigDecimal.ZERO;
+                        for (Block block : pl.getBlocks()) {
+                            totalFloorUnits = totalFloorUnits.add(block.getBuilding().getTotalFloorUnits());
+                        }
+                        if (occupancy.getType().getCode().equals(A4) && pl.getParkingRequired() > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_600) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(3);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
+                            // dont validate access width for single family residential with floor area <= 300
+                            if (totalFloorUnits.compareTo(BigDecimal.ONE) == 0)
+                                break;
+                            else {
+                                minimumAccessWidth = BigDecimal.valueOf(1.2);
                             }
-                            if (occupancy.getType().getCode().equals(A4) && pl.getParkingRequired() > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_600) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(3);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
-                                // dont validate access width for single family residential with floor area <= 300
-                                if (totalFloorUnits.compareTo(BigDecimal.ONE) == 0)
-                                    break;
-                                else {
-                                    minimumAccessWidth = BigDecimal.valueOf(1.2);
-                                }
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_600) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(2);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_600) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_1000) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(3);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1000) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_4000) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(3.6);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_4000) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_8000) <= 0) {
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_600) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(2);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_600) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_1000) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(3);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1000) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_4000) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(3.6);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_4000) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_8000) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(5);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_8000) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_18000) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(6);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_18000) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_24000) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(7);
+                        } else {
+                            minimumAccessWidth = BigDecimal.valueOf(10);
+                        }
+                    
+                    } else if (occupancy.getType().getCode().equals(A2) || occupancy.getType().getCode().equals(A3) ||
+                            occupancy.getType().getCode().equals(B1) || occupancy.getType().getCode().equals(B2) ||
+                            occupancy.getType().getCode().equals(B3) || occupancy.getType().getCode().equals(C) ||
+                            occupancy.getType().getCode().equals(C1) || occupancy.getType().getCode().equals(C2) ||
+                            occupancy.getType().getCode().equals(C3) || occupancy.getType().getCode().equals(D) ||
+                            occupancy.getType().getCode().equals(D1) || occupancy.getType().getCode().equals(D2) ||
+                            occupancy.getType().getCode().equals(E) || occupancy.getType().getCode().equals(F) ||
+                            occupancy.getType().getCode().equals(F1) || occupancy.getType().getCode().equals(F2) ||
+                            occupancy.getType().getCode().equals(F3) || occupancy.getType().getCode().equals(F3)) {
+                        
+                    	if (occupancy.getType().getCode().equals(A4) && pl.getParkingRequired() > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(3);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(1.2);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_1000) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(3);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1000) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_1500) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(3.6);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1500) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_6000) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(5);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_6000) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_12000) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(6);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_12000) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_18000) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(7);
+                        } else {
+                            minimumAccessWidth = BigDecimal.valueOf(8);
+                        }
+                    	subRule = SUBRULE_28_1_TABLE8;
+                    } else if (occupancy.getType().getCode().equals(G1) || occupancy.getType().getCode().equals(G2)) {
+                        if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(3);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_1500) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(3.6);
+                        } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1500) > 0
+                                && totalFloorAreaOfAllBlocks.compareTo(VAL_6000) <= 0) {
+                            minimumAccessWidth = BigDecimal.valueOf(5);
+                        } else {
+                            minimumAccessWidth = BigDecimal.valueOf(6);
+                        }
+                        subRule = SUBRULE_28_1_TABLE8A;
+                    } else if (occupancy.getType().getCode().equals(G3)) {
+                    	minimumAccessWidth = BigDecimal.valueOf(5);
+                        subRule = SUBRULE_28_1_TABLE8A;
+                    } else if (occupancy.getType().getCode().equals(G4)) {
+                    	minimumAccessWidth = BigDecimal.valueOf(7);
+                        subRule = SUBRULE_28_1_TABLE8A;
+                    } else if (occupancy.getType().getCode().equals(H)) {
+                    	if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0)
+                            minimumAccessWidth = BigDecimal.valueOf(1.2);
+                        else
+                        minimumAccessWidth = BigDecimal.valueOf(7);
+                        subRule = SUBRULE_28_1_TABLE8A;
+                    } else if (occupancy.getType().getCode().equals(I1) || occupancy.getType().getCode().equals(I2)) {
+                        minimumAccessWidth = BigDecimal.valueOf(7);
+                        subRule = SUBRULE_28_1_TABLE8A;
+                    }
+                    occupancyMinimumAccessWidthMap.put("subRule", subRule);
+                    occupancyMinimumAccessWidthMap.put("minAccessWidth", minimumAccessWidth);
+                    occupancyMinimumAccessWidthMap.put(OCCUPANCY, occupancy.getType().getName());
+                    listOfOccupancyMinimumAccessWidthMap.add(occupancyMinimumAccessWidthMap);
+                }
+            } else {
+                // validations for educational institutions
+				String occupancyType = pl.getVirtualBuilding().getOccupancyTypes().stream()
+						.anyMatch(occ -> occ.getType().getCode().equals(B2))
+								? Util.getOccupancyByCode(pl, B2).getType().getName()
+								: Util.getOccupancyByCode(pl, B1).getType().getName();
+                if (pl.getPlanInformation() != null && pl.getPlanInformation().getGovernmentOrAidedSchool() != null &&
+                        pl.getPlanInformation().getGovernmentOrAidedSchool()) {
+                    setReportOutputDetails(pl, SUBRULE_33_1, SUB_RULE_DES, occupancyType,
+                            "", "", Result.Verify.getResultVal(), "The existing access shall be sufficient " +
+                                    "for addition of toilet blocks and other sanitation arrangements");
+                }
+
+                if (pl.getPlanInformation() != null && pl.getVirtualBuilding().getTotalFloorArea() != null) {
+                    BigDecimal proposedArea = pl.getVirtualBuilding().getTotalFloorArea()
+                            .subtract(pl.getVirtualBuilding().getTotalExistingFloorArea() != null
+                                    ? pl.getVirtualBuilding().getTotalExistingFloorArea()
+                                    : BigDecimal.valueOf(0));
+                    BigDecimal minimumAccessWidth = BigDecimal.valueOf(3.6);
+
+                    // IF DEMOLITION AREA PRESENT, PROPOSED AREA LESS THAN DEMOLITION AREA
+                    if (pl.getPlanInformation().getDemolitionArea() != null
+                            && pl.getPlanInformation().getDemolitionArea().doubleValue() > 0.0
+                            && proposedArea.intValue() > 0
+                            && proposedArea.compareTo(pl.getPlanInformation().getDemolitionArea()) <= 0) {
+                        setReportOutputDetails(pl, SUBRULE_33_1, SUB_RULE_DES, occupancyType,
+                                "", "", Result.Verify.getResultVal(), "The existing access shall be sufficient " +
+                                        "for addition of toilet blocks and other sanitation arrangements");
+                    } else if (proposedArea.intValue() > 0) {
+                        // if area greather than 5000
+                        if (pl.getVirtualBuilding().getTotalFloorArea()
+                                .intValue() > 5000) {
+                            if (pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_1500) > 0
+                                    && pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_6000) <= 0) {
                                 minimumAccessWidth = BigDecimal.valueOf(5);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_8000) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_18000) <= 0) {
+                            } else if (pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_6000) > 0
+                                    && pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_12000) <= 0) {
                                 minimumAccessWidth = BigDecimal.valueOf(6);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_18000) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_24000) <= 0) {
+                            } else if (pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_12000) > 0
+                                    && pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_18000) <= 0) {
                                 minimumAccessWidth = BigDecimal.valueOf(7);
                             } else {
                                 minimumAccessWidth = BigDecimal.valueOf(10);
                             }
-                        
-                        } else if (occupancy.getType().getCode().equals(A2) || occupancy.getType().getCode().equals(A3) ||
-                                occupancy.getType().getCode().equals(B1) || occupancy.getType().getCode().equals(B2) ||
-                                occupancy.getType().getCode().equals(B3) || occupancy.getType().getCode().equals(C) ||
-                                occupancy.getType().getCode().equals(C1) || occupancy.getType().getCode().equals(C2) ||
-                                occupancy.getType().getCode().equals(C3) || occupancy.getType().getCode().equals(D) ||
-                                occupancy.getType().getCode().equals(D1) || occupancy.getType().getCode().equals(D2) ||
-                                occupancy.getType().getCode().equals(E) || occupancy.getType().getCode().equals(F) ||
-                                occupancy.getType().getCode().equals(F1) || occupancy.getType().getCode().equals(F2) ||
-                                occupancy.getType().getCode().equals(F3) || occupancy.getType().getCode().equals(F3)) {
-                            
-                        	if (occupancy.getType().getCode().equals(A4) && pl.getParkingRequired() > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(3);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(1.2);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_1000) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(3);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1000) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_1500) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(3.6);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1500) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_6000) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(5);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_6000) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_12000) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(6);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_12000) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_18000) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(7);
-                            } else {
-                                minimumAccessWidth = BigDecimal.valueOf(8);
-                            }
-                        	subRule = SUBRULE_28_1_TABLE8;
-                        } else if (occupancy.getType().getCode().equals(G1) || occupancy.getType().getCode().equals(G2)) {
-                            if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(3);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_1500) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(3.6);
-                            } else if (totalFloorAreaOfAllBlocks.compareTo(VAL_1500) > 0
-                                    && totalFloorAreaOfAllBlocks.compareTo(VAL_6000) <= 0) {
-                                minimumAccessWidth = BigDecimal.valueOf(5);
-                            } else {
-                                minimumAccessWidth = BigDecimal.valueOf(6);
-                            }
-                            subRule = SUBRULE_28_1_TABLE8A;
-                        } else if (occupancy.getType().getCode().equals(G3)) {
-                        	minimumAccessWidth = BigDecimal.valueOf(5);
-                            subRule = SUBRULE_28_1_TABLE8A;
-                        } else if (occupancy.getType().getCode().equals(G4)) {
-                        	minimumAccessWidth = BigDecimal.valueOf(7);
-                            subRule = SUBRULE_28_1_TABLE8A;
-                        } else if (occupancy.getType().getCode().equals(H)) {
-                        	if (totalFloorAreaOfAllBlocks.compareTo(VAL_300) <= 0)
-                                minimumAccessWidth = BigDecimal.valueOf(1.2);
-                            else
-                            minimumAccessWidth = BigDecimal.valueOf(7);
-                            subRule = SUBRULE_28_1_TABLE8A;
-                        } else if (occupancy.getType().getCode().equals(I1) || occupancy.getType().getCode().equals(I2)) {
-                            minimumAccessWidth = BigDecimal.valueOf(7);
-                            subRule = SUBRULE_28_1_TABLE8A;
+
+                        } else {
+                            minimumAccessWidth = BigDecimal.valueOf(3.6);
                         }
-                        occupancyMinimumAccessWidthMap.put("subRule", subRule);
-                        occupancyMinimumAccessWidthMap.put("minAccessWidth", minimumAccessWidth);
-                        occupancyMinimumAccessWidthMap.put(OCCUPANCY, occupancy.getType().getName());
-                        listOfOccupancyMinimumAccessWidthMap.add(occupancyMinimumAccessWidthMap);
-                    }
-                } else {
-                    // validations for educational institutions
-					String occupancyType = pl.getVirtualBuilding().getOccupancyTypes().stream()
-							.anyMatch(occ -> occ.getType().getCode().equals(B2))
-									? Util.getOccupancyByCode(pl, B2).getType().getName()
-									: Util.getOccupancyByCode(pl, B1).getType().getName();
-                    if (pl.getPlanInformation() != null && pl.getPlanInformation().getGovernmentOrAidedSchool() != null &&
-                            pl.getPlanInformation().getGovernmentOrAidedSchool()) {
-                        setReportOutputDetails(pl, SUBRULE_33_1, SUB_RULE_DES, occupancyType,
-                                "", "", Result.Verify.getResultVal(), "The existing access shall be sufficient " +
-                                        "for addition of toilet blocks and other sanitation arrangements");
-                    }
 
-                    if (pl.getPlanInformation() != null && pl.getVirtualBuilding().getTotalFloorArea() != null) {
-                        BigDecimal proposedArea = pl.getVirtualBuilding().getTotalFloorArea()
-                                .subtract(pl.getVirtualBuilding().getTotalExistingFloorArea() != null
-                                        ? pl.getVirtualBuilding().getTotalExistingFloorArea()
-                                        : BigDecimal.valueOf(0));
-                        BigDecimal minimumAccessWidth = BigDecimal.valueOf(3.6);
-
-                        // IF DEMOLITION AREA PRESENT, PROPOSED AREA LESS THAN DEMOLITION AREA
-                        if (pl.getPlanInformation().getDemolitionArea() != null
-                                && pl.getPlanInformation().getDemolitionArea().doubleValue() > 0.0
-                                && proposedArea.intValue() > 0
-                                && proposedArea.compareTo(pl.getPlanInformation().getDemolitionArea()) <= 0) {
+                        if (pl.getPlanInformation().getAccessWidth() != null
+                                && pl.getPlanInformation().getAccessWidth().compareTo(minimumAccessWidth) >= 0) {
+                            valid = true;
+                        }
+                        if (valid) {
                             setReportOutputDetails(pl, SUBRULE_33_1, SUB_RULE_DES, occupancyType,
-                                    "", "", Result.Verify.getResultVal(), "The existing access shall be sufficient " +
-                                            "for addition of toilet blocks and other sanitation arrangements");
-                        } else if (proposedArea.intValue() > 0) {
-                            // if area greather than 5000
-                            if (pl.getVirtualBuilding().getTotalFloorArea()
-                                    .intValue() > 5000) {
-                                if (pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_1500) > 0
-                                        && pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_6000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(5);
-                                } else if (pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_6000) > 0
-                                        && pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_12000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(6);
-                                } else if (pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_12000) > 0
-                                        && pl.getVirtualBuilding().getTotalFloorArea().compareTo(VAL_18000) <= 0) {
-                                    minimumAccessWidth = BigDecimal.valueOf(7);
-                                } else {
-                                    minimumAccessWidth = BigDecimal.valueOf(10);
-                                }
-
-                            } else {
-                                minimumAccessWidth = BigDecimal.valueOf(3.6);
-                            }
-
-                            if (pl.getPlanInformation().getAccessWidth() != null
-                                    && pl.getPlanInformation().getAccessWidth().compareTo(minimumAccessWidth) >= 0) {
-                                valid = true;
-                            }
-                            if (valid) {
-                                setReportOutputDetails(pl, SUBRULE_33_1, SUB_RULE_DES, occupancyType,
-                                        String.valueOf(3.6), pl.getPlanInformation().getAccessWidth().toString(),
-                                        Result.Accepted.getResultVal(), "");
-                            } else {
-                                setReportOutputDetails(pl, SUBRULE_33_1, SUB_RULE_DES, occupancyType,
-                                        String.valueOf(3.6), pl.getPlanInformation().getAccessWidth().toString(),
-                                        Result.Not_Accepted.getResultVal(), "");
-                            }
-                        }
-                    }
-
-                }
-            }
-            // calculate maximum of all minimum access widths and the occupancy corresponding to it is most restrictive
-            Map<String, Object> maxOfMinAccessWidth = new HashMap<>();
-            if (!listOfOccupancyMinimumAccessWidthMap.isEmpty()) {
-                maxOfMinAccessWidth = listOfOccupancyMinimumAccessWidthMap.get(0);
-                for (Map<String, Object> mapOfAllDtls : listOfOccupancyMinimumAccessWidthMap) {
-                    if (((BigDecimal) mapOfAllDtls.get("minAccessWidth"))
-                            .compareTo((BigDecimal) maxOfMinAccessWidth.get("minAccessWidth")) == 0) {
-                        // if subrules are same for any number of same minimum access width in map , show it only once, duplicates
-                        // are not shown.
-                        // if subrules are different for any number of same minimum access width in map, show all subrules by
-                        // comma separated.
-                        if (mapOfAllDtls.get("subRule") != null
-                                && !mapOfAllDtls.get("subRule").equals(maxOfMinAccessWidth.get("subRule"))) {
-                            SortedSet<String> uniqueSubrules = new TreeSet<>();
-                            String[] subRuleString = (mapOfAllDtls.get("subRule") + " , " + maxOfMinAccessWidth.get("subRule"))
-                                    .split(" , ");
-                            for (String str : subRuleString) {
-                                uniqueSubrules.add(str);
-                            }
-                            String subRuleStr = removeDuplicates(uniqueSubrules);
-                            maxOfMinAccessWidth.put("subRule", subRuleStr);
-
-                        }
-                        // if occupancies are same for any number of same minimum access width in map , show it only once,
-                        // duplicates are not shown.
-                        // if occupancies are different for any number of same minimum access width in map, show all occupancies
-                        // by comma separated.
-                        if (mapOfAllDtls.get(OCCUPANCY) != null
-                                && !(mapOfAllDtls.get(OCCUPANCY)).equals(maxOfMinAccessWidth.get(OCCUPANCY))) {
-                            SortedSet<String> uniqueOccupancies = new TreeSet<>();
-                            String[] occupancyString = (mapOfAllDtls.get(OCCUPANCY) + " , " + maxOfMinAccessWidth.get(OCCUPANCY))
-                                    .split(" , ");
-                            for (String str : occupancyString) {
-                                uniqueOccupancies.add(str);
-                            }
-                            String occupancyStr = removeDuplicates(uniqueOccupancies);
-                            maxOfMinAccessWidth.put(OCCUPANCY, occupancyStr);
-                        }
-                        continue;
-                    }
-                    if (((BigDecimal) maxOfMinAccessWidth.get("minAccessWidth"))
-                            .compareTo((BigDecimal) mapOfAllDtls.get("minAccessWidth")) < 0) {
-                        maxOfMinAccessWidth.putAll(mapOfAllDtls);
-                    }
-                }
-            }
-            // add height of all blocks to sorted set (in asc order)
-            SortedSet<BigDecimal> heightOfBlocks = new TreeSet<>();
-            for (Block block : pl.getBlocks()) {
-                if (block.getBuilding().getBuildingHeight() != null) {
-                    heightOfBlocks.add(block.getBuilding().getBuildingHeight());
-                }
-            }
-            Map<String, Object> mapOfHeightWiseValues = new ConcurrentHashMap<>();
-            Map<String, Object> mapOfFinalAccessWidthValues = new ConcurrentHashMap<>();
-            List<BigDecimal> hghtOfBlks = new ArrayList<>(heightOfBlocks);
-            // reverse the list so that all heights will come in desc order
-            Collections.reverse(hghtOfBlks);
-            // add subrule if height condition is satisfied.
-            if (!hghtOfBlks.isEmpty() && hghtOfBlks.get(0).compareTo(BigDecimal.valueOf(16)) > 0) {
-                mapOfHeightWiseValues.put("subRule", SUBRULE_116);
-                mapOfHeightWiseValues.put("minAccessWidth", BigDecimal.valueOf(5));
-                mapOfHeightWiseValues.put(OCCUPANCY, "Height Of Building Greater Than 16");
-            }
-            // calculate which access width amongst height condition or most restrictive occupancy is greater and process rule as
-            // per that
-            if (!maxOfMinAccessWidth.isEmpty()) {
-                if (!mapOfHeightWiseValues.isEmpty()) {
-                    if (((BigDecimal) mapOfHeightWiseValues.get("minAccessWidth"))
-                            .compareTo((BigDecimal) maxOfMinAccessWidth.get("minAccessWidth")) > 0) {
-                        mapOfFinalAccessWidthValues = mapOfHeightWiseValues;
-                    } else if (((BigDecimal) mapOfHeightWiseValues.get("minAccessWidth"))
-                            .compareTo((BigDecimal) maxOfMinAccessWidth.get("minAccessWidth")) < 0) {
-                        mapOfFinalAccessWidthValues = maxOfMinAccessWidth;
-                    } else {
-                        // if access width as per height condition and access width for most restrictive occupancy is same
-                        // if occupancies are same , show only once. if they are different show comma separated
-                        if (!(mapOfHeightWiseValues.get(OCCUPANCY)).equals(maxOfMinAccessWidth.get(OCCUPANCY))) {
-                            SortedSet<String> uniqueOccupancies = new TreeSet<>();
-                            String[] occupancyString = (mapOfHeightWiseValues.get(OCCUPANCY) + " , "
-                                    + maxOfMinAccessWidth.get(OCCUPANCY)).split(" , ");
-                            for (String str : occupancyString) {
-                                uniqueOccupancies.add(str);
-                            }
-                            String occupancyStr = removeDuplicates(uniqueOccupancies);
-                            mapOfFinalAccessWidthValues.put(OCCUPANCY, occupancyStr);
+                                    String.valueOf(3.6), pl.getPlanInformation().getAccessWidth().toString(),
+                                    Result.Accepted.getResultVal(), "");
                         } else {
-                            mapOfFinalAccessWidthValues.put(OCCUPANCY, mapOfHeightWiseValues.get(OCCUPANCY));
-                        }
-                        mapOfFinalAccessWidthValues.put("minAccessWidth", mapOfHeightWiseValues.get("minAccessWidth"));
-                        // if subrules are same , show only once. if they are different show comma separated
-                        if (!mapOfHeightWiseValues.get("subRule").equals(maxOfMinAccessWidth.get("subRule"))) {
-                            SortedSet<String> uniqueSubrules = new TreeSet<>();
-                            String[] subRuleString = (mapOfHeightWiseValues.get("subRule") + " , "
-                                    + maxOfMinAccessWidth.get("subRule")).split(" , ");
-                            for (String str : subRuleString) {
-                                uniqueSubrules.add(str);
-                            }
-                            String subRuleStr = removeDuplicates(uniqueSubrules);
-                            mapOfFinalAccessWidthValues.put("subRule", subRuleStr);
-                        } else {
-                            mapOfFinalAccessWidthValues.put("subRule", mapOfHeightWiseValues.get("subRule"));
+                            setReportOutputDetails(pl, SUBRULE_33_1, SUB_RULE_DES, occupancyType,
+                                    String.valueOf(3.6), pl.getPlanInformation().getAccessWidth().toString(),
+                                    Result.Not_Accepted.getResultVal(), "");
                         }
                     }
-                } else {
-                    mapOfFinalAccessWidthValues = maxOfMinAccessWidth;
                 }
-            }
-            if (pl.getPlanInformation().getAccessWidth() != null
-                    && (BigDecimal) mapOfFinalAccessWidthValues.get("minAccessWidth") != null) {
-                if (pl.getPlanInformation().getAccessWidth()
-                        .compareTo((BigDecimal) mapOfFinalAccessWidthValues.get("minAccessWidth")) >= 0)
-                    valid = true;
-                String occupancyName = mapOfFinalAccessWidthValues.get(OCCUPANCY).toString();
-                if (valid) {
-                    setReportOutputDetails(pl, (String) mapOfFinalAccessWidthValues.get("subRule"), SUB_RULE_DES,
-                    		occupancyName,
-                            mapOfFinalAccessWidthValues.get("minAccessWidth").toString() + DcrConstants.IN_METER,
-                            pl.getPlanInformation().getAccessWidth().toString() + DcrConstants.IN_METER,
-                            Result.Accepted.getResultVal(), "");
-                } else {
-                    setReportOutputDetails(pl, (String) mapOfFinalAccessWidthValues.get("subRule"), SUB_RULE_DES,
-                    		occupancyName,
-                            mapOfFinalAccessWidthValues.get("minAccessWidth").toString() + DcrConstants.IN_METER,
-                            pl.getPlanInformation().getAccessWidth().toString() + DcrConstants.IN_METER,
-                            Result.Not_Accepted.getResultVal(), "");
 
+            }
+        }
+        // calculate maximum of all minimum access widths and the occupancy corresponding to it is most restrictive
+        Map<String, Object> maxOfMinAccessWidth = new HashMap<>();
+        if (!listOfOccupancyMinimumAccessWidthMap.isEmpty()) {
+            maxOfMinAccessWidth = listOfOccupancyMinimumAccessWidthMap.get(0);
+            for (Map<String, Object> mapOfAllDtls : listOfOccupancyMinimumAccessWidthMap) {
+                if (((BigDecimal) mapOfAllDtls.get("minAccessWidth"))
+                        .compareTo((BigDecimal) maxOfMinAccessWidth.get("minAccessWidth")) == 0) {
+                    // if subrules are same for any number of same minimum access width in map , show it only once, duplicates
+                    // are not shown.
+                    // if subrules are different for any number of same minimum access width in map, show all subrules by
+                    // comma separated.
+                    if (mapOfAllDtls.get("subRule") != null
+                            && !mapOfAllDtls.get("subRule").equals(maxOfMinAccessWidth.get("subRule"))) {
+                        SortedSet<String> uniqueSubrules = new TreeSet<>();
+                        String[] subRuleString = (mapOfAllDtls.get("subRule") + " , " + maxOfMinAccessWidth.get("subRule"))
+                                .split(" , ");
+                        for (String str : subRuleString) {
+                            uniqueSubrules.add(str);
+                        }
+                        String subRuleStr = removeDuplicates(uniqueSubrules);
+                        maxOfMinAccessWidth.put("subRule", subRuleStr);
+
+                    }
+                    // if occupancies are same for any number of same minimum access width in map , show it only once,
+                    // duplicates are not shown.
+                    // if occupancies are different for any number of same minimum access width in map, show all occupancies
+                    // by comma separated.
+                    if (mapOfAllDtls.get(OCCUPANCY) != null
+                            && !(mapOfAllDtls.get(OCCUPANCY)).equals(maxOfMinAccessWidth.get(OCCUPANCY))) {
+                        SortedSet<String> uniqueOccupancies = new TreeSet<>();
+                        String[] occupancyString = (mapOfAllDtls.get(OCCUPANCY) + " , " + maxOfMinAccessWidth.get(OCCUPANCY))
+                                .split(" , ");
+                        for (String str : occupancyString) {
+                            uniqueOccupancies.add(str);
+                        }
+                        String occupancyStr = removeDuplicates(uniqueOccupancies);
+                        maxOfMinAccessWidth.put(OCCUPANCY, occupancyStr);
+                    }
+                    continue;
+                }
+                if (((BigDecimal) maxOfMinAccessWidth.get("minAccessWidth"))
+                        .compareTo((BigDecimal) mapOfAllDtls.get("minAccessWidth")) < 0) {
+                    maxOfMinAccessWidth.putAll(mapOfAllDtls);
                 }
             }
         }
+        // add height of all blocks to sorted set (in asc order)
+        SortedSet<BigDecimal> heightOfBlocks = new TreeSet<>();
+        for (Block block : pl.getBlocks()) {
+            if (block.getBuilding().getBuildingHeight() != null) {
+                heightOfBlocks.add(block.getBuilding().getBuildingHeight());
+            }
+        }
+        Map<String, Object> mapOfHeightWiseValues = new ConcurrentHashMap<>();
+        Map<String, Object> mapOfFinalAccessWidthValues = new ConcurrentHashMap<>();
+        List<BigDecimal> hghtOfBlks = new ArrayList<>(heightOfBlocks);
+        // reverse the list so that all heights will come in desc order
+        Collections.reverse(hghtOfBlks);
+        // add subrule if height condition is satisfied.
+        if (!hghtOfBlks.isEmpty() && hghtOfBlks.get(0).compareTo(BigDecimal.valueOf(16)) > 0) {
+            mapOfHeightWiseValues.put("subRule", SUBRULE_116);
+            mapOfHeightWiseValues.put("minAccessWidth", BigDecimal.valueOf(5));
+            mapOfHeightWiseValues.put(OCCUPANCY, "Height Of Building Greater Than 16");
+        }
+        // calculate which access width amongst height condition or most restrictive occupancy is greater and process rule as
+        // per that
+        if (!maxOfMinAccessWidth.isEmpty()) {
+            if (!mapOfHeightWiseValues.isEmpty()) {
+                if (((BigDecimal) mapOfHeightWiseValues.get("minAccessWidth"))
+                        .compareTo((BigDecimal) maxOfMinAccessWidth.get("minAccessWidth")) > 0) {
+                    mapOfFinalAccessWidthValues = mapOfHeightWiseValues;
+                } else if (((BigDecimal) mapOfHeightWiseValues.get("minAccessWidth"))
+                        .compareTo((BigDecimal) maxOfMinAccessWidth.get("minAccessWidth")) < 0) {
+                    mapOfFinalAccessWidthValues = maxOfMinAccessWidth;
+                } else {
+                    // if access width as per height condition and access width for most restrictive occupancy is same
+                    // if occupancies are same , show only once. if they are different show comma separated
+                    if (!(mapOfHeightWiseValues.get(OCCUPANCY)).equals(maxOfMinAccessWidth.get(OCCUPANCY))) {
+                        SortedSet<String> uniqueOccupancies = new TreeSet<>();
+                        String[] occupancyString = (mapOfHeightWiseValues.get(OCCUPANCY) + " , "
+                                + maxOfMinAccessWidth.get(OCCUPANCY)).split(" , ");
+                        for (String str : occupancyString) {
+                            uniqueOccupancies.add(str);
+                        }
+                        String occupancyStr = removeDuplicates(uniqueOccupancies);
+                        mapOfFinalAccessWidthValues.put(OCCUPANCY, occupancyStr);
+                    } else {
+                        mapOfFinalAccessWidthValues.put(OCCUPANCY, mapOfHeightWiseValues.get(OCCUPANCY));
+                    }
+                    mapOfFinalAccessWidthValues.put("minAccessWidth", mapOfHeightWiseValues.get("minAccessWidth"));
+                    // if subrules are same , show only once. if they are different show comma separated
+                    if (!mapOfHeightWiseValues.get("subRule").equals(maxOfMinAccessWidth.get("subRule"))) {
+                        SortedSet<String> uniqueSubrules = new TreeSet<>();
+                        String[] subRuleString = (mapOfHeightWiseValues.get("subRule") + " , "
+                                + maxOfMinAccessWidth.get("subRule")).split(" , ");
+                        for (String str : subRuleString) {
+                            uniqueSubrules.add(str);
+                        }
+                        String subRuleStr = removeDuplicates(uniqueSubrules);
+                        mapOfFinalAccessWidthValues.put("subRule", subRuleStr);
+                    } else {
+                        mapOfFinalAccessWidthValues.put("subRule", mapOfHeightWiseValues.get("subRule"));
+                    }
+                }
+            } else {
+                mapOfFinalAccessWidthValues = maxOfMinAccessWidth;
+            }
+        }
+        if (pl.getPlanInformation().getAccessWidth() != null
+                && (BigDecimal) mapOfFinalAccessWidthValues.get("minAccessWidth") != null) {
+            if (pl.getPlanInformation().getAccessWidth()
+                    .compareTo((BigDecimal) mapOfFinalAccessWidthValues.get("minAccessWidth")) >= 0)
+                valid = true;
+            String occupancyName = mapOfFinalAccessWidthValues.get(OCCUPANCY).toString();
+            if (valid) {
+                setReportOutputDetails(pl, (String) mapOfFinalAccessWidthValues.get("subRule"), SUB_RULE_DES,
+                		occupancyName,
+                        mapOfFinalAccessWidthValues.get("minAccessWidth").toString() + DcrConstants.IN_METER,
+                        pl.getPlanInformation().getAccessWidth().toString() + DcrConstants.IN_METER,
+                        Result.Accepted.getResultVal(), "");
+            } else {
+                setReportOutputDetails(pl, (String) mapOfFinalAccessWidthValues.get("subRule"), SUB_RULE_DES,
+                		occupancyName,
+                        mapOfFinalAccessWidthValues.get("minAccessWidth").toString() + DcrConstants.IN_METER,
+                        pl.getPlanInformation().getAccessWidth().toString() + DcrConstants.IN_METER,
+                        Result.Not_Accepted.getResultVal(), "");
+
+            }
+        }
+    
         return pl;
     }
 

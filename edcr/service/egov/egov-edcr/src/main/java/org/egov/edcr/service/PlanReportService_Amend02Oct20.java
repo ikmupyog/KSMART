@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.egov.common.entity.dcr.helper.CommonHelper;
 import org.egov.common.entity.dcr.helper.Declaration;
 import org.egov.common.entity.dcr.helper.ErrorHelper;
 import org.egov.common.entity.edcr.Block;
@@ -158,6 +159,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 frb.addColumn(columnHeading.name.toUpperCase(), columnHeading.name, String.class.getName(), columnWidth);
             }
             //frb.setMargins(1, 1, 1, 1);
+            frb.setTopMargin(0);
+            frb.setBottomMargin(0);
             frb.setUseFullPageWidth(true);
             List<AbstractColumn> columns = frb.getColumns();
             for (AbstractColumn col : columns) {
@@ -174,7 +177,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 frb.setSubtitle("\t" + subheading.toUpperCase());
             
             frb.setTitleStyle(reportService.getNewReportTitleStyle());
-           // frb.setHeaderHeight(5);
+            frb.setHeaderHeight(4);
             frb.setDefaultStyles(reportService.getNewReportTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getNewReportColumnHeaderStyle(), reportService.getNewReportDetailNumberStyle());
             frb.setAllowDetailSplit(false);
@@ -244,12 +247,15 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 				frb.setTitle("REGULARIZATION AREA AND OCCUPANCY");
 			else if(!isRegularized && !isProposed)
 				frb.setTitle("EXISTING AREA AND OCCUPANCY");
-            frb.setTitleStyle(reportService.getTitleStyle());
+            frb.setTitleStyle(reportService.getNewReportSubReportTitleStyle());
            /* frb.setHeaderHeight(5);
             frb.setTopMargin(10);
             frb.setBottomMargin(0);
             frb.setLeftMargin(20);*/
+            frb.setTitleHeight(0);
             frb.setMargins(0, 0, 0, 0);
+            //frb.setTopMargin(0);
+            //frb.setBottomMargin(0);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getNewReportColumnHeaderStyle(), reportService.getNewReportDetailStyle());
             frb.setAllowDetailSplit(false);
@@ -414,7 +420,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
             frb.setTitleStyle(reportService.getTitleStyle());
             frb.setHeaderHeight(5);
-            frb.setTopMargin(5);
+            frb.setTopMargin(0);
+            frb.setBottomMargin(0);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getDetailStyle());
             frb.setAllowDetailSplit(false);
@@ -512,7 +519,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
 
                 AbstractColumn constructedArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalConstructedArea", BigDecimal.class.getName())
-                        .setTitle("ALREADY CONSTRUCTED AREA Sq M)").setWidth(140)
+                        .setTitle("ALREADY CONSTRUCTED AREA Sq M)").setWidth(142)
                         .setStyle(reportService.getNewReportDetailStyle()).build();
 
                 frb.addColumn(builtUpArea);
@@ -542,8 +549,8 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             frb.setTitle("TOTAL AREA");
             frb.setTitleStyle(reportService.getNewReportTitleStyle());
             //frb.setHeaderHeight(5);
-            //frb.setTopMargin(5);
-            //frb.setTopMargin(120);
+            //frb.setTopMargin(0);
+            //frb.setBottomMargin(0);
             frb.setMargins(0, 15, 0, 0);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getDetailStyle());
@@ -607,7 +614,9 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
            // frb.setHeaderHeight(5);
            // frb.setTopMargin(5);
            // frb.setLeftMargin(120);
-            frb.setMargins(0, 0, 0, 0);
+            frb.setTopMargin(0);
+            frb.setBottomMargin(0);
+            //frb.setMargins(0, 0, 0, 0);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
             frb.setAllowDetailSplit(false);
@@ -679,9 +688,11 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             }
 
             frb.setTitle("2-1) EXISTING AREA");
+            frb.setTitleHeight(0);
             frb.setTitleStyle(reportService.getNewReportTitleStyle());
             //frb.setHeaderHeight(5);
-           // frb.setTopMargin(5);
+            //frb.setTopMargin(0);
+            //frb.setBottomMargin(0);
            
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getDetailStyle());
@@ -743,12 +754,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
              else 
              	frb.setTitle("2-1) PROPOSED AREA");
             frb.setTitleStyle(reportService.getNewReportSubTitleStyle());
-           
-           // frb.setSubtitleHeight(5);
-          
-           // frb.setHeaderHeight(5);
-           // frb.setTopMargin(5);
-           // frb.setLeftMargin(120);
+            frb.setTitleHeight(0);
             frb.setMargins(0, 0, 0, 0);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
@@ -798,9 +804,9 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             frb.setTitle(coveredTitle);
             frb.setTitleStyle(reportService.getDetailNewHeaderStyle());
             frb.setHeaderHeight(5);
-            //frb.setTopMargin(5);
-            //frb.setLeftMargin(25);
-            frb.setMargins(0, 0, 0, 0);
+            frb.setTopMargin(0);
+            frb.setBottomMargin(0);
+            //frb.setMargins(0, 0, 0, 0);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
             frb.setAllowDetailSplit(false);
@@ -855,9 +861,9 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
            // frb.setSubtitleHeight(5);
           
            // frb.setHeaderHeight(5);
-           // frb.setTopMargin(5);
-           // frb.setLeftMargin(120);
-            frb.setMargins(0, 0, 0, 0);
+            frb.setTopMargin(0);
+            frb.setBottomMargin(0);
+            //frb.setMargins(0, 0, 0, 0);
             frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
                     reportService.getColumnHeaderStyle(), reportService.getNewReportDetailStyle());
             frb.setAllowDetailSplit(false);
@@ -950,10 +956,37 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             frb.setUseFullPageWidth(true);
             frb.setTitle(title);
             frb.setShowDetailBand(false);
+            //frb.setTitleHeight(0);
+            //frb.setBottomMargin(0);
+            //frb.setTopMargin(0);
+            frb.setMargins(10, 0, 0, 0);
+            frb.setTitleStyle(reportService.getNewReportSubReportTitleStyle());
+            frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
+            DynamicReport build = frb.build();
+            Subreport sub = new Subreport();
+            sub.setDynamicReport(build);
+            sub.setDatasource(new DJDataSource(dataSourceName, DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
+            sub.setLayoutManager(new ClassicLayoutManager());
+            return sub;
+        } catch (ColumnBuilderException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return null;
+    }
+    
+    private Subreport createHeaderSubreportWithoutTopGap(String title, String dataSourceName) {
+        try {
+
+            FastReportBuilder frb = new FastReportBuilder();
+            frb.setUseFullPageWidth(true);
+            frb.setTitle(title);
+            frb.setShowDetailBand(false);
+            //frb.setTitleHeight(0);
+            //frb.setBottomMargin(0);
+            //frb.setTopMargin(0);
             frb.setMargins(0, 0, 0, 0);
             frb.setTitleStyle(reportService.getNewReportSubReportTitleStyle());
             frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
-            frb.setTitleHeight(20);
             DynamicReport build = frb.build();
             Subreport sub = new Subreport();
             sub.setDynamicReport(build);
@@ -1296,14 +1329,23 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             for (String blkName : blocks.keySet()) {
                 List blkHeading = new ArrayList();
                 blkHeading.add(BLOCK + blkName);
-                drb.addConcatenatedReport(
-                        createHeaderSubreport("BLOCK " + blkName, BLOCK + blkName));
+                if(blkName.equalsIgnoreCase("1"))
+                	drb.addConcatenatedReport(
+                		createHeaderSubreportWithoutTopGap("BLOCK " + blkName, BLOCK + blkName));
+                else
+                	drb.addConcatenatedReport(
+                    		createHeaderSubreport("BLOCK " + blkName, BLOCK + blkName));
                 valuesMap.put(BLOCK + blkName, blkHeading);
                 int j = 0;
                 // This is only for set back
                 ScrutinyDetail front = null;
                 ScrutinyDetail rear = null;
                 ScrutinyDetail side = null;
+                CommonHelper ch = new CommonHelper();
+                ch.setKey("HEIGHT OF BUILDING IN METERS");
+                ch.setValue(String.valueOf(plan.getBlockByName(blkName).getBuilding().getBuildingHeight()));
+                drb.addConcatenatedReport(getCommonTwoColumn(BLOCK+ blkName+ "heihgt", ""));
+                valuesMap.put(BLOCK+ blkName+ "heihgt", Arrays.asList(ch));
 				if (existingBlockDetails != null && !existingBlockDetails.isEmpty()) {
 					for (DcrReportBlockDetail existingBlockDetail : existingBlockDetails) {
 						if (existingBlockDetail.getBlockNo().equals(blkName)
@@ -1628,7 +1670,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 
                 AbstractColumn values = ColumnBuilder.getNew()
                         .setColumnProperty("value", String.class.getName())
-                        .setTitle("PROVIDED VALUE").setWidth(105)
+                        .setTitle("PROVIDED VALUE").setWidth(103)
                         .setStyle(reportService.getNewReportDetailStyle())
                         .build();
                 frb.addColumn(slNo);
@@ -2339,6 +2381,54 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             return sub;
         } catch (ColumnBuilderException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+    
+    private Subreport getCommonTwoColumn(String dataSource, String title) {
+        try {
+
+            FastReportBuilder frb = new FastReportBuilder();
+
+             {
+                AbstractColumn key = ColumnBuilder.getNew()
+                        .setColumnProperty("key", String.class.getName())
+                        .setWidth(271).setStyle(reportService.getNewReportDetailStyle()).build();
+                AbstractColumn value = ColumnBuilder.getNew()
+                        .setColumnProperty("value", String.class.getName())
+                        .setWidth(271)
+                        .setStyle(reportService.getNewReportDetailStyle())
+                        .build();
+
+                frb.addColumn(key);
+                frb.addColumn(value);
+                
+            }
+            frb.setTitleStyle(reportService.getNewReportDetailStyle());
+            frb.setHeaderHeight(0);
+            //frb.setTopMargin(0);
+            //frb.setBottomMargin(0);
+            //frb.setLeftMargin(25);
+            
+            frb.setMargins(0, 0, 0, 0);
+            frb.setDefaultStyles(reportService.getTitleStyle(), reportService.getSubTitleStyle(),
+                    reportService.getNewReportDetailStyle(), reportService.getNewReportDetailStyle());
+            frb.setAllowDetailSplit(false);
+            frb.setPageSizeAndOrientation(Page.Page_A4_Portrait());
+            DynamicReport build = frb.build();
+            Subreport sub = new Subreport();
+            sub.setDynamicReport(build);
+            Style style = new Style();
+            style.setStretchWithOverflow(true);
+            style.setStreching(RELATIVE_TO_BAND_HEIGHT);
+            sub.setStyle(style);
+
+            sub.setDatasource(new DJDataSource(dataSource, DJConstants.DATA_SOURCE_ORIGIN_PARAMETER, 0));
+
+            sub.setLayoutManager(new ClassicLayoutManager());
+            return sub;
+        } catch (ColumnBuilderException e) {
+            LOG.error(e.getMessage(), e);
         }
         return null;
     }

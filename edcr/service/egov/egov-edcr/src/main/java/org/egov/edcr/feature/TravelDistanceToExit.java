@@ -105,7 +105,7 @@ public class TravelDistanceToExit extends FeatureProcess {
                     }
                 }
             }
-            if (Util.isSmallPlot(pl)) {
+            if (pl.getVirtualBuilding().getSingleFamilyResidential()) {
                 exemption = Boolean.TRUE;
             }
         }

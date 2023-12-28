@@ -328,6 +328,7 @@ public class JasperReportService {
         final Style titleStyle = new Style("newSubReportTitleStyle");
         titleStyle.setFont(new Font(10, Font._FONT_MONOSPACED, true,true,false));
         titleStyle.setHorizontalAlign(HorizontalAlign.LEFT);
+        titleStyle.setVerticalAlign(VerticalAlign.MIDDLE);
         titleStyle.setBorder(Border.PEN_1_POINT());
         System.out.println("titleStyle.isOverridesExistingStyle()" +titleStyle.isOverridesExistingStyle());
         titleStyle.setBackgroundColor(Color.decode("#DCFCFA"));

@@ -266,9 +266,9 @@ public class ExitWidth extends FeatureProcess {
 					scrutinyDetail2.addColumnHeading(5, STATUS);
 					scrutinyDetail2.setKey("Block_" + block.getNumber() + "_" + "Exit Width- Maximum Occupant Load");
 					if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
-						if ((pl.getPlot() != null
-								&& Util.checkExemptionConditionForSmallPlotAtBlkLevel(pl.getPlot(), block))
-								|| Util.checkExemptionConditionForBuildingParts(block)) {
+						if (pl.getVirtualBuilding().getSingleFamilyResidential()
+								|| (!pl.getVirtualBuilding().getSingleFamilyResidential() && pl.getVirtualBuilding()
+										.getTotalFloorUnits().compareTo(BigDecimal.valueOf(2)) == 0)) {
 							continue blk;
 						}
 						for (Floor flr : block.getBuilding().getFloors()) {
