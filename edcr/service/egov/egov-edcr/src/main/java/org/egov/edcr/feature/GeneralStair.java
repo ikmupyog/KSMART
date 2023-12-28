@@ -322,7 +322,11 @@ public class GeneralStair extends FeatureProcess {
 
                         }
                     }
-
+                if (floorSize > 1 && generalStairCount.compareTo(BigDecimal.ZERO) == 0) {
+                	setReportOutputDetails(pl, RULE35_1_5, String.format(RULE35_1_5, block.getNumber()),
+                            "Minimum 1 General stair required",
+                            DcrConstants.OBJECTNOTDEFINED_DESC, Result.Not_Accepted.getResultVal(), stairDefined);
+                }
                 if (floorSize > 3) {
                     if (noOfFireStair.add(generalStairCount)
                             .compareTo(Util.roundOffTwoDecimal(BigDecimal.valueOf(2))) >= 0) {

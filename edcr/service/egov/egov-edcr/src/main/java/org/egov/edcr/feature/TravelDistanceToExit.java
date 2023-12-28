@@ -93,12 +93,6 @@ public class TravelDistanceToExit extends FeatureProcess {
             boolean numberofFloorsLessOrEqualToThree = true;
             for (Block block : pl.getBlocks()) {
                 if (!block.getCompletelyExisting()) {
-
-                    if (block.getBuilding() != null && block.getBuilding().getFloorsAboveGround() != null &&
-                            block.getBuilding().getFloorsAboveGround().compareTo(BigDecimal.valueOf(3)) > 0) {
-                        numberofFloorsLessOrEqualToThree = false;
-                    }
-
                     if (block.getResidentialBuilding().equals(Boolean.TRUE)
                             && numberofFloorsLessOrEqualToThree == true) {
                         exemption = Boolean.TRUE;

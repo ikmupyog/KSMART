@@ -1161,10 +1161,12 @@ public class Far extends FeatureProcess {
 			}
 			totalFloorUnits = totalFloorUnits + totalBlockFloorUnits;
 			block.getBuilding().setTotalFloorUnits(BigDecimal.valueOf(totalBlockFloorUnits));
-			List<String> occupancyCodes = block.getBuilding().getTotalArea().stream()
+			List<String> occupancyCodes = block.getBuilding().getOccupancies().stream()
 					.map(occ -> occ.getTypeHelper().getType().getCode()).collect(Collectors.toList());
 				
-			if (!block.getCompletelyExisting() && (occupancyCodes.contains(A1) || occupancyCodes.contains(A5))) {
+			if (!block.getCompletelyExisting()
+					&& (occupancyCodes.size() == 2 && occupancyCodes.contains(A1) && occupancyCodes.contains(A5))
+					|| (occupancyCodes.size() == 1 && occupancyCodes.contains(A1))) {
 				blockWiseUnits.put(block.getNumber(), totalBlockFloorUnits);
 				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) == 0)
 					pl.addError("Kitchen Unit",
