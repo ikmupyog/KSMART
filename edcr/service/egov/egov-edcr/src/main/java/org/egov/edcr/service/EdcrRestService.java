@@ -435,12 +435,14 @@ public class EdcrRestService {
                 PlanInformation pi = new PlanInformation();
                 pi.setApplicantName(edcrApplnDtl.getApplication().getApplicantName());
                 pl1.setPlanInformation(pi);
+                pl1.setApplicationType(edcrDetail.getAppliactionType());
                 edcrDetail.setPlanDetail(pl1);
             } else {
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 Plan pl1 = mapper.readValue(file, Plan.class);
                 pl1.getPlanInformation().setApplicantName(edcrApplnDtl.getApplication().getApplicantName());
+                pl1.setApplicationType(edcrDetail.getAppliactionType());
                 if (LOG.isInfoEnabled())
                     LOG.info("**************** Plan detail object **************" + pl1);
                 edcrDetail.setPlanDetail(pl1);
