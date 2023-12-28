@@ -120,7 +120,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Transactional(readOnly = true)
 public class EdcrRestService {
 
-    private final SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+    private static final String LOW_RISK_BUILDING_PLAN_SCRUTINY = "LOW_RISK_BUILDING_PLAN_SCRUTINY";
+
+	private static final String BUILDING_OC_PLAN_SCRUTINY = "BUILDING_OC_PLAN_SCRUTINY";
+
+	private static final String BUILDING_PLAN_SCRUTINY = "BUILDING_PLAN_SCRUTINY";
+
+	private final SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 
     private static final String MSG_UNQ_TRANSACTION_NUMBER = "Transaction Number should be unique";
 
@@ -128,11 +134,11 @@ public class EdcrRestService {
 
     private static final String USER_ID_IS_MANDATORY = "User id is mandatory";
 
-    private static final String BPA_01 = "BPA-01";
+    private static final String EDCR_01 = "EDCR-01";
 
-    private static final String BPA_07 = "BPA-07";
+    private static final String EDCR_07 = "EDCR-07";
 
-    private static final String BPA_05 = "BPA-05";
+    private static final String EDCR_05 = "EDCR-05";
 
     private static Logger LOG = LogManager.getLogger(EdcrApplicationService.class);
 
@@ -383,14 +389,15 @@ public class EdcrRestService {
         }
         ApplicationType applicationType = edcrApplnDtl.getApplication().getApplicationType();
         if (applicationType != null) {
-			if (ApplicationType.PERMIT.getApplicationTypeVal()
-					.equalsIgnoreCase(edcrApplnDtl.getApplication().getApplicationType().getApplicationTypeVal())
-					|| ApplicationType.SELF_CERTIFIED_PERMIT.getApplicationTypeVal().equalsIgnoreCase(
+			if (ApplicationType.SELF_CERTIFIED_PERMIT.getApplicationTypeVal().equalsIgnoreCase(
 							edcrApplnDtl.getApplication().getApplicationType().getApplicationTypeVal())) {
-                edcrDetail.setAppliactionType("BUILDING_PLAN_SCRUTINY");
+                edcrDetail.setAppliactionType(LOW_RISK_BUILDING_PLAN_SCRUTINY);
+            } else if (ApplicationType.PERMIT.getApplicationTypeVal()
+					.equalsIgnoreCase(edcrApplnDtl.getApplication().getApplicationType().getApplicationTypeVal())) {
+                edcrDetail.setAppliactionType(BUILDING_PLAN_SCRUTINY);
             } else if (ApplicationType.OCCUPANCY_CERTIFICATE.getApplicationTypeVal()
                     .equalsIgnoreCase(edcrApplnDtl.getApplication().getApplicationType().getApplicationTypeVal())) {
-                edcrDetail.setAppliactionType("BUILDING_OC_PLAN_SCRUTINY");
+                edcrDetail.setAppliactionType(BUILDING_OC_PLAN_SCRUTINY);
             } else {
                 edcrDetail.setAppliactionType(applicationType.getApplicationTypeVal());
             }
@@ -477,12 +484,15 @@ public class EdcrRestService {
         edcrDetail.setApplicationNumber(String.valueOf(applnDtls[10]));
         String applicationType = String.valueOf(applnDtls[11]);
         if (applicationType != null) {
-            if (ApplicationType.PERMIT.getApplicationTypeVal()
+            if (ApplicationType.SELF_CERTIFIED_PERMIT.getApplicationTypeVal()
                     .equalsIgnoreCase(ApplicationType.valueOf(applicationType).getApplicationTypeVal())) {
-                edcrDetail.setAppliactionType("BUILDING_PLAN_SCRUTINY");
+                edcrDetail.setAppliactionType(LOW_RISK_BUILDING_PLAN_SCRUTINY);
+            } else if (ApplicationType.PERMIT.getApplicationTypeVal()
+                    .equalsIgnoreCase(ApplicationType.valueOf(applicationType).getApplicationTypeVal())) {
+                edcrDetail.setAppliactionType(BUILDING_PLAN_SCRUTINY);
             } else if (ApplicationType.OCCUPANCY_CERTIFICATE.getApplicationTypeVal()
                     .equalsIgnoreCase(ApplicationType.valueOf(applicationType).getApplicationTypeVal())) {
-                edcrDetail.setAppliactionType("BUILDING_OC_PLAN_SCRUTINY");
+                edcrDetail.setAppliactionType(BUILDING_OC_PLAN_SCRUTINY);
             } else {
                 edcrDetail.setAppliactionType(ApplicationType.valueOf(applicationType).getApplicationTypeVal());
             }
@@ -741,9 +751,11 @@ public class EdcrRestService {
             String appliactionType = edcrRequest.getAppliactionType();
             if (isNotBlank(appliactionType)) {
                 ApplicationType applicationType = null;
-                if ("BUILDING_PLAN_SCRUTINY".equalsIgnoreCase(appliactionType)) {
+                if (LOW_RISK_BUILDING_PLAN_SCRUTINY.equalsIgnoreCase(appliactionType)) {
+                    applicationType = ApplicationType.SELF_CERTIFIED_PERMIT;
+                } else if (BUILDING_PLAN_SCRUTINY.equalsIgnoreCase(appliactionType)) {
                     applicationType = ApplicationType.PERMIT;
-                } else if ("BUILDING_OC_PLAN_SCRUTINY".equalsIgnoreCase(appliactionType)) {
+                } else if (BUILDING_OC_PLAN_SCRUTINY.equalsIgnoreCase(appliactionType)) {
                     applicationType = ApplicationType.OCCUPANCY_CERTIFICATE;
                 } else if ("Occupancy certificate".equalsIgnoreCase(appliactionType)) {
                     applicationType = ApplicationType.OCCUPANCY_CERTIFICATE;
@@ -814,9 +826,11 @@ public class EdcrRestService {
 
         if (edcrRequest != null && isNotBlank(appliactionType)) {
             ApplicationType applicationType = null;
-            if ("BUILDING_PLAN_SCRUTINY".equalsIgnoreCase(appliactionType)) {
+            if (LOW_RISK_BUILDING_PLAN_SCRUTINY.equalsIgnoreCase(appliactionType)) {
+                applicationType = ApplicationType.SELF_CERTIFIED_PERMIT;
+            } else if (BUILDING_PLAN_SCRUTINY.equalsIgnoreCase(appliactionType)) {
                 applicationType = ApplicationType.PERMIT;
-            } else if ("BUILDING_OC_PLAN_SCRUTINY".equalsIgnoreCase(appliactionType)) {
+            } else if (BUILDING_OC_PLAN_SCRUTINY.equalsIgnoreCase(appliactionType)) {
                 applicationType = ApplicationType.OCCUPANCY_CERTIFICATE;
             }
             if ("Permit".equalsIgnoreCase(appliactionType)) {
@@ -865,17 +879,17 @@ public class EdcrRestService {
             if (extension != null && !extension.isEmpty()) {
 
                 if (!dcrAllowedExtenstions.contains(extension.toLowerCase())) {
-                    return new ErrorDetail("BPA-02", "Please upload " + dcrAllowedExtenstions + " format file only");
+                    return new ErrorDetail("EDCR-02", "Please upload " + dcrAllowedExtenstions + " format file only");
                 } else if (file.getSize() > (Long.valueOf(maxAllowSizeInMB) * 1024 * 1024)) {
-                    return new ErrorDetail("BPA-04", "File size should not exceed 30 MB");
+                    return new ErrorDetail("EDCR-04", "File size should not exceed 30 MB");
                 } /*
                    * else if (allowedExtenstions.contains(extension.toLowerCase()) && (!mimeTypes.contains(mimeType) ||
                    * StringUtils.countMatches(file.getOriginalFilename(), ".") > 1 || file.getOriginalFilename().contains("%00")))
-                   * { return new ErrorDetail("BPA-03", "Malicious file upload"); }
+                   * { return new ErrorDetail("EDCR-03", "Malicious file upload"); }
                    */
             }
         } else {
-            return new ErrorDetail(BPA_05, "Please upload plan file, It is mandatory");
+            return new ErrorDetail(EDCR_05, "Please upload plan file, It is mandatory");
         }
 
         return null;
@@ -883,17 +897,17 @@ public class EdcrRestService {
 
     public ErrorDetail validateEdcrRequest(final EdcrRequest edcrRequest, final MultipartFile planFile) {
         if (edcrRequest.getRequestInfo() == null)
-            return new ErrorDetail(BPA_07, REQ_BODY_REQUIRED);
+            return new ErrorDetail(EDCR_07, REQ_BODY_REQUIRED);
         else if (edcrRequest.getRequestInfo().getUserInfo() == null
                 || (edcrRequest.getRequestInfo().getUserInfo() != null
                         && isBlank(edcrRequest.getRequestInfo().getUserInfo().getUuid())))
-            return new ErrorDetail(BPA_07, USER_ID_IS_MANDATORY);
+            return new ErrorDetail(EDCR_07, USER_ID_IS_MANDATORY);
 
         if (isBlank(edcrRequest.getTransactionNumber()))
-            return new ErrorDetail(BPA_07, "Please enter transaction number");
+            return new ErrorDetail(EDCR_07, "Please enter transaction number");
         if (isNotBlank(edcrRequest.getTransactionNumber())
                 && edcrApplicationService.findByTransactionNumber(edcrRequest.getTransactionNumber()) != null) {
-            return new ErrorDetail(BPA_01, MSG_UNQ_TRANSACTION_NUMBER);
+            return new ErrorDetail(EDCR_01, MSG_UNQ_TRANSACTION_NUMBER);
         }
 
         return validatePlanFile(planFile);
@@ -901,20 +915,20 @@ public class EdcrRestService {
 
     public ErrorDetail validateEdcrOcRequest(final EdcrRequest edcrRequest, final MultipartFile planFile) {
         if (edcrRequest.getRequestInfo() == null)
-            return new ErrorDetail(BPA_07, REQ_BODY_REQUIRED);
+            return new ErrorDetail(EDCR_07, REQ_BODY_REQUIRED);
         else if (edcrRequest.getRequestInfo().getUserInfo() == null
                 || (edcrRequest.getRequestInfo().getUserInfo() != null
                         && isBlank(edcrRequest.getRequestInfo().getUserInfo().getUuid())))
-            return new ErrorDetail(BPA_07, USER_ID_IS_MANDATORY);
+            return new ErrorDetail(EDCR_07, USER_ID_IS_MANDATORY);
 
         if (isBlank(edcrRequest.getTransactionNumber()))
-            return new ErrorDetail(BPA_07, "Transaction number is mandatory");
+            return new ErrorDetail(EDCR_07, "Transaction number is mandatory");
 
         if (null == edcrRequest.getPermitDate())
-            return new ErrorDetail("BPA-08", "Permit Date is mandatory");
+            return new ErrorDetail("EDCR-08", "Permit Date is mandatory");
         if (isNotBlank(edcrRequest.getTransactionNumber())
                 && edcrApplicationService.findByTransactionNumber(edcrRequest.getTransactionNumber()) != null) {
-            return new ErrorDetail(BPA_01, MSG_UNQ_TRANSACTION_NUMBER);
+            return new ErrorDetail(EDCR_01, MSG_UNQ_TRANSACTION_NUMBER);
 
         }
 
@@ -925,47 +939,47 @@ public class EdcrRestService {
         List<ErrorDetail> errorDetails = new ArrayList<>();
 
         if (edcrRequest.getRequestInfo() == null)
-            errorDetails.add(new ErrorDetail(BPA_07, REQ_BODY_REQUIRED));
+            errorDetails.add(new ErrorDetail(EDCR_07, REQ_BODY_REQUIRED));
         else if (edcrRequest.getRequestInfo().getUserInfo() == null
                 || (edcrRequest.getRequestInfo().getUserInfo() != null
                         && isBlank(edcrRequest.getRequestInfo().getUserInfo().getUuid())))
-            errorDetails.add(new ErrorDetail("BPA-08", USER_ID_IS_MANDATORY));
+            errorDetails.add(new ErrorDetail("EDCR-08", USER_ID_IS_MANDATORY));
 
         if (isBlank(edcrRequest.getTransactionNumber()))
-            errorDetails.add(new ErrorDetail("BPA-09", "Transaction number is mandatory"));
+            errorDetails.add(new ErrorDetail("EDCR-09", "Transaction number is mandatory"));
 
         if (null == edcrRequest.getPermitDate())
-            errorDetails.add(new ErrorDetail("BPA-10", "Permit Date is mandatory"));
+            errorDetails.add(new ErrorDetail("EDCR-10", "Permit Date is mandatory"));
         if (isNotBlank(edcrRequest.getTransactionNumber())
                 && edcrApplicationService.findByTransactionNumber(edcrRequest.getTransactionNumber()) != null) {
-            errorDetails.add(new ErrorDetail("BPA-11", MSG_UNQ_TRANSACTION_NUMBER));
+            errorDetails.add(new ErrorDetail("EDCR-11", MSG_UNQ_TRANSACTION_NUMBER));
 
         }
 
         String dcrNo = edcrRequest.getComparisonEdcrNumber();
         if (StringUtils.isBlank(dcrNo)) {
-            errorDetails.add(new ErrorDetail("BPA-29", "Comparison eDcr number is mandatory"));
+            errorDetails.add(new ErrorDetail("EDCR-29", "Comparison eDcr number is mandatory"));
         } else {
             EdcrApplicationDetail permitDcr = applicationDetailService.findByDcrNumberAndTPUserTenant(dcrNo,
                     edcrRequest.getTenantId());
 
             if (permitDcr != null && permitDcr.getApplication() != null
                     && StringUtils.isBlank(permitDcr.getApplication().getServiceType())) {
-                errorDetails.add(new ErrorDetail("BPA-26", "No service type found for dcr number " + dcrNo));
+                errorDetails.add(new ErrorDetail("EDCR-26", "No service type found for dcr number " + dcrNo));
             }
 
             if (permitDcr == null) {
-                errorDetails.add(new ErrorDetail("BPA-24", "No record found with dcr number " + dcrNo));
+                errorDetails.add(new ErrorDetail("EDCR-24", "No record found with dcr number " + dcrNo));
             }
 
             if (permitDcr != null && permitDcr.getApplication() != null && edcrRequest.getAppliactionType()
                     .equalsIgnoreCase(permitDcr.getApplication().getApplicationType().toString())) {
-                errorDetails.add(new ErrorDetail("BPA-27", "Application types are same"));
+                errorDetails.add(new ErrorDetail("EDCR-27", "Application types are same"));
             }
 
             if (permitDcr != null && permitDcr.getApplication() != null && !edcrRequest.getApplicationSubType()
                     .equalsIgnoreCase(permitDcr.getApplication().getServiceType())) {
-                errorDetails.add(new ErrorDetail("BPA-28", "Service types are not mathing"));
+                errorDetails.add(new ErrorDetail("EDCR-28", "Service types are not mathing"));
             }
         }
 
@@ -979,11 +993,11 @@ public class EdcrRestService {
     public List<ErrorDetail> validateEdcrMandatoryFields(final EdcrRequest edcrRequest) {
         List<ErrorDetail> errors = new ArrayList<>();
         if (StringUtils.isBlank(edcrRequest.getAppliactionType())) {
-            errors.add(new ErrorDetail("BPA-10", "Application type is missing"));
+            errors.add(new ErrorDetail("EDCR-10", "Application type is missing"));
         }
 
         if (StringUtils.isBlank(edcrRequest.getApplicationSubType())) {
-            errors.add(new ErrorDetail("BPA-11", "Service type is missing"));
+            errors.add(new ErrorDetail("EDCR-11", "Service type is missing"));
         }
 
         return errors;
@@ -992,7 +1006,7 @@ public class EdcrRestService {
     public ErrorDetail validateSearchRequest(final String edcrNumber, final String transactionNumber) {
         ErrorDetail errorDetail = null;
         if (isBlank(edcrNumber) && isBlank(transactionNumber))
-            return new ErrorDetail(BPA_07, "Please enter valid edcr number or transaction number");
+            return new ErrorDetail(EDCR_07, "Please enter valid edcr number or transaction number");
         return errorDetail;
     }
 
@@ -1014,17 +1028,17 @@ public class EdcrRestService {
             if (extension != null && !extension.isEmpty()) {
                 // mimeType = getMimeType(file);
                 if (!allowedExtenstions.contains(extension.toLowerCase())) {
-                    return new ErrorDetail("BPA-02", "Please upload " + allowedExtenstions + " format file only");
+                    return new ErrorDetail("EDCR-02", "Please upload " + allowedExtenstions + " format file only");
                 } else if (file.getSize() > (Long.valueOf(maxAllowSizeInMB) * 1024 * 1024)) {
-                    return new ErrorDetail("BPA-04", "File size should not exceed 30 MB");
+                    return new ErrorDetail("EDCR-04", "File size should not exceed 30 MB");
                 } /*
                    * else if (allowedExtenstions.contains(extension.toLowerCase()) && (!mimeTypes.contains(mimeType) ||
                    * StringUtils.countMatches(file.getOriginalFilename(), ".") > 1 || file.getOriginalFilename().contains("%00")))
-                   * { return new ErrorDetail("BPA-03", "Malicious file upload"); }
+                   * { return new ErrorDetail("EDCR-03", "Malicious file upload"); }
                    */
             }
         } else {
-            return new ErrorDetail(BPA_05, "Please, upload plan file is mandatory");
+            return new ErrorDetail(EDCR_05, "Please, upload plan file is mandatory");
         }
 
         return null;
