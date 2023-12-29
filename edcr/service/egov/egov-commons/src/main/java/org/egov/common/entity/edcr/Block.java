@@ -97,6 +97,7 @@ public class Block extends Measurement {
     private List<Measurement> libraryStackArea = new ArrayList<>();
     private List<Measurement> inBuiltSolutuons = new ArrayList<>();
     private List<Measurement> lpgSystem = new ArrayList<>();
+    private transient Boolean singleOrDualFamilyBuilding = false;
     @Override
     public String toString() {
         return "Block [building=" + building + ", name=" + name + ", number=" + number + ", setBacks=" + setBacks
@@ -453,6 +454,14 @@ public class Block extends Measurement {
 
 	public void setLpgSystem(List<Measurement> lpgSystem) {
 		this.lpgSystem = lpgSystem;
+	}
+
+	public Boolean getSingleOrDualFamilyBuilding() {
+		return singleOrDualFamilyBuilding;
+	}
+
+	public void setSingleOrDualFamilyBuilding(Boolean singleOrDualFamilyBuilding) {
+		this.singleOrDualFamilyBuilding = singleOrDualFamilyBuilding;
 	}
 
 }

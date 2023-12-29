@@ -1,5 +1,8 @@
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.DxfFileConstants.A1;
+import static org.egov.edcr.constants.DxfFileConstants.A5;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -65,9 +68,11 @@ public class GeneralStair extends FeatureProcess {
         // validate(planDetail);
         HashMap<String, String> errors = new HashMap<>();
         blk: for (Block block : pl.getBlocks()) {
+        	
             if (block.getBuilding() != null && !block.getBuilding().getOccupancies().isEmpty()) {
-				if (block.getBuilding() != null && block.getBuilding().getFloorsAboveGround() != null
-						&& block.getBuilding().getFloorsAboveGround().intValue() <= 1) {
+				if (block.getSingleOrDualFamilyBuilding() || (!block.getSingleOrDualFamilyBuilding()
+						&& block.getBuilding() != null && block.getBuilding().getFloorsAboveGround() != null
+						&& block.getBuilding().getFloorsAboveGround().intValue() <= 1)) {
 					continue blk;
 				}
 

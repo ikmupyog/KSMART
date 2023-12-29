@@ -1168,6 +1168,11 @@ public class Far extends FeatureProcess {
 					&& (occupancyCodes.size() == 2 && occupancyCodes.contains(A1) && occupancyCodes.contains(A5))
 					|| (occupancyCodes.size() == 1 && occupancyCodes.contains(A1))) {
 				blockWiseUnits.put(block.getNumber(), totalBlockFloorUnits);
+				if(block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
+					block.setSingleFamilyBuilding(true);
+				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0
+						|| block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.valueOf(2)) == 0)
+					block.setSingleOrDualFamilyBuilding(true);
 				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) == 0)
 					pl.addError("Kitchen Unit",
 							String.format("Mandatory Kitchen unit is not defined for Residential in the block %s",
