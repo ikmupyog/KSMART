@@ -131,7 +131,7 @@
 				<text><![CDATA[BUILDING DETAILS - KMBR/ KPBR SCRUTINY REPORT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="223" y="145" width="57" height="19" uuid="10f39610-2a48-455d-be03-0e94dedee3bc"/>
+				<reportElement x="14" y="145" width="266" height="19" uuid="10f39610-2a48-455d-be03-0e94dedee3bc"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -146,7 +146,7 @@
 				<text><![CDATA[STATUS :]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="report status style" x="280" y="145" width="100" height="19" uuid="3f3612b1-a275-495c-bc04-5393d31db615"/>
+				<reportElement style="report status style" x="280" y="145" width="275" height="19" uuid="3f3612b1-a275-495c-bc04-5393d31db615"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -294,7 +294,7 @@
 				<text><![CDATA[LOCAL SELF GOVERNMENT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="236" width="555" height="20" backcolor="#DCFCFA" uuid="f989e0b8-525d-494f-b9a0-f4887497086d"/>
+				<reportElement mode="Opaque" x="14" y="176" width="541" height="20" backcolor="#DCFCFA" uuid="f989e0b8-525d-494f-b9a0-f4887497086d"/>
 				<box topPadding="0" leftPadding="0">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -307,7 +307,7 @@
 				<text><![CDATA[1) GENERAL DETAILS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="256" width="280" height="18" uuid="bbba6966-0fad-4b84-ad82-cc5a577e20c0"/>
+				<reportElement x="14" y="196" width="266" height="18" uuid="bbba6966-0fad-4b84-ad82-cc5a577e20c0"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -320,7 +320,7 @@
 				<text><![CDATA[SURVEY / RESURVEY NUMBER:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="256" width="275" height="18" uuid="4a1aaa58-c3ff-42ba-9003-982f588b943c"/>
+				<reportElement x="280" y="196" width="275" height="18" uuid="4a1aaa58-c3ff-42ba-9003-982f588b943c"/>
 				<box topPadding="0" leftPadding="5">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -331,7 +331,7 @@
 				<textFieldExpression><![CDATA[$P{surveyNumber}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="274" width="280" height="18" uuid="88beb1f9-d07d-44b9-9441-464de15d5e59"/>
+				<reportElement x="14" y="214" width="266" height="18" uuid="88beb1f9-d07d-44b9-9441-464de15d5e59"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -344,7 +344,7 @@
 				<text><![CDATA[REVENUE WARD:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="274" width="275" height="18" uuid="759ac2f0-ea4a-4e2c-924e-ed1d78baf953"/>
+				<reportElement x="280" y="214" width="275" height="18" uuid="759ac2f0-ea4a-4e2c-924e-ed1d78baf953"/>
 				<box topPadding="0" leftPadding="5">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -355,7 +355,7 @@
 				<textFieldExpression><![CDATA[$P{revenewWard}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="292" width="280" height="18" uuid="160c14d2-4023-4236-9ef0-864b1038405b"/>
+				<reportElement x="14" y="232" width="266" height="18" uuid="160c14d2-4023-4236-9ef0-864b1038405b"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -368,7 +368,7 @@
 				<text><![CDATA[VILLAGE:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="292" width="275" height="18" uuid="e6bf89b0-3fc6-466f-b5fb-13c63c559855"/>
+				<reportElement x="280" y="232" width="275" height="18" uuid="e6bf89b0-3fc6-466f-b5fb-13c63c559855"/>
 				<box topPadding="0" leftPadding="5">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -379,7 +379,7 @@
 				<textFieldExpression><![CDATA[$P{village}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="310" width="280" height="18" uuid="82ac3ec8-0c79-46c6-be51-93bd82aa110d"/>
+				<reportElement x="14" y="250" width="266" height="18" uuid="82ac3ec8-0c79-46c6-be51-93bd82aa110d"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -392,7 +392,7 @@
 				<text><![CDATA[DESAM:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="310" width="275" height="18" uuid="8f933432-0532-407d-a436-05513a93dfd3"/>
+				<reportElement x="280" y="250" width="275" height="18" uuid="8f933432-0532-407d-a436-05513a93dfd3"/>
 				<box topPadding="0" leftPadding="5">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -403,7 +403,7 @@
 				<textFieldExpression><![CDATA[$P{desam}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="328" width="280" height="18" uuid="c405b4fe-a14a-4e7b-a668-87cc4545ded9"/>
+				<reportElement x="14" y="268" width="266" height="18" uuid="c405b4fe-a14a-4e7b-a668-87cc4545ded9"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -416,7 +416,7 @@
 				<text><![CDATA[PLOT AREA (IN Sq M):]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="364" width="275" height="18" uuid="4115eeba-4912-46a2-b48f-f58bdaa96f49"/>
+				<reportElement x="280" y="304" width="275" height="18" uuid="4115eeba-4912-46a2-b48f-f58bdaa96f49"/>
 				<box topPadding="0" leftPadding="5">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -427,7 +427,7 @@
 				<textFieldExpression><![CDATA[$P{noOfMechanicalParking}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="364" width="280" height="18" uuid="48ac4815-3c8e-425d-bdb4-f1fcc6330902"/>
+				<reportElement x="14" y="304" width="266" height="18" uuid="48ac4815-3c8e-425d-bdb4-f1fcc6330902"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -440,7 +440,7 @@
 				<text><![CDATA[NUMNBER OF MECHANICAL PARKING:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="382" width="275" height="18" uuid="6b5cad1a-af9b-42df-bc6e-b8eefa244d81"/>
+				<reportElement x="280" y="322" width="275" height="18" uuid="6b5cad1a-af9b-42df-bc6e-b8eefa244d81"/>
 				<box topPadding="0" leftPadding="5">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -451,7 +451,7 @@
 				<textFieldExpression><![CDATA[$P{demolitionArea}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="382" width="280" height="18" uuid="5fdb63df-53b1-4e73-8e9e-27a7390fc571"/>
+				<reportElement x="14" y="322" width="266" height="18" uuid="5fdb63df-53b1-4e73-8e9e-27a7390fc571"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -464,7 +464,7 @@
 				<text><![CDATA[EXISTING AREA TO BE DEMOLISHED (IN Sq M):]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="328" width="275" height="18" uuid="6f515501-c15c-45d9-908b-44bb218bc34a"/>
+				<reportElement x="280" y="268" width="275" height="18" uuid="6f515501-c15c-45d9-908b-44bb218bc34a"/>
 				<box topPadding="0" leftPadding="5">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -475,7 +475,7 @@
 				<textFieldExpression><![CDATA[$P{planInfoPlotArea}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="346" width="280" height="18" uuid="9ddaafe9-3a93-4889-ba54-4971fb158cf7"/>
+				<reportElement x="14" y="286" width="266" height="18" uuid="9ddaafe9-3a93-4889-ba54-4971fb158cf7"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -488,7 +488,7 @@
 				<text><![CDATA[ACCESS WITH (IN METERS):]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="280" y="346" width="275" height="18" uuid="a9392dca-5703-4ca5-a1ae-d78ba30138c3"/>
+				<reportElement x="280" y="286" width="275" height="18" uuid="a9392dca-5703-4ca5-a1ae-d78ba30138c3"/>
 				<box topPadding="0" leftPadding="5">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -499,7 +499,7 @@
 				<textFieldExpression><![CDATA[$P{accWidth}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="280" y="400" width="275" height="18" uuid="f458d065-6e43-4a6e-b05a-3947d1c8ab8a"/>
+				<reportElement x="280" y="340" width="275" height="18" uuid="f458d065-6e43-4a6e-b05a-3947d1c8ab8a"/>
 				<box topPadding="0" leftPadding="5">
 					<pen lineWidth="0.25"/>
 				</box>
@@ -510,7 +510,7 @@
 				<textFieldExpression><![CDATA[$P{alteredArea}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="400" width="280" height="18" uuid="2266a977-41d0-48d9-b937-5fe858d8706a"/>
+				<reportElement x="14" y="340" width="266" height="18" uuid="2266a977-41d0-48d9-b937-5fe858d8706a"/>
 				<box topPadding="0" leftPadding="0" rightPadding="4">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -570,22 +570,6 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="44">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="" stretchType="RelativeToTallestObject" x="5" y="26" width="517" height="18" isRemoveLineWhenBlank="true" uuid="a41cfed2-1239-43a2-aa02-5a86c5ca0b9a">
-					<printWhenExpression><![CDATA[!$P{nocs}.isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textFieldExpression><![CDATA[$P{nocString}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="5" y="6" width="193" height="19" isRemoveLineWhenBlank="true" uuid="6c9fce2c-90f2-4013-b9d9-719aa716287e">
-					<printWhenExpression><![CDATA[!$P{nocs}.isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Left">
-					<font size="12" isBold="true" isUnderline="false"/>
-				</textElement>
-				<text><![CDATA[Verify Noc's]]></text>
-			</staticText>
-		</band>
+		<band height="44"/>
 	</summary>
 </jasperReport>

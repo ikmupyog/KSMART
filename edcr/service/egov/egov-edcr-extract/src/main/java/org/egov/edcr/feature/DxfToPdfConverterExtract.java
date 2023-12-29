@@ -284,6 +284,10 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 				LOG.debug("Validation :  failed validation for pdf "+edcrPdfDetail.getLayer() );
 				continue;
 			}
+			
+			
+			
+			
 			LOG.debug("Validation : pdf  to print for as found is true  for : " + edcrPdfDetail.getLayer());
 			
 			edcrPdfDetail.getLayers().add("system_measurements");
@@ -307,7 +311,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 					seperatePrintPresent = true;
 					LOG.debug("seperatePrintPresent " + seperatePrintPresent);
 				}
-
+				
 			}
 
 		}
@@ -337,6 +341,8 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 			}
 
 		}
+		
+		boolean present= validateOtherPdfs(planDetail,singlePrintPresent);
 
 		if (!singlePrintPresent && !seperatePrintPresent)
 			planDetail.addError("DXF-PDF 001",
@@ -348,6 +354,77 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		LOG.debug("PDF file are converted");
 		return planDetail;
 
+	}
+
+	private boolean validateOtherPdfs(PlanDetail planDetail,boolean isSinglePrint) {
+	
+		Map<String, Boolean> mandatory=new HashMap<String, Boolean>();
+		Boolean servicePlan=false,sectionPlan=false,sitePlan=false,floorPlan=false,parkingPlan=false,utility=false,elevationPlan=false;
+		
+		for( EdcrPdfDetail detail:  planDetail.getEdcrPdfDetails())
+			
+		{
+			
+			
+			if(detail.getLayer().contains("SITE_PLAN"))
+				sitePlan=true;
+			else if(detail.getLayer().contains("SERVICE_PLAN"))
+				servicePlan=true;
+			else if(detail.getLayer().contains("UTILITY"))
+				utility=true;
+			
+		
+			if(!isSinglePrint)
+			{
+				if(detail.getLayer().contains("SECTION_PLAN"))
+					sectionPlan=true;	
+				else if(detail.getLayer().contains("FLOOR_PLAN"))
+					floorPlan=true;
+				else if(detail.getLayer().contains("ELEVATION_PLAN"))
+					elevationPlan=true;
+			}
+			
+			if(null !=planDetail.getParkingRequired() && planDetail.getParkingRequired()>0)
+			{
+				if(detail.getLayer().contains("PARKING_PLAN"))
+					parkingPlan=true;
+			}
+		}
+		
+		if(!servicePlan )
+		{
+			planDetail.addError("service.plan.print.mandatory", "SERVICE_PLAN_PRINT is mandatory");
+		}
+		if(!sitePlan )
+		{
+			planDetail.addError("site.plan.print.mandatory", "SITE_PLAN_PRINT is mandatory");
+		}
+		if(!utility )
+		{
+			planDetail.addError("utility.plan.print.mandatory", "UTILITY_PLAN_PRINT is mandatory");
+		}
+		
+		if(!isSinglePrint && !sectionPlan )
+		{
+			planDetail.addError("section.plan.print.mandatory", "SECTION_PLAN_PRINT is mandatory");
+		}
+		if(!isSinglePrint && !floorPlan )
+		{
+			planDetail.addError("floor.plan.print.mandatory", "FLOOR_PLAN_PRINT is mandatory");
+		}
+		if(!isSinglePrint && !elevationPlan )
+		{
+			planDetail.addError("elevation.plan.print.mandatory", "ELEVATION_PLAN_PRINT is mandatory");
+		}
+		
+		if(null !=planDetail.getParkingRequired() && !parkingPlan)
+		{
+			planDetail.addError("parking.plan.print.mandatory", "PARKING_PLAN_PRINT is mandatory");
+		}
+		
+		return true; 
+		
+		
 	}
 
 	@Override

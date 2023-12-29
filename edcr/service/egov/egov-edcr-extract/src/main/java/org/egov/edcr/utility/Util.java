@@ -1799,7 +1799,7 @@ public class Util {
     public static String getPolylinePrintableText(DXFPolyline pline, DXFLayer dxfLayer, EdcrPdfDetail detail, PlanDetail pl) {
 
         OccupancyTypeHelper occupancyType = null;
-        String name = null;
+        String name = "";
         
         if(dxfLayer.getName().equalsIgnoreCase("WASTE_DISPOSAL"))
         {
@@ -1830,7 +1830,7 @@ public class Util {
         
         
         String name1 = getlayerNameMap(dxfLayer,pline);
-        if(name1!=null)
+        if(name1!=null )
         {
         	name=name1;
         	return name;
@@ -1864,7 +1864,7 @@ public class Util {
     public static String getPolylinePrintableTextOC(DXFPolyline pline, DXFLayer dxfLayer, EdcrPdfDetail detail, PlanDetail pl) {
 
         OccupancyTypeHelper occupancyType = null;
-        String name = null;
+        String name = "";
         String occupancyName = "";
         LOG.debug("pline color for oc check.... "+pline.getColor());
         if (pline.getColor() != 0) {
@@ -1891,7 +1891,7 @@ public class Util {
 			PlanDetail pl) {
 
 		OccupancyTypeHelper occupancyType = null;
-		String name = null;
+		String name = "";
 
 		
 			if(getlayerNameMap(dxfLayer,pline)!=null)
@@ -1917,7 +1917,7 @@ public class Util {
     
     public static String getCirclePrintableTextOfLayer(DXFCircle circle, DXFLayer dxfLayer, EdcrPdfDetail detail,
 			PlanDetail pl) {
-     		String name = null;
+     		String name = "";
         if(dxfLayer.getName().contains("WELL"))  
         {
      	if(circle.getColor()!=0)
@@ -1937,8 +1937,9 @@ public class Util {
             	   name="Proposed Bio Gas facility";
            }
         }
-     		if (LOG.isDebugEnabled())
-				LOG.debug("returning  from getCirclePrintableTextOfLayer  " + name);
+      
+    	if (LOG.isInfoEnabled())
+			LOG.info("returning  from getCirclePrintableTextOfLayer  " + name + dxfLayer.getName());
 			return name;
 		
 	}
