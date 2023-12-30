@@ -67,8 +67,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.RoadOutput;
@@ -77,6 +79,7 @@ import org.egov.common.entity.edcr.SepticTank;
 import org.egov.common.entity.edcr.WasteDisposal;
 import org.egov.common.entity.edcr.WellUtility;
 import org.egov.edcr.utility.DcrConstants;
+import org.egov.edcr.utility.Util;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -99,13 +102,14 @@ public class Well extends FeatureProcess {
     private static final String SUB_RULE_75_2II = "75(2(ii))";
     private static final String SUB_RULE_75_2IV = "75(2(iv))";
     private static final String SUB_RULE_79_4 = "79(4)";
-
-    private static final BigDecimal three = BigDecimal.valueOf(3);
-    private static final BigDecimal TWO_MTR = BigDecimal.valueOf(2);
+    private static final String SUB_RULE_23_2 = "23(2)";
+    private static final BigDecimal THREE = BigDecimal.valueOf(3);
+    private static final BigDecimal TWO = BigDecimal.valueOf(2);
     private static final BigDecimal ONE_ANDHALF_MTR = BigDecimal.valueOf(1.5);
     private static final BigDecimal DIST_1_POINT_2 = BigDecimal.valueOf(1.2);
     private static final BigDecimal DIST_7_POINT_5 = BigDecimal.valueOf(7.5);
     private static final BigDecimal DIST_30_CM = BigDecimal.valueOf(0.3);
+    private static final BigDecimal SEVEN = BigDecimal.valueOf(7);
 	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 
     @Override
@@ -477,6 +481,18 @@ public class Well extends FeatureProcess {
                     .anyMatch(wd -> wd.equalsIgnoreCase(DcrConstants.EXISTING));
         }
 
+		if (proposedWell) {
+			List<WellUtility> proposedWells = pl.getUtility().getWells().stream()
+					.filter(pw -> pw.getType().equalsIgnoreCase(DcrConstants.PROPOSED)).collect(Collectors.toList());
+			setReportOutputDetailsWithoutOccupancy(pl, SUB_RULE_75_2IV, "Number of Proposed Wells", "",
+					String.valueOf(proposedWells.size()), Result.Verify.getResultVal());
+		}
+		if (existingWell) {
+			List<WellUtility> existingWells = pl.getUtility().getWells().stream()
+					.filter(pw -> pw.getType().equalsIgnoreCase(DcrConstants.EXISTING)).collect(Collectors.toList());
+			setReportOutputDetailsWithoutOccupancy(pl, SUB_RULE_75_2IV, "Number of Existing Wells", "",
+					String.valueOf(existingWells.size()), Result.Verify.getResultVal());
+		}
         // When existing well and proposed waste disposal is declared
         if (existingWell && proposedWasteDisposal) {
             for (RoadOutput roadOutput : pl.getUtility().getWellDistance()) {
@@ -615,27 +631,44 @@ public class Well extends FeatureProcess {
         String subRule = null;
         String subRuleDesc = null;
         boolean valid = false;
+        BigDecimal minimumHeightOfBuilding = BigDecimal.ZERO;
+        for (Block block : pl.getBlocks()) {
+            if (minimumHeightOfBuilding.compareTo(BigDecimal.ZERO) == 0 ||
+                    block.getBuilding().getBuildingHeight().compareTo(minimumHeightOfBuilding) < 0) {
+                minimumHeightOfBuilding = block.getBuilding().getBuildingHeight();
+            }
+        }
         for (RoadOutput roadOutput : pl.getUtility().getWellDistance()) {
             BigDecimal minimumDistance;
             if (checkConditionForNotifiedRoad(roadOutput)) {
-                minimumDistance = three;
-                subRule = SUB_RULE_75_2I;
+                minimumDistance = THREE;
+                subRule = SUB_RULE_23_2;
                 subRuleDesc = String.format(SUB_RULE_75_2I_DESCRIPTION, proposed);
                 setReportOutputDetail(pl, subRule, subRuleDesc, valid, roadOutput, minimumDistance);
             } else if (checkConditionForNonNotifiedRoad(roadOutput) || checkConditionForCuldesacRoad(roadOutput)) {
-                minimumDistance = TWO_MTR;
-                subRule = SUB_RULE_75_2I;
+                minimumDistance = TWO;
+                subRule = SUB_RULE_23_2;
                 subRuleDesc = String.format(SUB_RULE_75_2I_DESCRIPTION, proposed);
                 setReportOutputDetail(pl, subRule, subRuleDesc, valid, roadOutput, minimumDistance);
             } else if (checkConditionForLane(roadOutput)) {
-                minimumDistance = ONE_ANDHALF_MTR;
-                subRule = SUB_RULE_75_2I;
+            	if (Util.isSmallPlot(pl)) {
+	            	 if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
+	            		 minimumDistance = ONE_ANDHALF_MTR;
+	                 else
+	                	 minimumDistance = THREE; 
+	            } else {
+	                if (minimumHeightOfBuilding.compareTo(SEVEN) <= 0)
+	                	minimumDistance = ONE_ANDHALF_MTR;
+	                else
+	                	minimumDistance = THREE;
+	            }
+                subRule = SUB_RULE_23_2;
                 subRuleDesc = String.format(SUB_RULE_75_2I_DESCRIPTION, proposed);
                 setReportOutputDetail(pl, subRule, subRuleDesc, valid, roadOutput, minimumDistance);
             } else if (checkConditionForBoundary(roadOutput)) {
-                subRule = SUB_RULE_75_2II;
+                subRule = SUB_RULE_23_2;
                 subRuleDesc = String.format(SUB_RULE_75_2II_DESCRIPTION, proposed);
-                minimumDistance = DIST_1_POINT_2;
+                minimumDistance = ONE_ANDHALF_MTR;
                 setReportOutputDetail(pl, subRule, subRuleDesc, valid, roadOutput, minimumDistance);
             }
         }

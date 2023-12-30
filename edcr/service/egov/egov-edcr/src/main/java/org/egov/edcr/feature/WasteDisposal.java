@@ -122,7 +122,7 @@ public class WasteDisposal extends FeatureProcess {
 							.anyMatch(wasteDisposal -> wasteDisposal.getType().equalsIgnoreCase(DcrConstants.PROPOSED));
 					boolean isExisting = pl.getUtility().getWasteDisposalUnits().stream()
 							.anyMatch(wasteDisposal -> wasteDisposal.getType().equalsIgnoreCase(DcrConstants.EXISTING));
-					if (isProposed || isExisting) {
+					if (isProposed) {
 						printOutputForProposedWasteDisposal(pl);
 					}
 				}
@@ -177,7 +177,7 @@ public class WasteDisposal extends FeatureProcess {
 			HashMap<String, String> errors = new HashMap<>();
 			errors.put(WASTE_DISPOSAL_DISTANCE_FROMBOUNDARY + "not defined ",
 					edcrMessageSource.getMessage(DcrConstants.OBJECTNOTDEFINED,
-							new String[] { "Distance from the plot boundary to waste disposal" },
+							new String[] { "Distance from the plot boundary to proposed waste disposal" },
 							LocaleContextHolder.getLocale()));
 			pl.addErrors(errors);
 		}
