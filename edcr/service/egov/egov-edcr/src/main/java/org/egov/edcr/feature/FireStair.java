@@ -152,7 +152,7 @@ public class FireStair extends FeatureProcess {
 		HashMap<String, String> errors = new HashMap<>();
 		blk: for (Block block : pl.getBlocks()) {
 			if (block.getBuilding() != null && !block.getBuilding().getOccupancies().isEmpty()) {
-				if (Util.singleFamilyWithLessThanOrEqualToThreeFloor(block)) {
+				if (block.getSingleOrDualFamilyBuilding() && Util.singleFamilyWithLessThanOrEqualToThreeFloor(block)) {
 					continue blk;
 				}
 				ScrutinyDetail scrutinyDetail2 = new ScrutinyDetail();

@@ -157,7 +157,7 @@ public class LiftService extends FeatureProcess {
                 scrutinyDetail1.setKey("Block_" + block.getNumber() + "_" + "Lift - Minimum Dimension");
 
                 if (block.getBuilding() != null && !block.getBuilding().getOccupancies().isEmpty()) {
-                    if (Util.checkExemptionConditionForBuildingParts(block)) {
+                    if (block.getSingleOrDualFamilyBuilding()) {
                         continue blk;
                     }
                     List<OccupancyTypeHelper> occupancyTypes = block.getBuilding().getOccupancies().stream().map(occupancy -> occupancy.getTypeHelper()).collect(Collectors.toList());

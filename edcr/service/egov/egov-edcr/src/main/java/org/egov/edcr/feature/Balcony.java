@@ -84,7 +84,7 @@ public class Balcony extends FeatureProcess {
     @Override
     public Plan process(Plan plan) {
         for (Block block : plan.getBlocks()) {
-            if (block.getBuilding() != null) {
+            if (!block.getSingleOrDualFamilyBuilding() && block.getBuilding() != null) {
 
                 ScrutinyDetail scrutinyDetailLanding = new ScrutinyDetail();
                 scrutinyDetailLanding.addColumnHeading(1, RULE_NO);

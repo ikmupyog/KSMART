@@ -206,54 +206,50 @@ public class Parking extends FeatureProcess {
 
 		for (Block blk : pl.getBlocks()) {
 
-			if (pl.getPlot().getSmallPlot()) {
-				if (!Util.checkExemptionConditionForSmallPlotAtBlkLevel(pl.getPlot(), blk)) {
+			List<Occupancy> proposedOccupancies = blk.getBuilding().getOccupancies();
+
+			Map<String, BigDecimal> occupancies = new HashMap<>();
+			proposedOccupancies.stream().forEach(occ -> {
+				if (occupancies.containsKey(occ.getTypeHelper().getType().getCode())) {
+					occupancies.put(occ.getTypeHelper().getType().getCode(),
+							occupancies.get(occ.getTypeHelper().getType().getCode()).add(occ.getBuiltUpArea()));
+				} else {
+					occupancies.put(occ.getTypeHelper().getType().getCode(), occ.getBuiltUpArea());
+				}
+			});
+
+			BigDecimal floorCount = blk.getBuilding().getFloorsAboveGround();
+			BigDecimal bldgHht = blk.getBuilding().getBuildingHeight();
+			if (!occupancies.isEmpty()) {
+				if (occupancies.size() == 1 && occupancies.containsKey(A1) || occupancies.containsKey(A5)) {
+					exempted = true;
+				} else if (occupancies.size() == 1 && occupancies.containsKey(A4)
+						&& (occupancies.get(A4).compareTo(BigDecimal.valueOf(200)) <= 0
+								&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
+								&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)
+						&& pl.getPlot().getSmallPlot()) {
+					exempted = true;
+				} else if (occupancies.size() == 1 && occupancies.containsKey(F)
+						&& (occupancies.get(F).compareTo(BigDecimal.valueOf(200)) <= 0
+								&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
+								&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)
+						&& pl.getPlot().getSmallPlot()) {
+					exempted = true;
+				} else if (occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(A5))) {
+					exempted = true;
+				} else if (occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(F))
+						&& (occupancies.get(A1).compareTo(BigDecimal.valueOf(200)) <= 0
+								&& occupancies.get(F).compareTo(BigDecimal.valueOf(200)) <= 0
+								&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
+								&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)
+						&& pl.getPlot().getSmallPlot()) {
+					exempted = true;
+				} else {
 					exempted = false;
 					break;
 				}
-
-			} else {
-				List<Occupancy> proposedOccupancies = blk.getBuilding().getOccupancies();
-
-				Map<String, BigDecimal> occupancies = new HashMap<>();
-				proposedOccupancies.stream().forEach(occ -> {
-					if (occupancies.containsKey(occ.getTypeHelper().getType().getCode())) {
-						occupancies.put(occ.getTypeHelper().getType().getCode(),
-								occupancies.get(occ.getTypeHelper().getType().getCode()).add(occ.getBuiltUpArea()));
-					} else {
-						occupancies.put(occ.getTypeHelper().getType().getCode(), occ.getBuiltUpArea());
-					}
-				});
-
-				BigDecimal floorCount = blk.getBuilding().getFloorsAboveGround();
-				BigDecimal bldgHht = blk.getBuilding().getBuildingHeight();
-				if (!occupancies.isEmpty()) {
-					if (occupancies.size() == 1 && occupancies.containsKey(A1) || occupancies.containsKey(A5)) {
-						exempted = true;
-					} else if (occupancies.size() == 1 && occupancies.containsKey(A4)
-							&& (occupancies.get(A4).compareTo(BigDecimal.valueOf(200)) <= 0
-									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
-									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
-						exempted = true;
-					} else if (occupancies.size() == 1 && occupancies.containsKey(F)
-							&& (occupancies.get(F).compareTo(BigDecimal.valueOf(200)) <= 0
-									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
-									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
-						exempted = true;
-					} else if (occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(A5))) {
-						exempted = true;
-					} else if (occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(F))
-							&& (occupancies.get(A1).compareTo(BigDecimal.valueOf(200)) <= 0
-									&& occupancies.get(F).compareTo(BigDecimal.valueOf(200)) <= 0
-									&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
-									&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)) {
-						exempted = true;
-					} else {
-						exempted = false;
-						break;
-					}
-				}
 			}
+
 		}
 
 		return exempted;
@@ -450,7 +446,7 @@ public class Parking extends FeatureProcess {
 			case F:
 				BigDecimal noOfCarParkingForF = BigDecimal.ZERO;
 				if (occupancy != null && occupancy.getBuiltUpArea().compareTo(BigDecimal.valueOf(200)) <= 0
-						|| pl.getPlot().getPlotBndryArea().doubleValue() <= 125)
+						&& pl.getPlot().getSmallPlot())
 					result.totalRequiredCarParking += 0d;
 				else {
 					if (occupancy != null && occupancy.getFloorArea() != null
@@ -540,7 +536,7 @@ public class Parking extends FeatureProcess {
 			processMechanicalParking(pl, result);
 		}
 		if (!pl.getParkingDetails().getEvChargers().isEmpty())
-			setReportOutputDetails(pl, SUB_RULE_29_12, "Charging Point", "", OBJECTDEFINED_DESC,
+			setReportOutputDetails(pl, SUB_RULE_29_12, "Charging Point", "Should be defined", OBJECTDEFINED_DESC,
 					Result.Accepted.getResultVal());
 
 		processUnits(pl);

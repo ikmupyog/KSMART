@@ -1151,7 +1151,7 @@ public class Far extends FeatureProcess {
 
 	private void processFloorUnits(Plan pl) {
 		long totalFloorUnits = 0l;
-		Map<String, Long> blockWiseUnits = new HashMap<>(); 
+		Map<String, Long> blockWiseUnits = new HashMap<>();
 		for (Block block : pl.getBlocks()) {
 			long totalBlockFloorUnits = 0l;
 			if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
@@ -1163,12 +1163,12 @@ public class Far extends FeatureProcess {
 			block.getBuilding().setTotalFloorUnits(BigDecimal.valueOf(totalBlockFloorUnits));
 			List<String> occupancyCodes = block.getBuilding().getOccupancies().stream()
 					.map(occ -> occ.getTypeHelper().getType().getCode()).collect(Collectors.toList());
-				
+
 			if (!block.getCompletelyExisting()
 					&& (occupancyCodes.size() == 2 && occupancyCodes.contains(A1) && occupancyCodes.contains(A5))
 					|| (occupancyCodes.size() == 1 && occupancyCodes.contains(A1))) {
 				blockWiseUnits.put(block.getNumber(), totalBlockFloorUnits);
-				if(block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
+				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
 					block.setSingleFamilyBuilding(true);
 				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0
 						|| block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.valueOf(2)) == 0)
@@ -1183,13 +1183,19 @@ public class Far extends FeatureProcess {
 							block.getNumber()));
 			}
 		}
-		
-		Map<String, Long> filteredMap = blockWiseUnits.entrySet()
-		        .stream().filter(x -> 1 == x.getValue())
-		        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-			if(blockWiseUnits.size() > 0 && filteredMap.size() == blockWiseUnits.size())
-				pl.getVirtualBuilding().setSingleFamilyResidential(true);
-			
+
+		Map<String, Long> filteredMap = blockWiseUnits.entrySet().stream().filter(x -> 1 == x.getValue())
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		if (blockWiseUnits.size() > 0 && filteredMap.size() == blockWiseUnits.size()) {
+			pl.getVirtualBuilding().setSingleFamilyResidential(true);
+			pl.getVirtualBuilding().setSingleOrDualFamilyResidential(true);
+		}
+
+		Map<String, Long> dualFamilyFilterMap = blockWiseUnits.entrySet().stream().filter(x -> 2 == x.getValue())
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		if (blockWiseUnits.size() > 0 && dualFamilyFilterMap.size() == blockWiseUnits.size())
+			pl.getVirtualBuilding().setSingleOrDualFamilyResidential(true);
+
 		pl.getVirtualBuilding().setTotalFloorUnits(BigDecimal.valueOf(totalFloorUnits));
 	}
 

@@ -58,7 +58,6 @@ import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.utility.DcrConstants;
-import org.egov.edcr.utility.Util;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -90,11 +89,9 @@ public class TravelDistanceToExit extends FeatureProcess {
         Boolean exemption = Boolean.FALSE;
         if (pl != null && pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()
                 && !pl.getBlocks().isEmpty()) {
-            boolean numberofFloorsLessOrEqualToThree = true;
             for (Block block : pl.getBlocks()) {
                 if (!block.getCompletelyExisting()) {
-                    if (block.getResidentialBuilding().equals(Boolean.TRUE)
-                            && numberofFloorsLessOrEqualToThree == true) {
+                    if (block.getSingleOrDualFamilyBuilding()) {
                         exemption = Boolean.TRUE;
                     }
                 }
@@ -106,7 +103,6 @@ public class TravelDistanceToExit extends FeatureProcess {
         if (!exemption) {
             validate(pl);
             String subRule = SUBRULE_43_2;
-            String subRuleDesc = SUBRULE_43_2_DESC;
             scrutinyDetail = new ScrutinyDetail();
             scrutinyDetail.setKey("Common_Travel Distance To Emergency Exits");
             scrutinyDetail.addColumnHeading(1, RULE_NO);

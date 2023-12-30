@@ -42,7 +42,7 @@ public class MezzanineFloorService extends FeatureProcess {
 		if (pl != null && !pl.getBlocks().isEmpty()) {
 			blk: for (Block block : pl.getBlocks()) {
 				if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
-					if (Util.checkExemptionConditionForBuildingParts(block)) {
+					if (block.getSingleOrDualFamilyBuilding()) {
 						continue blk;
 					}
 					for (Floor floor : block.getBuilding().getFloors()) {
@@ -102,7 +102,7 @@ public class MezzanineFloorService extends FeatureProcess {
 				scrutinyDetail.addColumnHeading(6, STATUS);
 				scrutinyDetail.setKey("Block_" + block.getNumber() + "_" + "Mezzanine Floor");
 				if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
-					if (Util.checkExemptionConditionForBuildingParts(block)) {
+					if (block.getSingleOrDualFamilyBuilding()) {
 						continue blk;
 					}
 					for (Floor floor : block.getBuilding().getFloors()) {

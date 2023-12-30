@@ -81,6 +81,7 @@ public class VirtualBuilding implements Serializable {
     private BigDecimal totalFloorUnits = BigDecimal.ZERO;
     private BigDecimal totalParkingArea;
     private transient Boolean singleFamilyResidential = false;
+    private transient Boolean singleOrDualFamilyResidential = false;
     
     public BigDecimal getTotalCarpetArea() {
         return totalCarpetArea;
@@ -264,6 +265,14 @@ public class VirtualBuilding implements Serializable {
 
 	public void setSingleFamilyResidential(Boolean singleFamilyResidential) {
 		this.singleFamilyResidential = singleFamilyResidential;
+	}
+
+	public Boolean getSingleOrDualFamilyResidential() {
+		return singleOrDualFamilyResidential;
+	}
+
+	public void setSingleOrDualFamilyResidential(Boolean singleOrDualFamilyResidential) {
+		this.singleOrDualFamilyResidential = singleOrDualFamilyResidential;
 	}
 
 	public boolean containsOccupancy(String occupancyCode) {

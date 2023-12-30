@@ -301,7 +301,7 @@ public class HeightOfRoom extends FeatureProcess {
                                     }
                                     validateRoomHghtMandatory(pl, errors, block, floor, requirementCountMap.keySet());
                                 } else {
-                                    List<OccupancyTypeHelper> occupancies = floor.getOccupancies().stream()
+                                    List<OccupancyTypeHelper> occupancies = floor.getConvertedOccupancies().stream()
                                             .map(occupancy -> occupancy.getTypeHelper()).collect(Collectors.toList());
                                     List<String> occupancyTypes = occupancies.stream().map(occ -> occ.getType().getCode()).collect(Collectors.toList());
                                     if (occupancyTypes != null && occupancyTypes.size() > 0)
@@ -323,7 +323,7 @@ public class HeightOfRoom extends FeatureProcess {
     private void validateRoomHghtMandatory(Plan pl, HashMap<String, String> errors, Block block, Floor floor,
             Set<Integer> coloursUniqueSet) {
         boolean isPresent = false;
-        List<OccupancyTypeHelper> occupancies = floor.getOccupancies().stream().map(Occupancy::getTypeHelper).collect(Collectors.toList());
+        List<OccupancyTypeHelper> occupancies = floor.getConvertedOccupancies().stream().map(Occupancy::getTypeHelper).collect(Collectors.toList());
         boolean isAssembly = occupancies.stream().anyMatch(occupancy -> Arrays.asList(D, D1, D2,D3,D4).contains(occupancy.getType().getCode()));
 
         if (isAssembly) {

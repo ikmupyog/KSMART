@@ -138,8 +138,7 @@ public class RampService extends FeatureProcess {
             blk: for (Block block : pl.getBlocks())
                 if (!block.getCompletelyExisting()) {
                     if (block.getBuilding() != null && !block.getBuilding().getOccupancies().isEmpty()) {
-                        if (Util.checkExemptionConditionForBuildingParts(block) ||
-                                Util.checkExemptionConditionForSmallPlotAtBlkLevel(pl.getPlot(), block))
+                        if (!block.getSingleOrDualFamilyBuilding())
                             continue blk;
                         List<OccupancyTypeHelper> occupancyTypeList = block.getBuilding().getOccupancies().stream()
                                 .map(occupancy -> occupancy.getTypeHelper()).collect(Collectors.toList());
@@ -154,7 +153,7 @@ public class RampService extends FeatureProcess {
                                     break;
                                 }
                     }
-                    if (pl.getPlot() != null && !Util.checkExemptionConditionForSmallPlotAtBlkLevel(pl.getPlot(), block))
+                    if (!block.getSingleOrDualFamilyBuilding())
                         if (!block.getDARamps().isEmpty()) {
                             boolean isSlopeDefined = false;
                             for (DARamp daRamp : block.getDARamps())
@@ -246,8 +245,7 @@ public class RampService extends FeatureProcess {
                     scrutinyDetail5.setKey("Block_" + block.getNumber() + "_" + "Ramp - Maximum Slope");
 
                     if (block.getBuilding() != null && !block.getBuilding().getOccupancies().isEmpty()) {
-                        if (Util.checkExemptionConditionForBuildingParts(block) ||
-                                Util.checkExemptionConditionForSmallPlotAtBlkLevel(pl.getPlot(), block))
+                        if (!block.getSingleOrDualFamilyBuilding())
                             continue blk;
                         List<OccupancyTypeHelper> occupancyTypeList = block.getBuilding().getOccupancies().stream()
                                 .map(occupancy -> occupancy.getTypeHelper()).collect(Collectors.toList());
@@ -265,7 +263,7 @@ public class RampService extends FeatureProcess {
                                     break;
                                 }
                     }
-                    if (pl.getPlot() != null && !Util.checkExemptionConditionForSmallPlotAtBlkLevel(pl.getPlot(), block))
+                    if (!block.getSingleOrDualFamilyBuilding())
                         if (!block.getDARamps().isEmpty()) {
                             boolean isSlopeDefined = false;
                             for (DARamp daRamp : block.getDARamps())

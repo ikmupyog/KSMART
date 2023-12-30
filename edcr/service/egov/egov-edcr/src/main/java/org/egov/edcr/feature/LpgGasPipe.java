@@ -67,7 +67,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Scope("prototype")
-public class LPGGasPipe extends FeatureProcess {
+public class LpgGasPipe extends FeatureProcess {
 	private static final String RULE_43_3 = "43(3)";
 	private static final String RULE_43_3_DESC = "LPG piped gas system ";
 	protected ScrutinyDetail scrutinyDetail = new ScrutinyDetail();

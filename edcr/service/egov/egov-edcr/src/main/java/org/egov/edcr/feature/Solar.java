@@ -47,7 +47,6 @@
 
 package org.egov.edcr.feature;
 
-import static org.egov.edcr.constants.DxfFileConstants.A1;
 import static org.egov.edcr.constants.DxfFileConstants.A2;
 import static org.egov.edcr.constants.DxfFileConstants.A3;
 import static org.egov.edcr.constants.DxfFileConstants.A4;
@@ -98,7 +97,7 @@ public class Solar extends FeatureProcess {
 				for (Occupancy occupancy : pl.getOccupancies()) {
 					String occCode = occupancy.getTypeHelper().getType().getCode();
 					BigDecimal builtupArea = occupancy.getBuiltUpArea();
-					if (occCode.equals(A1) && pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() == 1
+					if (pl.getVirtualBuilding().getSingleOrDualFamilyResidential()
 							&& builtupArea != null && builtupArea.compareTo(FOURHUNDRED) > 0
 							&& pl.getUtility().getSolar().isEmpty()) {
 						errors.put(SOLAR_SYSTEM, edcrMessageSource.getMessage(OBJECTNOTDEFINED,
@@ -137,8 +136,8 @@ public class Solar extends FeatureProcess {
 			for (Occupancy occupancy : pl.getOccupancies()) {
 				String occCode = occupancy.getTypeHelper().getType().getCode();
 				BigDecimal builtupArea = occupancy.getBuiltUpArea();
-				if (occCode.equals(A1) && pl.getVirtualBuilding().getTotalBuitUpArea() != null
-						&& pl.getVirtualBuilding().getTotalFloorUnits().doubleValue() == 1
+				if (pl.getVirtualBuilding().getSingleOrDualFamilyResidential() 
+						&& pl.getVirtualBuilding().getTotalBuitUpArea() != null
 						&& builtupArea.compareTo(FOURHUNDRED) > 0) {
 					processSolar(pl, subRule, subRuleDesc);
 					break;

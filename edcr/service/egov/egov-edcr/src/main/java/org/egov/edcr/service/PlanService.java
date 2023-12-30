@@ -464,14 +464,14 @@ public class PlanService {
     
 	private void checkLowiskBuildingPermit(Plan pl, EdcrApplication dcrApplication) {
 		if (!pl.getOccupancies().isEmpty() && pl.getOccupancies().size() == 1) {
-			BigDecimal builtupArea = pl.getOccupancies().stream().map(Occupancy::getBuiltUpArea).reduce(BigDecimal.ZERO,
+			BigDecimal builtupArea = pl.getDeclaredOccupancies().stream().map(Occupancy::getBuiltUpArea).reduce(BigDecimal.ZERO,
 					BigDecimal::add);
 			Map<String, BigDecimal> bldgHieghts = new HashMap<>();
 			for (Block blk : pl.getBlocks())
 				bldgHieghts.put(blk.getNumber(), blk.getBuilding().getBuildingHeight());
 			BigDecimal buildingHeight = pl.getBlocks().get(0).getBuilding().getBuildingHeight();
 			BigDecimal floorCount = pl.getVirtualBuilding().getFloorsAboveGround();
-			String occupCode = pl.getOccupancies().get(0).getTypeHelper().getType().getCode();
+			String occupCode = pl.getDeclaredOccupancies().get(0).getTypeHelper().getType().getCode();
 			if ((occupCode.equals(A1) || occupCode.equals(A4) || occupCode.equals(A5))
 					&& builtupArea.compareTo(BigDecimal.valueOf(300)) <= 0
 					&& buildingHeight.compareTo(BigDecimal.valueOf(7)) <= 0

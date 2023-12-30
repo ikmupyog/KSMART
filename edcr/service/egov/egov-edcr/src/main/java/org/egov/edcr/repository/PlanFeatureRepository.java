@@ -86,7 +86,7 @@ import org.egov.edcr.feature.InBuiltSolutions;
 import org.egov.edcr.feature.InfoCommsTechService;
 import org.egov.edcr.feature.InteriorOpenSpaceService;
 import org.egov.edcr.feature.Kitchen;
-import org.egov.edcr.feature.LPGGasPipe;
+import org.egov.edcr.feature.LpgGasPipe;
 import org.egov.edcr.feature.LandUse;
 import org.egov.edcr.feature.LiftService;
 import org.egov.edcr.feature.LocationPlan;
@@ -374,7 +374,7 @@ public class PlanFeatureRepository {
         features.add(pf);
         pf = new PlanFeature(InBuiltSolutions.class);
         features.add(pf);
-        pf = new PlanFeature(LPGGasPipe.class);
+        pf = new PlanFeature(LpgGasPipe.class);
         features.add(pf);
         pf = new PlanFeature(DxfToPdfConverter.class);
         features.add(pf);
