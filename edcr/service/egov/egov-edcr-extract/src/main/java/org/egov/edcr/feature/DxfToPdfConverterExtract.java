@@ -118,6 +118,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		boolean singlePrintPresent = false;
 		boolean seperatePrintPresent = false;
 		Map<String, String> dxfLayerNamesInFile = new HashMap<>();
+		Boolean servicePlan=false,sectionPlan=false,sitePlan=false,floorPlan=false,parkingPlan=false,utility=false,elevationPlan=false;
 		
 		Boolean mdmsEnabled = mdmsConfiguration.getMdmsEnabled();
 		boolean mdmsDxfToPdfEnabled = false;
@@ -312,6 +313,32 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 					LOG.debug("seperatePrintPresent " + seperatePrintPresent);
 				}
 				
+				if(file.getName().contains("SITE_PLAN"))
+					sitePlan=true;
+				else if(file.getName().contains("SERVICE_PLAN"))
+					servicePlan=true;
+				else if(file.getName().contains("UTILITY"))
+					utility=true;
+				
+			
+				if(!singlePrintPresent)
+				{
+					if(file.getName().contains("SECTION_PLAN"))
+						sectionPlan=true;	
+					else if(file.getName().contains("FLOOR_PLAN"))
+						floorPlan=true;
+					else if(file.getName().contains("ELEVATION_PLAN"))
+						elevationPlan=true;
+				}
+				
+				if(null !=planDetail.getParkingRequired() && planDetail.getParkingRequired()>0)
+				{
+					if(file.getName().contains("PARKING_PLAN"))
+						parkingPlan=true;
+				}
+		 
+				
+				
 			}
 
 		}
@@ -342,90 +369,16 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 
 		}
 		
-		boolean present= validateOtherPdfs(planDetail,singlePrintPresent);
+		
+		 
 
-		if (!singlePrintPresent && !seperatePrintPresent)
-			planDetail.addError("DXF-PDF 001",
-					"Print layer of either SINGLE (_S_PRINT) or Seperate FLOOR,ELEVATION,SECTION are Mandatory");
-		if (singlePrintPresent && seperatePrintPresent)
-			planDetail.addError("DXF-PDF 001",
-					"Print layer of Both SINGLE (_S_PRINT) and Seperate FLOOR,ELEVATION,SECTION are Provided , Please choose any one ");
-
+	
 		LOG.debug("PDF file are converted");
 		return planDetail;
 
 	}
 
-	private boolean validateOtherPdfs(PlanDetail planDetail,boolean isSinglePrint) {
 	
-		Map<String, Boolean> mandatory=new HashMap<String, Boolean>();
-		Boolean servicePlan=false,sectionPlan=false,sitePlan=false,floorPlan=false,parkingPlan=false,utility=false,elevationPlan=false;
-		
-		for( EdcrPdfDetail detail:  planDetail.getEdcrPdfDetails())
-			
-		{
-			
-			
-			if(detail.getLayer().contains("SITE_PLAN"))
-				sitePlan=true;
-			else if(detail.getLayer().contains("SERVICE_PLAN"))
-				servicePlan=true;
-			else if(detail.getLayer().contains("UTILITY"))
-				utility=true;
-			
-		
-			if(!isSinglePrint)
-			{
-				if(detail.getLayer().contains("SECTION_PLAN"))
-					sectionPlan=true;	
-				else if(detail.getLayer().contains("FLOOR_PLAN"))
-					floorPlan=true;
-				else if(detail.getLayer().contains("ELEVATION_PLAN"))
-					elevationPlan=true;
-			}
-			
-			if(null !=planDetail.getParkingRequired() && planDetail.getParkingRequired()>0)
-			{
-				if(detail.getLayer().contains("PARKING_PLAN"))
-					parkingPlan=true;
-			}
-		}
-		
-		if(!servicePlan )
-		{
-			planDetail.addError("service.plan.print.mandatory", "SERVICE_PLAN_PRINT is mandatory");
-		}
-		if(!sitePlan )
-		{
-			planDetail.addError("site.plan.print.mandatory", "SITE_PLAN_PRINT is mandatory");
-		}
-		if(!utility )
-		{
-			planDetail.addError("utility.plan.print.mandatory", "UTILITY_PLAN_PRINT is mandatory");
-		}
-		
-		if(!isSinglePrint && !sectionPlan )
-		{
-			planDetail.addError("section.plan.print.mandatory", "SECTION_PLAN_PRINT is mandatory");
-		}
-		if(!isSinglePrint && !floorPlan )
-		{
-			planDetail.addError("floor.plan.print.mandatory", "FLOOR_PLAN_PRINT is mandatory");
-		}
-		if(!isSinglePrint && !elevationPlan )
-		{
-			planDetail.addError("elevation.plan.print.mandatory", "ELEVATION_PLAN_PRINT is mandatory");
-		}
-		
-		if(null !=planDetail.getParkingRequired() && !parkingPlan)
-		{
-			planDetail.addError("parking.plan.print.mandatory", "PARKING_PLAN_PRINT is mandatory");
-		}
-		
-		return true; 
-		
-		
-	}
 
 	@Override
 	public PlanDetail validate(PlanDetail planDetail) {
@@ -845,7 +798,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 	if (detail.getPrintNameLayers().contains(dxfLayer.getName())) {
 			DXFMText plineLayer = new DXFMText();
 			plineLayer.setHeight(0.5d);
-			plineLayer.setText(Util.getLinePrintableText(line, dxfLayer, detail, pl)+" : "+scaledLength);
+			plineLayer.setText(Util.getLinePrintableText(line, dxfLayer, detail, pl)+" "+scaledLength);
 			plineLayer.setAlign(1);
 			plineLayer.setHeight(0.35d);
 			plineLayer.setX(p.getX());
@@ -1040,8 +993,8 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		   Point p=   checkIfTextNearBy(centroidX,centroidY,mEntties);     
 		   DXFVertex v1=new DXFVertex();  
 		   Point point11=   new Point();
-		   point11.setX(centroidX-oneSideSize);
-		   point11.setY(centroidY-.5);
+		   point11.setX(p.getX()-oneSideSize);
+		   point11.setY(p.getY()-.5);
 		   v1.setPoint(point11);
 	       pLine1.addVertex(v1);
 	       
@@ -1049,30 +1002,30 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		   
 	       DXFVertex v2=new DXFVertex();
 		   Point point22=   new Point();
-		   point22.setX(centroidX-oneSideSize);
-		   point22.setY(centroidY+.5);
+		   point22.setX(p.getX()-oneSideSize);
+		   point22.setY(p.getY()+.5);
 		   v2.setPoint(point22);
 	       pLine1.addVertex(v2);
 	       
 	       DXFVertex v3=new DXFVertex();
 		   Point point33=   new Point();
-		   point33.setX(centroidX+oneSideSize);
-		   point33.setY(centroidY+.5);
+		   point33.setX(p.getX()+oneSideSize);
+		   point33.setY(p.getY()+.5);
 		   v3.setPoint(point33);
 	       pLine1.addVertex(v3);
 	       
 	       DXFVertex v4=new DXFVertex();
 		   Point point44=   new Point();
-		   point44.setX(centroidX+oneSideSize);
-		   point44.setY(centroidY-.5);
+		   point44.setX(p.getX()+oneSideSize);
+		   point44.setY(p.getY()-.5);
 		   v4.setPoint(point44);
 	       pLine1.addVertex(v4);
 	       
 	       
 		   DXFVertex v5=new DXFVertex();
 		   Point point55=   new Point();
-		   point55.setX(centroidX-oneSideSize);
-		   point55.setY(centroidY-.5);
+		   point55.setX(p.getX()-oneSideSize);
+		   point55.setY(p.getY()-.5);
 		   v5.setPoint(point55);
 	       pLine1.addVertex(v5);
 	       
@@ -1089,7 +1042,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 	    	   pLine1.setColor(detail.getColorOverrides().get(dxfLayer.getName()));
 	       else 
 	       {
-	    	   pLine1.setColor(pline.getColor());
+	    	   pLine1.setColor(5);
 	    	   pLine1.setColorRGB(e.getColorRGB());
 	       }
 	          
@@ -1155,8 +1108,8 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		plineDimension.setAlign(1);
 	    plineDimension.setHeight(0.5d);
 	
-		plineDimension.setX(centroidX-(oneSideSize-.10));
-		plineDimension.setY(centroidY + 0.25);
+		plineDimension.setX(p.getX()-(oneSideSize-.10));
+		plineDimension.setY(p.getY() + 0.25);
 		 
 		//plineDimension.setThickness(2);
         plineDimension.setLineType("Continuous");
@@ -1176,20 +1129,31 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		p.setX(centroidX);
 		p.setY(centroidY);
 		
-	/*outer12:	for(DXFEntity ee1:mEntties)
+		LOG.info("for   points matching on  Y "+p.getY() + " X " +p.getX());	
+	outer12:	for(DXFEntity ee1:mEntties)
 	{
 		inner12:for(DXFEntity ee:mEntties)
 		{
 			Bounds bounds = ee.getBounds();
-			if(centroidY < bounds.getMaximumY() && centroidY >bounds.getMinimumY())
+			if((centroidY < bounds.getMaximumY() && centroidY >bounds.getMinimumY()) )
 			{
-				centroidY=centroidY+.75d;
+				LOG.info("found points matching on  Y "+ee1.getBounds().getMaximumY() + "" +ee1.getBounds().getMinimumY());
+				
+				centroidY=centroidY+.90d;
+				p.setY(centroidY);
+			if (centroidX < bounds.getMaximumX() && centroidX >bounds.getMinimumX())	
+			{
+				LOG.info("found points matching on X "+ee1.getBounds().getMaximumX() + "" +ee1.getBounds().getMinimumX());	
+				centroidX=centroidX+1d;
+				p.setX(centroidX);
+			}
 				break inner12;
 			}
 			 
 			
 		}
-	}*/
+	}
+		LOG.info("returnting  points matching on  Y "+p.getY() + " X " +p.getX());
 		
 		return p;
 		
@@ -1271,7 +1235,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 					LOG.debug("---------conversion success " + " n:" +fileOut.getName()+  " - p:" +fileOut.getAbsolutePath()+ "  l:"+ layerName + "----------");
 				fout.flush();
 				fout.close();
-				LOG.info("---------conversion success " +fileOut.length()+ "  " + " - " + layerName + "----------");
+				LOG.debug("---------conversion success " +fileOut.length()+ "  " + " - " + layerName + "----------");
 				return fileOut.length() > 0 ? fileOut : null;
 			} catch (Exception ep) {
 				LOG.error("Pdf convertion failed for " + fileName + " - " + layerName + " due to " + ep.getMessage());

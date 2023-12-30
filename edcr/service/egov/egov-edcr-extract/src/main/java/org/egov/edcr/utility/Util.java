@@ -1938,15 +1938,25 @@ public class Util {
            }
         }
       
-    	if (LOG.isInfoEnabled())
-			LOG.info("returning  from getCirclePrintableTextOfLayer  " + name + dxfLayer.getName());
+    	if (LOG.isDebugEnabled())
+			LOG.debug("returning  from getCirclePrintableTextOfLayer  " + name + dxfLayer.getName());
 			return name;
 		
 	}
     public static String getLinePrintableText(DXFLine line, DXFLayer dxfLayer, EdcrPdfDetail detail,
 			PlanDetail pl)
     {
-        String	name = dxfLayer.getName();
+        
+    	if(dxfLayer.getName().contains("FRONT_YARD_MIN"))
+			return "BSMNT- FY-MIN=";
+		if(dxfLayer.getName().contains("REAR_YARD_MIN"))
+			return "BSMNT- RY-MIN=";
+		if(dxfLayer.getName().contains("SIDE_YARD1_MIN"))
+			return "BSMNT- SY1-MIN=";
+		if(dxfLayer.getName().contains("SIDE_YARD2_MIN"))
+			return "BSMNT- SY2-MIN=";
+    	
+    	String	name = dxfLayer.getName();
         name = name.replaceAll("BLK_\\d", "");
 		name = name.replaceAll("FLR_\\d", "");
 		name= name.replaceAll("NO_\\d", "");

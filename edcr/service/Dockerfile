@@ -1,4 +1,4 @@
-FROM maven:3.9.4-amazoncorretto-17-al2023 AS build
+FROM amazoncorretto:8-al2023-jdk AS build
 ARG WORK_DIR
 WORKDIR /app
 

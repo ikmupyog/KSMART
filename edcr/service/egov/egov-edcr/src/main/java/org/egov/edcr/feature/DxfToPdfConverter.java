@@ -48,9 +48,11 @@
 package org.egov.edcr.feature;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.egov.common.entity.edcr.EdcrPdfDetail;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.springframework.context.annotation.Scope;
@@ -65,11 +67,100 @@ public class DxfToPdfConverter extends FeatureProcess {
 
 	@Override
 	public Plan validate(Plan plan) {
+		
+
+		Map<String, Boolean> mandatory=new HashMap<String, Boolean>();
+		Boolean servicePlan=false,sectionPlan=false,sitePlan=false,floorPlan=false,parkingPlan=false,utility=false,elevationPlan=false;
+		Boolean excavationPlan=false;
+		boolean isSinglePrint=false;
+		for(EdcrPdfDetail detail: plan.getEdcrPdfDetails())
+		{
+			if(detail.getConvertedPdf()!=null){
+			if(detail.getConvertedPdf().getName().contains("SINGLE") || detail.getConvertedPdf().getName().contains("_S_PRINT"))
+			{
+				isSinglePrint=true;
+			}
+			
+			if(detail.getConvertedPdf().getName().contains("SITE_PLAN"))
+				sitePlan=true;
+			else if(detail.getConvertedPdf().getName().contains("SERVICE_PLAN"))
+				servicePlan=true;
+			else if(detail.getConvertedPdf().getName().contains("UTILITY"))
+				utility=true;
+			
+			if(null !=plan.getParkingRequired() && plan.getParkingRequired()>0)
+			{
+				if(detail.getConvertedPdf().getName().contains("PARKING_PLAN"))
+					parkingPlan=true;
+			}
+			if(null !=plan.getDepthCuttings() && plan.getDepthCuttings().size()>0)
+			{
+				if(detail.getConvertedPdf().getName().contains("EXCAVATION_PLAN"))
+					excavationPlan=true;
+			}
+			}
+		}
+		for(EdcrPdfDetail detail: plan.getEdcrPdfDetails())
+		{	
+			if(isSinglePrint) break;
+			if(detail.getConvertedPdf()!=null){
+			if(!isSinglePrint)
+			{
+				if(detail.getConvertedPdf().getName().contains("SECTION_PLAN"))
+					sectionPlan=true;	
+				else if(detail.getConvertedPdf().getName().contains("FLOOR_PLAN"))
+					floorPlan=true;
+				else if(detail.getConvertedPdf().getName().contains("ELEVATION_PLAN"))
+					elevationPlan=true;
+			}
+			
+			
+		}
+		}
+		
+		if(!servicePlan )
+		{
+			plan.addError("service.plan.print.mandatory", "SERVICE_PLAN_PRINT is mandatory");
+		}
+		if(!sitePlan )
+		{
+			plan.addError("site.plan.print.mandatory", "SITE_PLAN_PRINT is mandatory");
+		}
+		if(!utility )
+		{
+			plan.addError("utility.plan.print.mandatory", "UTILITY_PLAN_PRINT is mandatory");
+		}
+		
+		if(!isSinglePrint && !sectionPlan )
+		{
+			plan.addError("section.plan.print.mandatory", "SECTION_PLAN_PRINT is mandatory");
+		}
+		if(!isSinglePrint && !floorPlan )
+		{
+			plan.addError("floor.plan.print.mandatory", "FLOOR_PLAN_PRINT is mandatory");
+		}
+		if(!isSinglePrint && !elevationPlan )
+		{
+			plan.addError("elevation.plan.print.mandatory", "ELEVATION_PLAN_PRINT is mandatory");
+		}
+		
+		if(null !=plan.getParkingRequired() && !parkingPlan)
+		{
+			plan.addError("parking.plan.print.mandatory", "PARKING_PLAN_PRINT is mandatory");
+		}
+	
+		if(!excavationPlan )
+		{
+			plan.addError("site.plan.print.mandatory", "EXCAVATION_DETAIL is mandatory");
+		}
+		
+		
 		return plan;
 	}
 
 	@Override
 	public Plan process(Plan plan) {
+		validate(plan);
 		return plan;
 		}
 

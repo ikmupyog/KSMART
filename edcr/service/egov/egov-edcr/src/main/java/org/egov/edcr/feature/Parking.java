@@ -184,6 +184,8 @@ public class Parking extends FeatureProcess {
 
 		Boolean isExempted = checkIsParkingValidationRequired(pl);
 		if (!isExempted) {
+			//just to know parking is required
+			pl.setParkingRequired(Double.valueOf(1));
 			HashMap<String, String> errors = new HashMap<>();
 			if (pl.getParkingDetails().getCars().isEmpty()) {
 				errors.put(DcrConstants.PARKINGSLOT_UNIT,
@@ -265,6 +267,7 @@ public class Parking extends FeatureProcess {
 		 */
 		Boolean isExempted = checkIsParkingValidationRequired(pl);
 		if (!isExempted) {
+			
 			scrutinyDetail = new ScrutinyDetail();
 			scrutinyDetail.setKey("Common_Parking");
 			scrutinyDetail.addColumnHeading(1, RULE_NO);
