@@ -177,11 +177,36 @@ public class HeightOfRoom extends FeatureProcess {
                         for (Floor floor : block.getBuilding().getFloors())
                             if (!floor.getTerrace())
                                 if (!floor.getHabitableRooms().isEmpty()) {
+                                    boolean isAssemblyConvertedIntoCommercial = false;
+ 									
+ 									Map<OccupancyTypeHelper, OccupancyTypeHelper> assemblyConvertOccupancy = new HashMap<>();
+									for (Occupancy occupancy : floor.getOccupancies()) {
+										if (occupancy.getTypeHelper().getType().getCode().equals(D)
+												|| occupancy.getTypeHelper().getType().getCode().equals(D1)
+												|| occupancy.getTypeHelper().getType().getCode().equals(D2)
+												|| occupancy.getTypeHelper().getType().getCode().equals(D3)
+												|| occupancy.getTypeHelper().getType().getCode().equals(D4)) {
+											OccupancyTypeHelper occupancyTypeAsPerFloorArea = Util
+													.getOccupancyAsPerFloorArea(occupancy.getTypeHelper(),
+															occupancy.getFloorArea(), pl);
+											assemblyConvertOccupancy.put(occupancyTypeAsPerFloorArea,
+													occupancy.getTypeHelper());
+										}
+									}
+									
+									if(!assemblyConvertOccupancy.isEmpty()) {
+										for(Map.Entry<OccupancyTypeHelper, OccupancyTypeHelper> occ : assemblyConvertOccupancy.entrySet()) {
+											if(occ.getKey().getType().getCode().equals(F))
+												isAssemblyConvertedIntoCommercial = true;
+										}
+									}
+        							
                                 	List<RoomHeight> roomHghts = new ArrayList<>();
                                 	for(Room hr : floor.getHabitableRooms())
                                 		roomHghts.addAll(hr.getHeights());
                                     Map<Integer, Long> requirementCountMap = roomHghts.stream()
                                             .collect(Collectors.groupingBy(RoomHeight::getColorCode, Collectors.counting()));
+                                    
                                     for (Integer colorCode : requirementCountMap.keySet()) {
                                         BigDecimal minimumHeight = BigDecimal.ZERO;
                                         String subRule = null;
@@ -212,14 +237,26 @@ public class HeightOfRoom extends FeatureProcess {
 														subRuleDesc = SUBRULE_29_4_DESC_PARKING_ROOMS;
 													} else if (height
 															.getColorCode() == DxfFileConstants.ASSEMBLY_ROOM_COLOR_CODE) {
-														minimumHeight = MINIMUM_HEIGHT_4;
-														subRule = SUBRULE_44_1;
-														subRuleDesc = SUBRULE_44_1_DESC_ASSEMBLY_ROOMS;
+														if(isAssemblyConvertedIntoCommercial) {
+															minimumHeight = MINIMUM_HEIGHT_3;
+															subRule = SUBRULE_33;
+															subRuleDesc = SUBRULE_33_DESC_NORMAL_ROOMS;
+														} else {
+															minimumHeight = MINIMUM_HEIGHT_4;
+															subRule = SUBRULE_44_1;
+															subRuleDesc = SUBRULE_44_1_DESC_ASSEMBLY_ROOMS;
+														}
 													} else if (height
 															.getColorCode() == DxfFileConstants.ASSEMBLY_AC_HALL_COLOR_CODE) {
-														minimumHeight = MINIMUM_HEIGHT_3;
-														subRule = SUBRULE_44_1_PROVISIO;
-														subRuleDesc = SUBRULE_44_1_PROVISIO_DESC_ASSEMBLY_AC_ROOMS;
+														if(isAssemblyConvertedIntoCommercial) {
+															minimumHeight = MINIMUM_HEIGHT_2_4;
+															subRule = SUBRULE_33_PROVISIO_1;
+															subRuleDesc = SUBRULE_33_PROVISIO_DESC_AC_ROOMS;
+														} else {
+															minimumHeight = MINIMUM_HEIGHT_3;
+															subRule = SUBRULE_44_1_PROVISIO;
+															subRuleDesc = SUBRULE_44_1_PROVISIO_DESC_ASSEMBLY_AC_ROOMS;
+														}
 													} else if (height
 															.getColorCode() == DxfFileConstants.HEAD_ROOM_BENEATH_OR_ABOVE_BALCONY_COLOR_CODE) {
 														minimumHeight = MINIMUM_HEIGHT_3;
