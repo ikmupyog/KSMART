@@ -62,6 +62,7 @@ import org.egov.common.entity.edcr.Plot;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.common.entity.edcr.SetBack;
+import org.egov.edcr.utility.DcrConstants;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -346,12 +347,33 @@ public class RearYardService_Amend01Sep23 extends GeneralRule {
 							minVal = REARYARDMINIMUM_DISTANCE_0;
 							meanVal = REARYARDMINIMUM_DISTANCE_0;
 						} else {
-							if (side1Distance.compareTo(REARYARDMINIMUM_DISTANCE_1) >= 0
+							// Check any openings are provided in Side yards
+							boolean openingOnSideBelow2mt = pl.getPlanInformation().getOpeningOnSideBelow2mtsDesc()
+									.equalsIgnoreCase(DcrConstants.NO);
+							boolean openingOnSideAbove2mts = pl.getPlanInformation().getOpeningOnSideAbove2mtsDesc()
+									.equalsIgnoreCase(DcrConstants.NO);
+							boolean nocToAbutSide = pl.getPlanInformation().getNocToAbutSideDesc()
+									.equalsIgnoreCase(DcrConstants.NO);
+							
+							subRule = RULE_26_4_PRO5;
+							
+							if (openingOnSideBelow2mt && openingOnSideAbove2mts && nocToAbutSide) {
+								if (side1Distance.compareTo(REARYARDMINIMUM_DISTANCE_1) >= 0) {
+									if (side2Distance.compareTo(REARYARDMINIMUM_DISTANCE_FIFTY_CM) > 0) {
+										subRule = RULE_26_4 + " ," + RULE_26_4A;
+										minVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+										meanVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+									} else {
+										minVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
+										meanVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
+									}
+								}
+							} else if (side1Distance.compareTo(REARYARDMINIMUM_DISTANCE_1) >= 0
 									&& side2Distance.compareTo(REARYARDMINIMUM_DISTANCE_SIXTY_CM) >= 0) {
 								minVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
 								meanVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
 							} else {
-								subRule = RULE_26_4_PRO5;
+								subRule = RULE_26_4 + " ," + RULE_26_4A;
 								minVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
 								meanVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
 							}

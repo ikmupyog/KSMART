@@ -785,7 +785,10 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
 		BigDecimal side1Meanval = SIDEVALUE_ZERO;
 		BigDecimal rearyardMinDist = setBack.getRearYard() == null ? BigDecimal.ZERO
 				: setBack.getRearYard().getMinimumDistance();
-
+		final BigDecimal side1Distance = (setBack.getSideYard1() == null) ? BigDecimal.ZERO
+				: setBack.getSideYard1().getMinimumDistance();
+		final BigDecimal side2Distance = (setBack.getSideYard2() == null) ? BigDecimal.ZERO
+				: setBack.getSideYard2().getMinimumDistance();
 		if (mostRestrictiveOccupancy.getType().getCode().equals(A1)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(A2)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(A3)
@@ -886,15 +889,23 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
 								side2val = SIDEVALUE_ZERO;
 								side1val = SIDEVALUE_ONE;
 							} else {
-								if (rearyardMinDist.compareTo(SIDEVALUE_SIXTY_CM) >= 0) {
-									subRule = RULE_26_4_PROVISO2;
+								//If no openings are provided for the Rear yard
+						        boolean openingOnRearBelow2mts = pl.getPlanInformation().getOpeningOnRearBelow2mtsDesc().equalsIgnoreCase(DcrConstants.NO);
+						        boolean openingOnRearAbove2mts = pl.getPlanInformation().getOpeningOnRearAbove2mtsDesc().equalsIgnoreCase(DcrConstants.NO);
+						        boolean nocToAbutRear = pl.getPlanInformation().getNocToAbutRearDesc().equalsIgnoreCase(DcrConstants.NO);
+								subRule = RULE_26_4 + ", " + RULE_26_10_PROVISO2;
+								if (openingOnRearBelow2mts && openingOnRearAbove2mts && nocToAbutRear) {
+									if(side2Distance.compareTo(SIDEVALUE_FIFTY_CM) > 0)
+										side2val = SIDEVALUE_FIFTY_CM;
+									else
+										side2val = SIDEVALUE_SIXTY_CM;
+									
+								} else if (rearyardMinDist.compareTo(SIDEVALUE_SIXTY_CM) >= 0) {
 									side2val = SIDEVALUE_FIFTY_CM;
-									side1val = SIDEVALUE_ONE;
-								} else {
-									subRule = RULE_26_4 + ", " + RULE_26_10_PROVISO2;
+								} else
 									side2val = SIDEVALUE_SIXTY_CM;
-									side1val = SIDEVALUE_ONE;
-								}
+								
+								side1val = SIDEVALUE_ONE;
 							}
 						} else {
 							if (rearyardMinDist.compareTo(SIDEVALUE_ONE) >= 0) {
