@@ -312,33 +312,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 					seperatePrintPresent = true;
 					LOG.debug("seperatePrintPresent " + seperatePrintPresent);
 				}
-				
-				if(file.getName().contains("SITE_PLAN"))
-					sitePlan=true;
-				else if(file.getName().contains("SERVICE_PLAN"))
-					servicePlan=true;
-				else if(file.getName().contains("UTILITY"))
-					utility=true;
-				
 			
-				if(!singlePrintPresent)
-				{
-					if(file.getName().contains("SECTION_PLAN"))
-						sectionPlan=true;	
-					else if(file.getName().contains("FLOOR_PLAN"))
-						floorPlan=true;
-					else if(file.getName().contains("ELEVATION_PLAN"))
-						elevationPlan=true;
-				}
-				
-				if(null !=planDetail.getParkingRequired() && planDetail.getParkingRequired()>0)
-				{
-					if(file.getName().contains("PARKING_PLAN"))
-						parkingPlan=true;
-				}
-		 
-				
-				
 			}
 
 		}
@@ -518,6 +492,13 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		if (edcrPdfDetail.getLayers() != null)
 			Outer: for (String layer : edcrPdfDetail.getLayers()) {
 				if(layer.startsWith("system_")) 	continue;
+				
+				/*if((layer.contains("AVG_GROUND_LVL" )) || (layer.contains("ROOF_LVL")))
+				{
+					LOG.debug(edcrPdfDetail.getLayer() +"");
+					addMeasurement = true;
+
+				}*/
 
 				if (edcrPdfDetail.getMeasurementLayers().contains(layer)
 						|| edcrPdfDetail.getDimensionLayers().contains(layer)
@@ -528,6 +509,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 						||edcrPdfDetail.getThicknessOverrides().containsKey(layer))
 					addMeasurement = true;
 
+				 
 				DXFLayer dxfLayer = dxfDocument.getDXFLayer(layer);
 				LOG.debug(edcrPdfDetail.getLayer()  + " \ncount:   " +edcrPdfDetail.getCountLayers() +"\n layerName:  "+edcrPdfDetail.getPrintNameLayers() +"\n Measurement : "+edcrPdfDetail.getMeasurementLayers());
 
@@ -643,7 +625,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 							//e.setLineWeight(-1);
 							// e.setVisibile(visibile);
 							if (addMeasurement) {
-								addLineMeasurement(dxfLayer, e, edcrPdfDetail, pl, countMap);
+								addLineMeasurement(dxfLayer, e, edcrPdfDetail, pl, countMap,mEntties);
 								if (edcrPdfDetail.getColorOverrides().containsKey(dxfLayer.getName()))
 									e.setColor(edcrPdfDetail.getColorOverrides().get(dxfLayer.getName()));
 								if (edcrPdfDetail.getThicknessOverrides().keySet().contains(dxfLayer.getName()))
@@ -788,30 +770,100 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		
 	}
 	private void addLineMeasurement(DXFLayer dxfLayer, DXFEntity e, EdcrPdfDetail detail, PlanDetail pl,
-			Map<String, Integer> countMap) {
+			Map<String, Integer> countMap,List<DXFEntity> mEntties) {
 	 	LOG.debug("Starting Line Measurement for ..... " +dxfLayer.getName());
 		DXFLine line = (DXFLine) e;
-		Point p = Util.getMidPoint(line.getStartPoint(), line.getEndPoint());
+		Point midPoint= Util.getMidPoint(line.getStartPoint(), line.getEndPoint());
 		BigDecimal valueOf = BigDecimal.valueOf(line.getLength());
 		BigDecimal scaledLength = valueOf.setScale(2, 0);
 				
 	if (detail.getPrintNameLayers().contains(dxfLayer.getName())) {
 			DXFMText plineLayer = new DXFMText();
 			plineLayer.setHeight(0.5d);
-			plineLayer.setText(Util.getLinePrintableText(line, dxfLayer, detail, pl)+" "+scaledLength);
-			plineLayer.setAlign(1);
-			plineLayer.setHeight(0.35d);
-			plineLayer.setX(p.getX());
-			plineLayer.setY(p.getY());
-			//plineLayer.setThickness(2);
-			//plineLayer.setRotation(line);
-			if (detail.getColorOverrides().get(dxfLayer.getName().toString()) != null) {
-				plineLayer.setColor(detail.getColorOverrides().get(dxfLayer.getName()));
-			}else
-			{
-				plineLayer.setColor(160);	
-			}
-			dxfLayer.addDXFEntity(plineLayer);
+		    String	centeredText= Util.getLinePrintableText(line, dxfLayer, detail, pl) ;
+		    if(centeredText==null)
+		    	centeredText="";
+		    if(dxfLayer.getName().contains("YARD"))
+		    	centeredText=centeredText+ scaledLength;		    		
+		    
+			 DXFLWPolyline pLine1=new DXFLWPolyline();
+			  BigDecimal totalChars= BigDecimal.valueOf(centeredText.toString().length());
+			 // totalChars.setScale(2, RoundingMode.UP);
+			 // Double oneSideSize=D
+			   Double oneSideSize = totalChars.divide(BigDecimal.valueOf(6),2, RoundingMode.HALF_DOWN).doubleValue();
+			   LOG.debug("totalChars" +totalChars +"  oneSideSize "+ oneSideSize +" text: "+centeredText +" layer" +dxfLayer.getName());
+			
+			   Point p=   checkIfTextNearByX(midPoint.getX(),oneSideSize,midPoint.getY(),mEntties);  
+			   DXFVertex v1=new DXFVertex();  
+			   Point point11=   new Point();
+			   point11.setX(p.getX()-oneSideSize);
+			   point11.setY(p.getY()-.5);
+			   v1.setPoint(point11);
+		       pLine1.addVertex(v1);  
+		       
+		     
+			   
+		       DXFVertex v2=new DXFVertex();
+			   Point point22=   new Point();
+			   point22.setX(p.getX()-oneSideSize);
+			   point22.setY(p.getY()+.5);
+			   v2.setPoint(point22);
+		       pLine1.addVertex(v2);
+		       
+		       DXFVertex v3=new DXFVertex();
+			   Point point33=   new Point();
+			   point33.setX(p.getX()+oneSideSize);
+			   point33.setY(p.getY()+.5);
+			   v3.setPoint(point33);
+		       pLine1.addVertex(v3);
+		       
+		       DXFVertex v4=new DXFVertex();
+			   Point point44=   new Point();
+			   point44.setX(p.getX()+oneSideSize);
+			   point44.setY(p.getY()-.5);
+			   v4.setPoint(point44);
+		       pLine1.addVertex(v4);
+		       
+		       
+			   DXFVertex v5=new DXFVertex();
+			   Point point55=   new Point();
+			   point55.setX(p.getX()-oneSideSize);
+			   point55.setY(p.getY()-.5);
+			   v5.setPoint(point55);
+		       pLine1.addVertex(v5);
+		       
+		      
+		       
+		       pLine1.setLineType("Continuous");
+		      // pLine1.setLineWeight(4);
+		       pLine1.setLinetypeScaleFactor(e.getLinetypeScaleFactor());
+		       if(e.isModelSpace())
+		       pLine1.setModelSpace(true);
+		     
+		       // comment here   pLine1.setColor(e.getColor()); for default color 5
+		       if (detail.getColorOverrides().get(dxfLayer.getName().toString()) != null)
+		    	   pLine1.setColor(detail.getColorOverrides().get(dxfLayer.getName()));
+		       else 
+		       {
+		    	   pLine1.setColor(5);
+		    	  // pLine1.setColorRGB(e.getColorRGB());
+		       }
+		        plineLayer.setHeight(0.5d);
+		        plineLayer.setText(centeredText);
+				plineLayer.setAlign(1);
+				plineLayer.setX(midPoint.getX()-(oneSideSize-.10));
+				plineLayer.setY(midPoint.getY()+.25);
+				//plineLayer.setThickness(2);
+				//plineLayer.setRotation(line);
+				if (detail.getColorOverrides().get(dxfLayer.getName().toString()) != null) {
+					plineLayer.setColor(detail.getColorOverrides().get(dxfLayer.getName()));
+				}else
+				{
+					plineLayer.setColor(5);	
+				}
+				dxfLayer.addDXFEntity(plineLayer);
+		          
+		       mEntties.add(pLine1);  
 		}
 		
 	}
@@ -988,15 +1040,20 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		 // totalChars.setScale(2, RoundingMode.UP);
 		 // Double oneSideSize=D
 		   Double oneSideSize = totalChars.divide(BigDecimal.valueOf(6),2, RoundingMode.HALF_DOWN).doubleValue();
-		   LOG.debug("totalChars" +totalChars +"  oneSideSize "+ oneSideSize +" text: "+centeredText );
-		     
-		   Point p=   checkIfTextNearBy(centroidX,centroidY,mEntties);     
+		   LOG.debug("totalChars" +totalChars +"  oneSideSize "+ oneSideSize +" text: "+centeredText +" layer" +dxfLayer.getName());
+		 if(totalChars.compareTo(BigDecimal.ZERO) ==0)
+		 {
+			 //t this may block only  if we are printing K (count of ploygon)s
+			 return;
+		 }
+		 //  Point p=   checkIfTextNearBy(centroidX,centroidY,mEntties);   
+		   Point p=   checkIfTextNearByX(centroidX,oneSideSize,centroidY,mEntties);  
 		   DXFVertex v1=new DXFVertex();  
 		   Point point11=   new Point();
 		   point11.setX(p.getX()-oneSideSize);
 		   point11.setY(p.getY()-.5);
 		   v1.setPoint(point11);
-	       pLine1.addVertex(v1);
+	       pLine1.addVertex(v1);  
 	       
 	     
 		   
@@ -1043,11 +1100,12 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 	       else 
 	       {
 	    	   pLine1.setColor(5);
-	    	   pLine1.setColorRGB(e.getColorRGB());
+	    	  // pLine1.setColorRGB(e.getColorRGB());
 	       }
 	          
-	       mEntties.add(pLine1);     
-	      // newLayer.addDXFEntity(pLine1);  
+	       mEntties.add(pLine1);    
+		 
+	       // newLayer.addDXFEntity(pLine1);  
 	       
 	      // dxfLayer.getDXFDocument().addDXFLayer(newLayer);
 	       
@@ -1105,8 +1163,8 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		int length = centeredText.length();
 		LOG.debug("trxt len" +length +"  "+ (point22.getX() - point33.getX()) );
 		plineDimension.setText(centeredText.toString());
-		plineDimension.setAlign(1);
-	    plineDimension.setHeight(0.5d);
+		plineDimension.setAlign(5);
+	    plineDimension.setHeight(0.6d);
 	
 		plineDimension.setX(p.getX()-(oneSideSize-.10));
 		plineDimension.setY(p.getY() + 0.25);
@@ -1129,7 +1187,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		p.setX(centroidX);
 		p.setY(centroidY);
 		
-		LOG.info("for   points matching on  Y "+p.getY() + " X " +p.getX());	
+		LOG.debug("for   points matching on  Y "+p.getY() + " X " +p.getX());	
 	outer12:	for(DXFEntity ee1:mEntties)
 	{
 		inner12:for(DXFEntity ee:mEntties)
@@ -1137,23 +1195,61 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 			Bounds bounds = ee.getBounds();
 			if((centroidY < bounds.getMaximumY() && centroidY >bounds.getMinimumY()) )
 			{
-				LOG.info("found points matching on  Y "+ee1.getBounds().getMaximumY() + "" +ee1.getBounds().getMinimumY());
+				LOG.debug("found points matching on  Y "+ee1.getBounds().getMaximumY() + "" +ee1.getBounds().getMinimumY());
 				
 				centroidY=centroidY+.90d;
 				p.setY(centroidY);
-			if (centroidX < bounds.getMaximumX() && centroidX >bounds.getMinimumX())	
+			}
+			/*if (centroidX < bounds.getMaximumX() && centroidX >bounds.getMinimumX())	
 			{
-				LOG.info("found points matching on X "+ee1.getBounds().getMaximumX() + "" +ee1.getBounds().getMinimumX());	
+				LOG.debug("found points matching on X "+ee1.getBounds().getMaximumX() + "" +ee1.getBounds().getMinimumX());	
 				centroidX=centroidX+1d;
 				p.setX(centroidX);
-			}
-				break inner12;
+			}*/
+				//break inner12;
 			}
 			 
 			
-		}
+		
 	}
-		LOG.info("returnting  points matching on  Y "+p.getY() + " X " +p.getX());
+		LOG.debug("returnting  points matching on  Y "+p.getY() + " X " +p.getX());
+		
+		return p;
+		
+	}
+	
+	private Point  checkIfTextNearByX(double centroidX, Double oneSideValue, double centroidY, List<DXFEntity> mEntties) {
+		Point p=new Point();
+		p.setX(centroidX);
+		p.setY(centroidY);
+		
+		LOG.debug("for   points matching on  Y "+p.getY() + " X " +p.getX());	
+	outer12:	for(DXFEntity ee1:mEntties)
+	{
+		inner12:for(DXFEntity ee:mEntties)
+		{
+			Bounds bounds = ee.getBounds();
+			if((centroidY < bounds.getMaximumY() && centroidY >bounds.getMinimumY()) 
+					&&  (centroidX-oneSideValue > bounds.getMinimumX() && centroidX + oneSideValue < bounds.getMinimumX()) )
+			{
+				LOG.debug("found points matching on  Y "+ee1.getBounds().getMaximumY() + "" +ee1.getBounds().getMinimumY());
+				
+				centroidY=centroidY+.90d;
+				p.setY(centroidY);
+			}
+			/*if (centroidX < bounds.getMaximumX() && centroidX >bounds.getMinimumX())	
+			{
+				LOG.debug("found points matching on X "+ee1.getBounds().getMaximumX() + "" +ee1.getBounds().getMinimumX());	
+				centroidX=centroidX+1d;
+				p.setX(centroidX);
+			}*/
+				//break inner12;
+			}
+			 
+			
+		
+	}
+		LOG.debug("returnting  points matching on  Y "+p.getY() + " X " +p.getX());
 		
 		return p;
 		
@@ -1710,12 +1806,12 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 					}
 					String[] split1 = layerNamesRegEx.split(",");
 					for (String s : split1) {
-
-						getLayerColorConfigs(planDetail, pdfdetail, s);
-						s = s.substring(0, s.indexOf(":") != -1 ? s.indexOf(":") : s.length());
 						s = s.replace("BLK_*", "BLK_" + b.getNumber());
 						s = s.replace("NO_*", "NO_" + no);
+						getLayerColorConfigs(planDetail, pdfdetail, s);
+						s = s.substring(0, s.indexOf(":") != -1 ? s.indexOf(":") : s.length());
 						LOG.debug("(BLK_*_NO_*_) : searching layer Name for "+s);
+						
 
 						List<String> layer = getLayerName(planDetail.getDxfDocument(), s, dxfLayerNamesInFile);
 						LOG.debug("(BLK_*_NO_*_) : got layers  "+layer);
@@ -1769,7 +1865,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 				i++;
 			}
 
-		} else if (layerNamesRegEx.contains("BLK_*")) { // this is for blockwise all print
+		} else if (layerNamesRegEx.contains("BLK_*") && !sheetName.contains("NO_*") ) { // this is for blockwise all print
 			LOG.debug("layerNamesRegEx.contains(BLK_*_) "+layerNamesRegEx);
 			pdfdetail = new EdcrPdfDetail();
 			pdfdetail.setPageSize(page);
