@@ -283,6 +283,13 @@ public class RearYardService_Amend01Sep23 extends GeneralRule {
 				|| mostRestrictiveOccupancy.getType().getCode().equals(A4)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(A5)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(A3)) {
+			// Check any openings are provided in Side yards
+			boolean openingOnSideBelow2mt = pl.getPlanInformation().getOpeningOnSideBelow2mtsDesc()
+					.equalsIgnoreCase(DcrConstants.NO);
+			boolean openingOnSideAbove2mts = pl.getPlanInformation().getOpeningOnSideAbove2mtsDesc()
+					.equalsIgnoreCase(DcrConstants.NO);
+			boolean nocToAbutSide = pl.getPlanInformation().getNocToAbutSideDesc()
+					.equalsIgnoreCase(DcrConstants.NO);
 			if (plot.getArea().compareTo(BigDecimal.valueOf(SITEAREA_125)) <= 0) {
 				if ((mostRestrictiveOccupancy.getType().getCode().equals(A1)
 						|| mostRestrictiveOccupancy.getType().getCode().equals(F))
@@ -304,11 +311,35 @@ public class RearYardService_Amend01Sep23 extends GeneralRule {
 									minVal = REARYARDMINIMUM_DISTANCE_0;
 									meanVal = REARYARDMINIMUM_DISTANCE_0;
 								} else {
-									minVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
-									meanVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+									if (openingOnSideBelow2mt && openingOnSideAbove2mts && nocToAbutSide) {
+										if (side1Distance.compareTo(REARYARDMINIMUM_DISTANCE_1) >= 0) {
+											if (side2Distance.compareTo(REARYARDMINIMUM_DISTANCE_FIFTY_CM) > 0) {
+												subRule = RULE_26_4 + " ," + RULE_26_4A;
+												minVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+												meanVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+											} else {
+												minVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
+												meanVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
+											}
+										}
+									} else {
+										minVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+										meanVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+									}
 								}
 							} else {
-								if (side1Distance.compareTo(REARYARDMINIMUM_DISTANCE_SIXTY_CM) >= 0
+								if (openingOnSideBelow2mt && openingOnSideAbove2mts && nocToAbutSide) {
+									if (side1Distance.compareTo(REARYARDMINIMUM_DISTANCE_1) >= 0) {
+										if (side2Distance.compareTo(REARYARDMINIMUM_DISTANCE_FIFTY_CM) > 0) {
+											subRule = RULE_26_4 + " ," + RULE_26_4A;
+											minVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+											meanVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+										} else {
+											minVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
+											meanVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
+										}
+									}
+								} else if (side1Distance.compareTo(REARYARDMINIMUM_DISTANCE_SIXTY_CM) >= 0
 										&& side2Distance.compareTo(REARYARDMINIMUM_DISTANCE_SIXTY_CM) >= 0) {
 									minVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
 									meanVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
@@ -347,14 +378,6 @@ public class RearYardService_Amend01Sep23 extends GeneralRule {
 							minVal = REARYARDMINIMUM_DISTANCE_0;
 							meanVal = REARYARDMINIMUM_DISTANCE_0;
 						} else {
-							// Check any openings are provided in Side yards
-							boolean openingOnSideBelow2mt = pl.getPlanInformation().getOpeningOnSideBelow2mtsDesc()
-									.equalsIgnoreCase(DcrConstants.NO);
-							boolean openingOnSideAbove2mts = pl.getPlanInformation().getOpeningOnSideAbove2mtsDesc()
-									.equalsIgnoreCase(DcrConstants.NO);
-							boolean nocToAbutSide = pl.getPlanInformation().getNocToAbutSideDesc()
-									.equalsIgnoreCase(DcrConstants.NO);
-							
 							subRule = RULE_26_4_PRO5;
 							
 							if (openingOnSideBelow2mt && openingOnSideAbove2mts && nocToAbutSide) {
@@ -376,6 +399,17 @@ public class RearYardService_Amend01Sep23 extends GeneralRule {
 								subRule = RULE_26_4 + " ," + RULE_26_4A;
 								minVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
 								meanVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+							}
+						}
+					} else if (openingOnSideBelow2mt && openingOnSideAbove2mts && nocToAbutSide) {
+						if (side1Distance.compareTo(REARYARDMINIMUM_DISTANCE_1) >= 0) {
+							if (side2Distance.compareTo(REARYARDMINIMUM_DISTANCE_FIFTY_CM) > 0) {
+								subRule = RULE_26_4 + " ," + RULE_26_4A;
+								minVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+								meanVal = REARYARDMINIMUM_DISTANCE_SIXTY_CM;
+							} else {
+								minVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
+								meanVal = REARYARDMINIMUM_DISTANCE_FIFTY_CM;
 							}
 						}
 					} else if (side1Distance.compareTo(REARYARDMINIMUM_DISTANCE_1) >= 0

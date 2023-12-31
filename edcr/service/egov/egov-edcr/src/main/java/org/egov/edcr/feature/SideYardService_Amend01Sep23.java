@@ -798,7 +798,10 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
 				|| mostRestrictiveOccupancy.getType().getCode().equals(F1)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(F2)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(F3)) {
-
+			//If no openings are provided for the Rear yard
+	        boolean openingOnRearBelow2mts = pl.getPlanInformation().getOpeningOnRearBelow2mtsDesc().equalsIgnoreCase(DcrConstants.NO);
+	        boolean openingOnRearAbove2mts = pl.getPlanInformation().getOpeningOnRearAbove2mtsDesc().equalsIgnoreCase(DcrConstants.NO);
+	        boolean nocToAbutRear = pl.getPlanInformation().getNocToAbutRearDesc().equalsIgnoreCase(DcrConstants.NO);
 			// Plot area less than or equal to 125
 			if (plot.getArea().compareTo(SITEAREA_125) <= 0) {
 
@@ -833,7 +836,13 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
 											side1val = SIDEVALUE_SIXTY_CM;
 										} else {
 											subRule = RULE_26_4_PROVISO2 + ", " + RULE_50_2;
-											if (rearyardMinDist.compareTo(SIDEVALUE_SIXTY_CM) >= 0) {
+											if (openingOnRearBelow2mts && openingOnRearAbove2mts && nocToAbutRear) {
+												side1val = SIDEVALUE_SIXTY_CM;
+												if(side2Distance.compareTo(SIDEVALUE_FIFTY_CM) > 0)
+													side2val = SIDEVALUE_FIFTY_CM;
+												else
+													side2val = SIDEVALUE_SIXTY_CM;
+											} else if (rearyardMinDist.compareTo(SIDEVALUE_SIXTY_CM) >= 0) {
 												side2val = SIDEVALUE_FIFTY_CM;
 												side1val = SIDEVALUE_SIXTY_CM;
 											} else {
@@ -843,7 +852,13 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
 										}
 									} else {
 										subRule = RULE_26_4_PROVISO2 + ", " + RULE_50_2;
-										if (rearyardMinDist.compareTo(SIDEVALUE_SIXTY_CM) >= 0) {
+										if (openingOnRearBelow2mts && openingOnRearAbove2mts && nocToAbutRear) {
+											side1val = SIDEVALUE_SIXTY_CM;
+											if(side2Distance.compareTo(SIDEVALUE_FIFTY_CM) > 0)
+												side2val = SIDEVALUE_FIFTY_CM;
+											else
+												side2val = SIDEVALUE_SIXTY_CM;
+										} else if (rearyardMinDist.compareTo(SIDEVALUE_SIXTY_CM) >= 0) {
 											side2val = SIDEVALUE_FIFTY_CM;
 											side1val = SIDEVALUE_SIXTY_CM;
 										} else {
@@ -889,10 +904,6 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
 								side2val = SIDEVALUE_ZERO;
 								side1val = SIDEVALUE_ONE;
 							} else {
-								//If no openings are provided for the Rear yard
-						        boolean openingOnRearBelow2mts = pl.getPlanInformation().getOpeningOnRearBelow2mtsDesc().equalsIgnoreCase(DcrConstants.NO);
-						        boolean openingOnRearAbove2mts = pl.getPlanInformation().getOpeningOnRearAbove2mtsDesc().equalsIgnoreCase(DcrConstants.NO);
-						        boolean nocToAbutRear = pl.getPlanInformation().getNocToAbutRearDesc().equalsIgnoreCase(DcrConstants.NO);
 								subRule = RULE_26_4 + ", " + RULE_26_10_PROVISO2;
 								if (openingOnRearBelow2mts && openingOnRearAbove2mts && nocToAbutRear) {
 									if(side2Distance.compareTo(SIDEVALUE_FIFTY_CM) > 0)
@@ -908,7 +919,14 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
 								side1val = SIDEVALUE_ONE;
 							}
 						} else {
-							if (rearyardMinDist.compareTo(SIDEVALUE_ONE) >= 0) {
+							if (openingOnRearBelow2mts && openingOnRearAbove2mts && nocToAbutRear) {
+								subRule = RULE_26_4_PROVISO2;
+								side1val = SIDEVALUE_ONE;
+								if(side2Distance.compareTo(SIDEVALUE_FIFTY_CM) > 0)
+									side2val = SIDEVALUE_FIFTY_CM;
+								else
+									side2val = SIDEVALUE_SIXTY_CM;
+							} else if (rearyardMinDist.compareTo(SIDEVALUE_ONE) >= 0) {
 								subRule = RULE_26_4_PROVISO2;
 								side2val = SIDEVALUE_FIFTY_CM;
 								side1val = SIDEVALUE_ONE;
