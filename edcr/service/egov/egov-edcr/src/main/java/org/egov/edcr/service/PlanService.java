@@ -467,21 +467,29 @@ public class PlanService {
 			BigDecimal builtupArea = pl.getDeclaredOccupancies().stream().map(Occupancy::getBuiltUpArea).reduce(BigDecimal.ZERO,
 					BigDecimal::add);
 			Map<String, BigDecimal> bldgHieghts = new HashMap<>();
-			for (Block blk : pl.getBlocks())
+			boolean isMoreThanOneProposed = true;
+			int proposedBuildingCount = 0;
+			for (Block blk : pl.getBlocks()) {
 				bldgHieghts.put(blk.getNumber(), blk.getBuilding().getBuildingHeight());
+				if(!blk.getCompletelyExisting())
+					proposedBuildingCount++;
+			}
+			if(proposedBuildingCount == 1)
+				isMoreThanOneProposed = false;
+			
 			BigDecimal buildingHeight = pl.getBlocks().get(0).getBuilding().getBuildingHeight();
 			BigDecimal floorCount = pl.getVirtualBuilding().getFloorsAboveGround();
 			String occupCode = pl.getDeclaredOccupancies().get(0).getTypeHelper().getType().getCode();
-			if ((occupCode.equals(A1) || occupCode.equals(A4) || occupCode.equals(A5))
+			if (!isMoreThanOneProposed && (occupCode.equals(A1) || occupCode.equals(A4) || occupCode.equals(A5))
 					&& builtupArea.compareTo(BigDecimal.valueOf(300)) <= 0
 					&& buildingHeight.compareTo(BigDecimal.valueOf(7)) <= 0
 					&& floorCount.compareTo(BigDecimal.valueOf(2)) <= 0) {
 				dcrApplication.setApplicationType(ApplicationType.SELF_CERTIFIED_PERMIT);
-			} else if ((occupCode.equals(A2) || occupCode.equals(B1) || occupCode.equals(B2) || occupCode.equals(B3)
-					|| occupCode.equals(D) || occupCode.equals(D1))
+			} else if (!isMoreThanOneProposed && (occupCode.equals(A2) || occupCode.equals(B1) || occupCode.equals(B2) || occupCode.equals(B3)
+					|| occupCode.equals(D4) || occupCode.equals(D1))
 					&& builtupArea.compareTo(BigDecimal.valueOf(200)) <= 0) {
 				dcrApplication.setApplicationType(ApplicationType.SELF_CERTIFIED_PERMIT);
-			} else if ((occupCode.equals(F) || occupCode.equals(G5))
+			} else if (!isMoreThanOneProposed && (occupCode.equals(F) || occupCode.equals(G5))
 					&& builtupArea.compareTo(BigDecimal.valueOf(100)) <= 0) {
 				dcrApplication.setApplicationType(ApplicationType.SELF_CERTIFIED_PERMIT);
 			}

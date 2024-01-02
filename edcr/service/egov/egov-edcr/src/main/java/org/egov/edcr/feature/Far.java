@@ -1164,16 +1164,37 @@ public class Far extends FeatureProcess {
 			List<String> occupancyCodes = block.getBuilding().getOccupancies().stream()
 					.map(occ -> occ.getTypeHelper().getType().getCode()).collect(Collectors.toList());
 
+			boolean isBOccupancyIntoA1 = false;
+			Map<OccupancyTypeHelper, OccupancyTypeHelper> assemblyConvertOccupancy = new HashMap<>();
+			for (Occupancy occupancy : block.getBuilding().getOccupancies()) {
+				if (occupancy.getTypeHelper().getType().getCode().equals(B1)
+						|| occupancy.getTypeHelper().getType().getCode().equals(B2)
+						|| occupancy.getTypeHelper().getType().getCode().equals(B3)) {
+					OccupancyTypeHelper occupancyTypeAsPerFloorArea = Util
+							.getOccupancyAsPerFloorArea(occupancy.getTypeHelper(),
+									occupancy.getFloorArea(), pl);
+					assemblyConvertOccupancy.put(occupancyTypeAsPerFloorArea,
+							occupancy.getTypeHelper());
+				}
+			}
+			
+			if(!assemblyConvertOccupancy.isEmpty()) {
+				for(Map.Entry<OccupancyTypeHelper, OccupancyTypeHelper> occ : assemblyConvertOccupancy.entrySet()) {
+					if(occ.getKey().getType().getCode().equals(A1))
+						isBOccupancyIntoA1 = true;
+				}
+			}
+			
 			if (!block.getCompletelyExisting()
 					&& (occupancyCodes.size() == 2 && occupancyCodes.contains(A1) && occupancyCodes.contains(A5))
 					|| (occupancyCodes.size() == 1 && occupancyCodes.contains(A1))) {
 				blockWiseUnits.put(block.getNumber(), totalBlockFloorUnits);
-				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0)
+				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0 || (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) == 0 && isBOccupancyIntoA1))
 					block.setSingleFamilyBuilding(true);
 				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ONE) == 0
-						|| block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.valueOf(2)) == 0)
+						|| block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.valueOf(2)) == 0 || (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) == 0 && isBOccupancyIntoA1))
 					block.setSingleOrDualFamilyBuilding(true);
-				if (block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) == 0)
+				if (!isBOccupancyIntoA1 && block.getBuilding().getTotalFloorUnits().compareTo(BigDecimal.ZERO) == 0)
 					pl.addError("Kitchen Unit",
 							String.format("Mandatory Kitchen unit is not defined for Residential in the block %s",
 									block.getNumber()));

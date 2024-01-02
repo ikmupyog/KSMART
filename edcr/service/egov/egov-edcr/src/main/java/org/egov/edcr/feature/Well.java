@@ -668,7 +668,7 @@ public class Well extends FeatureProcess {
             } else if (checkConditionForBoundary(roadOutput)) {
                 subRule = SUB_RULE_23_2;
                 subRuleDesc = String.format(SUB_RULE_75_2II_DESCRIPTION, proposed);
-                minimumDistance = ONE_ANDHALF_MTR;
+                minimumDistance = DIST_1_POINT_2;
                 setReportOutputDetail(pl, subRule, subRuleDesc, valid, roadOutput, minimumDistance);
             }
         }
