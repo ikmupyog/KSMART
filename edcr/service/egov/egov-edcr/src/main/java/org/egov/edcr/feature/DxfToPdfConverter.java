@@ -93,7 +93,7 @@ public class DxfToPdfConverter extends FeatureProcess {
 				if(detail.getConvertedPdf().getName().contains("PARKING_PLAN"))
 					parkingPlan=true;
 			}
-			if(null !=plan.getDepthCuttings() && plan.getDepthCuttings().size()>0)
+			if(null !=plan.getPlanInformation().getDepthCutting() && plan.getPlanInformation().getDepthCutting()==true )
 			{
 				if(detail.getConvertedPdf().getName().contains("EXCAVATION_PLAN"))
 					excavationPlan=true;
@@ -144,12 +144,12 @@ public class DxfToPdfConverter extends FeatureProcess {
 			plan.addError("elevation.plan.print.mandatory", "ELEVATION_PLAN_PRINT is mandatory");
 		}
 		
-		if(null !=plan.getParkingRequired() && !parkingPlan)
+		if(null !=plan.getParkingRequired() && plan.getParkingRequired() >0 && !parkingPlan)
 		{
 			plan.addError("parking.plan.print.mandatory", "PARKING_PLAN_PRINT is mandatory");
 		}
 	
-		if(!excavationPlan )
+		if( (null !=plan.getPlanInformation().getDepthCutting() && plan.getPlanInformation().getDepthCutting()==true ) && !excavationPlan )
 		{
 			plan.addError("site.plan.print.mandatory", "EXCAVATION_DETAIL is mandatory");
 		}

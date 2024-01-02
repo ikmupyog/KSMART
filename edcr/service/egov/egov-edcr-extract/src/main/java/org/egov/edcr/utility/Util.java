@@ -1830,7 +1830,7 @@ public class Util {
         
         
         String name1 = getlayerNameMap(dxfLayer,pline);
-        if(name1!=null )
+        if(name1!=null && name.isEmpty())
         {
         	name=name1;
         	return name;
@@ -1894,9 +1894,9 @@ public class Util {
 		String name = "";
 
 		
-			if(getlayerNameMap(dxfLayer,pline)!=null)
+			if(getlayerNameMap(dxfLayer,pline)!=null && !getlayerNameMap(dxfLayer,pline).isEmpty())
 			{
-				name=getlayerNameMap(dxfLayer,pline);
+				name=getlayerNameMap(dxfLayer,pline);   
 				if (LOG.isDebugEnabled())
 					LOG.debug("returning  from getPolylinePrintableTextOfLayer  "+name);	
 			}else {
@@ -1923,18 +1923,18 @@ public class Util {
      	if(circle.getColor()!=0)
            {
         	   if (circle.getColor() == 1)
-        		   name="Existing Well";
+        		   name="E. WELL";
                else if (circle.getColor() == 2)
-            	   name="Proposed Well";
+            	   name="P. WELL";
            }
         }else  if(dxfLayer.getName().contains("BIO_GAS"))  
         {
      	if(circle.getColor()!=0)
            {
         	   if (circle.getColor() == 1)
-        		   name="Existing Bio Gas facility";
+        		   name="E. BIO GAS";
                else if (circle.getColor() == 2)
-            	   name="Proposed Bio Gas facility";
+            	   name="P. BIO GAS";
            }
         }
       
@@ -1971,15 +1971,15 @@ public class Util {
 
 	private static String getlayerNameMap(DXFLayer dxfLayer, DXFPolyline pline) {
 		if(dxfLayer.getName().equalsIgnoreCase("NOTIFIED_ROAD"))
-		  return "Notified Road/ Un notified road with width more than 6.0 m";
+		  return "NOTIFIED/UN NOTIFIED ROAD WIDTH > 6.0 M";
 		if(dxfLayer.getName().equalsIgnoreCase("CULD_1"))
-			  return "Cul- De Sac road up to 250 m/ Lane up to 3.0 m wide/ Internal Roads-Resi Colonies";
+			  return "CUL- DE SAC ROAD UP TO 250 M/ LANE UP TO 3.0 M WIDE/ INTERNAL ROADS-RESI COLONIES";
 		if(dxfLayer.getName().equalsIgnoreCase("LANE_1"))
 			  return "Lanes up to 75m";
 		if(dxfLayer.getName().equalsIgnoreCase("NON_NOTIFIED_ROAD"))
-			  return "Un notified Road-Width less than 6.0 m";
+			  return "UN NOTIFIED ROAD-WIDTH LESS THAN 6.0 M";
 		if(dxfLayer.getName().equalsIgnoreCase("LANE_1"))
-			  return "Lanes up to 75m";
+			  return "LANES UP TO 75M";
 		
 		if(dxfLayer.getName().contains("DA_PARKING"))
 			return "DA";
@@ -2024,13 +2024,12 @@ public class Util {
 		if(dxfLayer.getName().contains("SOLID_LIQUID_WASTE_TREATMENT"))
 			return "GW RECHARGE";
 		if(dxfLayer.getName().contains("LPG_SYSTEM"))
-			return "LPG Piped system";
-		
-		if(dxfLayer.getName().contains("LPG_SYSTEM"))
-			return "LPG Piped system";
+			return "LPG PS";
 		
 		if(dxfLayer.getName().contains("LIFT"))
 			return "LIFT";
+		
+		
 		
 		
 		
@@ -2042,19 +2041,19 @@ public class Util {
 		if(dxfLayer.getName().contains("BIO_GAS"))
 		{
 			if(pline.getColor()==1)
-			return "Existing  Bio Gas facility";
+			return "E. BIO GAS";
 			else if (pline.getColor()==2)
-			return "Proposed  Bio Gas facility";
+			return "P. BIO GAS";
 		}
 		
 		if(dxfLayer.getName().contains("UNITFA_HALL"))
-			return "Assembly Hall";
+			return "ASSEMBLY HALL";
 		if(dxfLayer.getName().contains("UNITFA"))
 		{
 			if(pline.getColor()==24)
-				return "Dinning Area";
+				return "DINNING AREA";
 				else 
-				return "Kitchen";
+				return "KITCHEN";
 		}
 		
 		 String name = null;
@@ -2065,9 +2064,9 @@ public class Util {
 	        	 if(pline.getColor()!=0)
 	             {
 	          	   if (pline.getColor() == 1)
-	          		   name="Existing Waste Disposal Facility";
+	          		   name="E. WDF";
 	                 else if (pline.getColor() == 2)
-	              	   name="Proposed Waste Disposal Facility";
+	              	   name="P. WDF";
 	             }
 	        	return name;
 	        }
@@ -2078,15 +2077,15 @@ public class Util {
 	        	 if(pline.getColor()!=0)
 	             {
 	          	   if (pline.getColor() == 1)
-	          		   name="Existing Septic Tank";
+	          		   name="E. ST";
 	                 else if (pline.getColor() == 2)
-	              	   name="Proposed Septic Tank";
+	              	   name="P. ST";
 	             }
 	        	 LOG.debug("returning "+name);
 	        	return name;
 	        }
 		
-		return null;
+		return "";
 	}
 
     
