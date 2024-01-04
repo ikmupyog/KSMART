@@ -138,7 +138,7 @@ public class RampService extends FeatureProcess {
             blk: for (Block block : pl.getBlocks())
                 if (!block.getCompletelyExisting()) {
                     if (block.getBuilding() != null && !block.getBuilding().getOccupancies().isEmpty()) {
-                        if (!block.getSingleOrDualFamilyBuilding())
+                        if (block.getSingleOrDualFamilyBuilding())
                             continue blk;
                         List<OccupancyTypeHelper> occupancyTypeList = block.getBuilding().getOccupancies().stream()
                                 .map(occupancy -> occupancy.getTypeHelper()).collect(Collectors.toList());
@@ -245,7 +245,7 @@ public class RampService extends FeatureProcess {
                     scrutinyDetail5.setKey("Block_" + block.getNumber() + "_" + "Ramp - Maximum Slope");
 
                     if (block.getBuilding() != null && !block.getBuilding().getOccupancies().isEmpty()) {
-                        if (!block.getSingleOrDualFamilyBuilding())
+                        if (block.getSingleOrDualFamilyBuilding())
                             continue blk;
                         List<OccupancyTypeHelper> occupancyTypeList = block.getBuilding().getOccupancies().stream()
                                 .map(occupancy -> occupancy.getTypeHelper()).collect(Collectors.toList());

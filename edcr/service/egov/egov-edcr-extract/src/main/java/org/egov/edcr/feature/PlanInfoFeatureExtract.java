@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -90,6 +91,7 @@ public class PlanInfoFeatureExtract extends FeatureExtract {
 		String buildingFootPrint = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + "\\d+_"
 				+ layerNames.getLayerName("LAYER_NAME_LEVEL_NAME_PREFIX") + "\\d+_"
 				+ layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT");
+		
 		List<String> layerNames1 = Util.getLayerNamesLike(pl.getDoc(), buildingFootPrint);
 		for (String s : layerNames1) {
 			polyLinesByLayer = Util.getPolyLinesByLayer(pl.getDoc(), s);
@@ -123,10 +125,10 @@ public class PlanInfoFeatureExtract extends FeatureExtract {
 					setBack.setBuildingFootPrint(footPrint);
 					block.getSetBacks().add(setBack);
 
-				}
+				}	
 
 		}
-
+	        
 		if (pl.getBlocks().isEmpty()) {
 			pl.addError(layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT"),
 					getEdcrMessageSource().getMessage(DcrConstants.OBJECTNOTDEFINED,
@@ -134,6 +136,49 @@ public class PlanInfoFeatureExtract extends FeatureExtract {
 			pl.addKYRError(layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT"),
 					getEdcrMessageSource().getMessage(DcrConstants.OBJECTNOTDEFINED,
 							new String[] { layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT") }, null));
+		}
+		
+		// When multiple blocks are present, for one of blocks footprint is not defined then throw validate
+		 String blocksLayerName = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + "\\d+_"
+	                + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + "-?\\d+_"
+	                + layerNames.getLayerName("LAYER_NAME_BUILT_UP_AREA");
+	        
+	     List<String> propsedBlocklayerNames = Util.getLayerNamesLike(pl.getDoc(), blocksLayerName);
+	     Set<String> blocksCount = new LinkedHashSet<>();
+	     for(String block : propsedBlocklayerNames) {
+	    	 List<DXFLWPolyline> blockPolyLinesByLayer = Util.getPolyLinesByLayer(pl.getDoc(), block);
+	    	 if(blockPolyLinesByLayer != null && !blockPolyLinesByLayer.isEmpty()) {
+	    		 String [] arr = block.split("_");
+		    	 blocksCount.add(arr[1]);
+	    	 }
+	     }
+	     
+	     String layerRegExForExistingPlan = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX")
+                 + "\\d+_" + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + "-?\\d+_"
+                 + layerNames.getLayerName("LAYER_NAME_BUILT_UP_AREA")
+                 + layerNames.getLayerName("LAYER_NAME_EXISTING_PREFIX");
+	     List<String> existingBlocklayerNames = Util.getLayerNamesLike(pl.getDoc(), layerRegExForExistingPlan);
+	     for(String block : existingBlocklayerNames) {
+	    	 List<DXFLWPolyline> blockPolyLinesByLayer = Util.getPolyLinesByLayer(pl.getDoc(), block);
+	    	 if(blockPolyLinesByLayer != null && !blockPolyLinesByLayer.isEmpty()) {
+	    		 String [] arr = block.split("_");
+		    	 blocksCount.add(arr[1]);
+	    	 }
+	     }
+	     
+		if(!pl.getBlocks().isEmpty() && !blocksCount.isEmpty() && pl.getBlocks().size() != blocksCount.size()) {
+			for(String blockNo : blocksCount) {
+				if(pl.getBlockByName(blockNo) == null) {
+					pl.addError(layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT"),
+							getEdcrMessageSource().getMessage(DcrConstants.OBJECTNOTDEFINED,
+									new String[] { layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + blockNo + "_"
+											+ layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT") }, null));
+					pl.addKYRError(layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT"),
+							getEdcrMessageSource().getMessage(DcrConstants.OBJECTNOTDEFINED,
+									new String[] { layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + blockNo + "_"
+											+ layerNames.getLayerName("LAYER_NAME_BUILDING_FOOT_PRINT") }, null));
+				}
+			}
 		}
 
 		for (Block b : pl.getBlocks()) {
