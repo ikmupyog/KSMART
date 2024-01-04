@@ -536,38 +536,7 @@
 		</band>
 	</title>
 	<pageFooter>
-		<band height="78">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="221" y="27" width="15" height="25" uuid="68b285d7-eec7-41c7-a617-0e666c163f7a"/>
-				<textElement verticalAlignment="Bottom">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="true">
-				<reportElement x="248" y="27" width="22" height="25" uuid="0c301f1e-dfac-47e6-bcce-a509c0366641"/>
-				<textElement verticalAlignment="Bottom">
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="231" y="27" width="11" height="25" uuid="2656c6b1-22db-4ad7-962b-92d966d3917d"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[of]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="370" y="27" width="178" height="20" uuid="a2cafcf9-510a-49f0-8ca8-53c4a4c6d777"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
-				<text><![CDATA[INFORMATION KERALA MISSION]]></text>
-			</staticText>
-			<image onErrorType="Icon">
-				<reportElement x="16" y="28" width="34" height="24" uuid="6fc862e7-1dd7-4d35-bf48-72cbc9acf902"/>
-				<imageExpression><![CDATA[$P{footerLogo}]]></imageExpression>
-			</image>
-		</band>
+		<band height="78"/>
 	</pageFooter>
 	<summary>
 		<band height="44"/>

@@ -1948,13 +1948,13 @@ public class Util {
     {
         
     	if(dxfLayer.getName().contains("FRONT_YARD_MIN"))
-			return "BSMNT- FY-MIN=";
+			return "FY-MIN=";
 		if(dxfLayer.getName().contains("REAR_YARD_MIN"))
-			return "BSMNT- RY-MIN=";
+			return "RY-MIN=";
 		if(dxfLayer.getName().contains("SIDE_YARD1_MIN"))
-			return "BSMNT- SY1-MIN=";
+			return "SY1-MIN=";
 		if(dxfLayer.getName().contains("SIDE_YARD2_MIN"))
-			return "BSMNT- SY2-MIN=";
+			return "SY2-MIN=";
     	
     	String	name = dxfLayer.getName();
         name = name.replaceAll("BLK_\\d", "");
