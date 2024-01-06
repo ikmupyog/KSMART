@@ -490,23 +490,23 @@ public class Sanitation extends FeatureProcess {
                            /* processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
                                     failedDimensionSpWcMap);
                             break;*/
-                        	helper.maleWc += buildUpArea * 2 / (5.9 * 3 * 10);
-                            helper.femaleWc += buildUpArea * 1 / (5.9 * 3 * 8);
-                            helper.urinal += buildUpArea * 2 / (5.9 * 3 * 25);
-                            helper.maleWash += buildUpArea * 2 / (5.9 * 3 * 10);
-                            helper.femaleWash += buildUpArea / (5.9 * 3 * 10);
-                            helper.maleBath += buildUpArea * 2 / (5.9 * 3 * 10);
-                            helper.femaleBath += buildUpArea / (5.9 * 3 * 10);
+                        	helper.maleWc += Math.ceil(buildUpArea * 2 / (5.9 * 3 * 10));
+                            helper.femaleWc += Math.ceil(buildUpArea * 1 / (5.9 * 3 * 8));
+                            helper.urinal += Math.ceil(buildUpArea * 2 / (5.9 * 3 * 25));
+                            helper.maleWash += Math.ceil(buildUpArea * 2 / (5.9 * 3 * 10));
+                            helper.femaleWash += Math.ceil(buildUpArea / (5.9 * 3 * 10));
+                            helper.maleBath += Math.ceil(buildUpArea * 2 / (5.9 * 3 * 10));
+                            helper.femaleBath += Math.ceil(buildUpArea / (5.9 * 3 * 10));
                             processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
                                     failedDimensionSpWcMap);
                             helper.ruleNo.add(RULE_34_3_1_TABLE_13_14__RULE_42); 
                             break;
                         case A3: //Hotel
-                            helper.maleWc += buildUpArea * 2 / (5.9 * 3 * 100);
-                            helper.femaleWc += buildUpArea * 1 / (5.9 * 3 * 100);
-                            helper.urinal += buildUpArea * 1 / (5.9 * 1 * 25);
-                            helper.commonWash += buildUpArea * 1 / (5.9 * 1 * 25); 
-                            helper.commonBath += buildUpArea / (5.9 * 1 * 100);
+                            helper.maleWc += Math.ceil(buildUpArea * 2 / (5.9 * 3 * 100));
+                            helper.femaleWc += Math.ceil(buildUpArea * 1 / (5.9 * 3 * 100));
+                            helper.urinal += Math.ceil(buildUpArea * 1 / (5.9 * 1 * 25));
+                            helper.commonWash += Math.ceil(buildUpArea * 1 / (5.9 * 1 * 25)); 
+                            helper.commonBath += Math.ceil(buildUpArea / (5.9 * 1 * 100));
                             processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
                                     failedDimensionSpWcMap);
                             helper.ruleNo.add(RULE_34_3_1_TABLE_13_14__RULE_42); 
@@ -514,11 +514,11 @@ public class Sanitation extends FeatureProcess {
                         case B1:
                         case B2:
                         case B3:
-                            helper.maleWc += buildUpArea * 2 / (5.9 * 3 * 40);
-                            helper.femaleWc += buildUpArea / (5.9 * 3 * 25);
-                            helper.urinal += buildUpArea * 2 / (5.9 * 3 * 50);
-                            helper.maleWash += buildUpArea * 2 / (5.9 * 3 * 40);
-                            helper.femaleWash += buildUpArea / (5.9 * 3 * 40);
+                            helper.maleWc += Math.ceil(buildUpArea * 2 / (5.9 * 3 * 40));
+                            helper.femaleWc +=Math.ceil( buildUpArea / (5.9 * 3 * 25));
+                            helper.urinal += Math.ceil(buildUpArea * 2 / (5.9 * 3 * 50));
+                            helper.maleWash += Math.ceil(buildUpArea * 2 / (5.9 * 3 * 40));
+                            helper.femaleWash += Math.ceil(buildUpArea / (5.9 * 3 * 40));
                             processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
                                     failedDimensionSpWcMap);
                             helper.ruleNo.add(RULE_34_3_1_TABLE_13_14__RULE_42);
@@ -529,17 +529,17 @@ public class Sanitation extends FeatureProcess {
                             double noofBeds = pl.getPlanInformation().getNoOfBeds().doubleValue();
                             
 								    helper.commonWc += ((noofBeds / 8)>= b.getSanityDetails().getTotalSPWC())?  
-								    		((noofBeds / 8) - b.getSanityDetails().getTotalSPWC()):Double.valueOf(0); //
+								    		Math.ceil(((noofBeds / 8) - b.getSanityDetails().getTotalSPWC())):Double.valueOf(0); //
 								
 								if (noofBeds < 30) {
 									helper.commonWash += 2;
 								} else {
-									helper.commonWash += 2 + (noofBeds - 30) / 30;
+									helper.commonWash += 2 + Math.ceil((noofBeds - 30) / 30);
 								}
 								
-	                        helper.commonBath += noofBeds / 8;
+	                        helper.commonBath += Math.ceil(noofBeds / 8);
                             helper.abultionTap += (((noofBeds / 8)>= b.getSanityDetails().getTotalSPWC())?  
-						    		((noofBeds / 8) - b.getSanityDetails().getTotalSPWC()):Double.valueOf(0)) + buildUpArea / (5.9 * 50);
+                            		Math.ceil(((noofBeds / 8) - b.getSanityDetails().getTotalSPWC())):Double.valueOf(0)) + Math.ceil(buildUpArea / (5.9 * 50));
                             
                             processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
                                     failedDimensionSpWcMap);
@@ -548,14 +548,14 @@ public class Sanitation extends FeatureProcess {
                             break;
 
                         case C2://Medical OP
-                            helper.maleWc += buildUpArea * 2 / (5.9 * 3 * 100);
-                            helper.femaleWc += buildUpArea / (5.9 * 3 * 50);
-                            helper.urinal += buildUpArea * 1 / (5.9 * 50);
-                            helper.commonWash += buildUpArea * 1 / (5.9 * 100);
+                            helper.maleWc += Math.ceil(buildUpArea * 2 / (5.9 * 3 * 100));
+                            helper.femaleWc += Math.ceil(buildUpArea / (5.9 * 3 * 50));
+                            helper.urinal += Math.ceil(buildUpArea * 1 / (5.9 * 50));
+                            helper.commonWash += Math.ceil(buildUpArea * 1 / (5.9 * 100));
                             //helper.femaleWash += buildUpArea / (5.9 * 100);
                             // helper.maleBath = carpetArea * 2 / (5.9 * 3 * 10);
                             // helper.femaleBath = carpetArea / (5.9 * 3 * 10);
-                            helper.abultionTap += helper.maleWc + helper.femaleWc + buildUpArea / (5.9 * 50);
+                            helper.abultionTap += Math.ceil(buildUpArea * 2 / (5.9 * 3 * 100)) +  Math.ceil(buildUpArea / (5.9 * 3 * 50)) +  Math.ceil(buildUpArea / (5.9 * 50));
                             processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
                                     failedDimensionSpWcMap);
                             helper.ruleNo.add(RULE_34_3_1_TABLE_13_15__RULE_42);
@@ -563,10 +563,10 @@ public class Sanitation extends FeatureProcess {
 
                         case C3://Medical admin
                             helper.ruleNo.add(RULE_34_3_1_TABLE_13_15__RULE_42);
-                            helper.maleWc += buildUpArea * 2 / (5.9 * 3 * 25);
-                            helper.femaleWc += buildUpArea / (5.9 * 3 * 15);
+                            helper.maleWc +=Math.ceil(buildUpArea * 2 / (5.9 * 3 * 25));
+                            helper.femaleWc +=Math.ceil(buildUpArea / (5.9 * 3 * 15));
 
-                            helper.commonWash += buildUpArea * 1 / (5.9 * 25);
+                            helper.commonWash += Math.ceil(buildUpArea * 1 / (5.9 * 25));
                             //helper.femaleWash += buildUpArea * 2 / (5.9 * 3 * 25);
                             Double noOfPersons = buildUpArea/(5.9);
                             BigDecimal noOfPersonsBig = BigDecimal.valueOf(noOfPersons).divide(BigDecimal.ONE,
@@ -586,7 +586,7 @@ public class Sanitation extends FeatureProcess {
                             else if (noofPerson > 200)
                                 helper.urinal += 6d;
 
-                            helper.abultionTap += helper.maleWc + helper.femaleWc + buildUpArea / (5.9 * 50);
+                            helper.abultionTap += Math.ceil( buildUpArea * 2 / (5.9 * 3 * 25)) + Math.ceil( buildUpArea / (5.9 * 3 * 15)) + Math.ceil(buildUpArea / (5.9 * 50));
                             processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
                                     failedDimensionSpWcMap);
                             break;
@@ -597,19 +597,19 @@ public class Sanitation extends FeatureProcess {
                             if (buildUpArea <= 1000)
                             {
                             	if(((buildUpArea * 2) / (1.8 * 3 * 200))>b.getSanityDetails().getTotalSPWC())
-                            		helper.maleWc += ((buildUpArea * 2) / (1.8 * 3 * 200)) - b.getSanityDetails().getTotalSPWC();
-                            	helper.femaleWc += ((buildUpArea * 1) / (1.8 * 3 * 100)) ;  
-                                helper.urinal += buildUpArea * 1 / (1.8 * 50);
-                                helper.maleWash += buildUpArea * 2 / (1.8* 3 * 200);
-                                helper.femaleWash += buildUpArea * 1 / (1.8* 3 * 200);
+                            		helper.maleWc += Math.ceil(((buildUpArea * 2) / (1.8 * 3 * 200)) - b.getSanityDetails().getTotalSPWC());
+                            	helper.femaleWc += Math.ceil(((buildUpArea * 1) / (1.8 * 3 * 100)) );  
+                                helper.urinal += Math.ceil(buildUpArea * 1 / (1.8 * 50));
+                                helper.maleWash += Math.ceil(buildUpArea * 2 / (1.8* 3 * 200));
+                                helper.femaleWash += Math.ceil(buildUpArea * 1 / (1.8* 3 * 200));
 
                             }else
                             {
-                            	helper.maleWc += 2d + (buildUpArea - 1000) * 2 / (1.8 * 3 * 400);
-                            	helper.femaleWc += 2d + (buildUpArea - 1000) * 1 / (1.8 * 3 * 200);
-                                helper.urinal += 12d+( buildUpArea-1000) * 1 / (1.8 * 100);
-                                helper.maleWash += 2d+( buildUpArea-1000) * 2 / (1.8* 3 * 400);
-                                helper.femaleWash += 2d+( buildUpArea-1000) * 1 / (1.8* 3 * 400);
+                            	helper.maleWc += 2d + Math.ceil((buildUpArea - 1000) * 2 / (1.8 * 3 * 400));
+                            	helper.femaleWc += 2d + Math.ceil((buildUpArea - 1000) * 1 / (1.8 * 3 * 200));
+                                helper.urinal += 12d+ Math.ceil(( buildUpArea-1000) * 1 / (1.8 * 100));
+                                helper.maleWash += 2d+ Math.ceil(( buildUpArea-1000) * 2 / (1.8* 3 * 400));
+                                helper.femaleWash += 2d+ Math.ceil(( buildUpArea-1000) * 1 / (1.8* 3 * 400));
 
                             }
                             // helper.maleBath += carpetArea * 2 / (5.9 * 3 * 10);
@@ -622,12 +622,12 @@ public class Sanitation extends FeatureProcess {
                             if (buildUpArea/1.8 <= 1000)
                                 helper.commonWc += 4d;
                             else
-                                helper.commonWc += 4d + ((buildUpArea/1.8) - 1000)/1000;//TODO: CHECK THIS LOGIC AGAIN.
+                                helper.commonWc += 4d + Math.ceil(((buildUpArea/1.8) - 1000)/1000);//TODO: CHECK THIS LOGIC AGAIN.
 
                             if (buildUpArea <= 1000)
                                 helper.urinal += 6d;
                             else
-                                helper.urinal += 6d + (((buildUpArea/1.8) - 1000) / (1000));
+                                helper.urinal += 6d + Math.ceil(((buildUpArea/1.8) - 1000) / (1000));
  
                             helper.maleWash += 4d;
                             helper.femaleWash += 4d;
@@ -637,9 +637,10 @@ public class Sanitation extends FeatureProcess {
                             break;
                         case E:
                         case E1:
-                        	helper.maleWc += ((buildUpArea * 2 / (5.9 * 3 * 25)) * 0.75 ) - b.getSanityDetails().getTotalSPWC();
-                            helper.femaleWc += ((buildUpArea * 1 / (5.9 * 3 * 15)) * 0.75 );
-                            helper.urinal += buildUpArea * 0.75 / (5.9 * 25);
+                        	if(((buildUpArea * 2 / (5.9 * 3 * 25)) * 0.75 )> b.getSanityDetails().getTotalSPWC())
+                        		helper.maleWc += Math.ceil(((buildUpArea * 2 / (5.9 * 3 * 25)) * 0.75 )) - b.getSanityDetails().getTotalSPWC();
+                            helper.femaleWc += Math.ceil((buildUpArea * 1 / (5.9 * 3 * 15)) * 0.75 );
+                            helper.urinal += Math.ceil(buildUpArea * 0.75 / (5.9 * 25));
 
                             helper.ruleNo.add(RULE_34_3_34_3_5);
                             helper.ruleDescription = SANITY_RULE_DESC + type.getTypeHelper().getType().getName();
@@ -650,9 +651,9 @@ public class Sanitation extends FeatureProcess {
                         case E2:
                         case F:
                         	if((buildUpArea * 2 / (5.9 * 3 * 25))> b.getSanityDetails().getTotalSPWC())
-                        		helper.maleWc += (buildUpArea * 2 / (5.9 * 3 * 25)) - b.getSanityDetails().getTotalSPWC() ;
-                            helper.femaleWc += buildUpArea / (5.9 * 3 * 15);
-                            helper.urinal += buildUpArea * 1 / (5.9 * 25);
+                        		helper.maleWc += Math.ceil((buildUpArea * 2 / (5.9 * 3 * 25))) - b.getSanityDetails().getTotalSPWC() ;
+                            helper.femaleWc += Math.ceil(buildUpArea / (5.9 * 3 * 15));
+                            helper.urinal += Math.ceil(buildUpArea * 1 / (5.9 * 25));
 
                             helper.ruleNo.add(RULE_34_3_1_TABLE_13_14);
                             helper.ruleDescription = SANITY_RULE_DESC + type.getTypeHelper().getType().getName();
@@ -664,19 +665,19 @@ public class Sanitation extends FeatureProcess {
                         	if (buildUpArea <= 1000)
                             {
                             	if(((buildUpArea * 2) / (1.8 * 3 * 200))>b.getSanityDetails().getTotalSPWC())
-                            		helper.maleWc += ((buildUpArea * 2) / (1.8 * 3 * 200)) - b.getSanityDetails().getTotalSPWC();
-                            	helper.femaleWc += ((buildUpArea * 1) / (1.8 * 3 * 100)) ;  
-                                helper.urinal += buildUpArea * 1 / (1.8 * 50);
-                                helper.maleWash += buildUpArea * 2 / (1.8* 3 * 200);
-                                helper.femaleWash += buildUpArea * 1 / (1.8* 3 * 200);
+                            		helper.maleWc += Math.ceil((buildUpArea * 2) / (1.8 * 3 * 200)) - b.getSanityDetails().getTotalSPWC();
+                            	helper.femaleWc += Math.ceil((buildUpArea * 1) / (1.8 * 3 * 100)) ;  
+                                helper.urinal += Math.ceil(buildUpArea * 1 / (1.8 * 50));
+                                helper.maleWash += Math.ceil(buildUpArea * 2 / (1.8* 3 * 200));
+                                helper.femaleWash += Math.ceil(buildUpArea * 1 / (1.8* 3 * 200));
 
                             }else
                             {
-                            	helper.maleWc += 2d +(buildUpArea - 1000) * 2 / (1.8 * 3 * 400);
-                            	helper.femaleWc += 2d + (buildUpArea - 1000) * 1 / (1.8 * 3 * 200);
-                                helper.urinal += 12d+( buildUpArea-1000) * 1 / (1.8 * 100);
-                                helper.maleWash += 2d+( buildUpArea-1000) * 2 / (1.8* 3 * 400);
-                                helper.femaleWash += 2d+( buildUpArea-1000) * 1 / (1.8* 3 * 400);
+                            	helper.maleWc += 2d +Math.ceil((buildUpArea - 1000) * 2 / (1.8 * 3 * 400));
+                            	helper.femaleWc += 2d + Math.ceil((buildUpArea - 1000) * 1 / (1.8 * 3 * 200));
+                                helper.urinal += 12d+ Math.ceil(( buildUpArea-1000) * 1 / (1.8 * 100));
+                                helper.maleWash += 2d+ Math.ceil(( buildUpArea-1000) * 2 / (1.8* 3 * 400));
+                                helper.femaleWash += 2d+ Math.ceil((buildUpArea-1000) * 1 / (1.8* 3 * 400));
                             }
                         	helper.ruleNo.add(RULE_34_3_1_TABLE_13_14);
                             helper.ruleDescription = SANITY_RULE_DESC + type.getTypeHelper().getType().getName();
@@ -688,17 +689,17 @@ public class Sanitation extends FeatureProcess {
                         case G3:
                         case G4:
                         case G5:
-                            helper.maleWc += buildUpArea * 2 / (30 * 3 * 25);
-                            helper.femaleWc += buildUpArea / (30 * 3 * 15);
-                            helper.urinal += buildUpArea * 1 / (30 * 25);
+                            helper.maleWc += Math.ceil(buildUpArea * 2 / (30 * 3 * 25));
+                            helper.femaleWc += Math.ceil(buildUpArea / (30 * 3 * 15));
+                            helper.urinal += Math.ceil(buildUpArea * 1 / (30 * 25));
                         	helper.ruleNo.add(RULE_34_3_1_TABLE_13_14);
                             helper.ruleDescription = SANITY_RULE_DESC + type.getTypeHelper().getType().getName();
                             // accepted = processSanity(pl, b, carpetArea, helper, scrutinyDetail, type);
                             break;
                         case H:
-                            helper.maleWc += buildUpArea * 2 / (3 * 30 * 50);
-                            helper.femaleWc += buildUpArea / (3 * 30 * 25);
-                            helper.urinal += buildUpArea * 2 / (3 * 30 * 100);
+                            helper.maleWc += Math.ceil(buildUpArea * 2 / (3 * 30 * 50));
+                            helper.femaleWc +=Math.ceil( buildUpArea / (3 * 30 * 25));
+                            helper.urinal += Math.ceil(buildUpArea * 2 / (3 * 30 * 100));
                         	helper.ruleNo.add(RULE_34_3_1_TABLE_13_14);
                             helper.ruleDescription = SANITY_RULE_DESC + type.getTypeHelper().getType().getName();
                                                    break;
@@ -719,12 +720,12 @@ public class Sanitation extends FeatureProcess {
                                        helper.maleWc += 1d;
                             	}
                             	else{
-                            		helper.maleWc +=1d+ ((buildUpArea/30)-50) * 2 / (3 * 70);
-                            		helper.femaleWc +=2d+ ((buildUpArea/30)-50) * 1 / (3 * 70);
+                            		helper.maleWc +=1d+ Math.ceil(((buildUpArea/30)-50) * 2 / (3 * 70));
+                            		helper.femaleWc +=2d+ Math.ceil(((buildUpArea/30)-50) * 1 / (3 * 70));
                                     
                             	}
                             }
-                            helper.urinal += ((buildUpArea/30) * 2 / (3 * 100));
+                            helper.urinal += Math.ceil((buildUpArea/30) * 2 / (3 * 100));
                             helper.ruleNo.add(RULE_34_3_34_3_3);
                             // accepted = processSanity(pl, b, floorArea, helper, scrutinyDetail, type);
                             break;
@@ -898,10 +899,10 @@ public class Sanitation extends FeatureProcess {
                         	 if(totalMedicalOccupancyBuildUpArea.compareTo(BigDecimal.valueOf(1000))>0){
 	                             processSpecialWaterClosetForVisitorsl(b, helper, scrutinyDetail, requiredSpWcMap,
 	                                     providedSpWcMap, failedAreaSpWcMap, failedDimensionSpWcMap,RULE_34_3_1_TABLE_13_15__RULE_42);
-	                         	 helper.maleWc += buildUpArea * 0.1 * 2 / (5.9 * 3 * 100);
-	                             helper.femaleWc += buildUpArea * 0.1 / (5.9 * 3 * 50);
-	                             helper.urinal += buildUpArea * 0.1 * 1 / (5.9 * 50);
-	                             helper.commonWash += buildUpArea * 0.1 * 1 / (5.9 * 100);
+	                         	 helper.maleWc += Math.ceil(buildUpArea * 0.1 * 2 / (5.9 * 3 * 100));
+	                             helper.femaleWc += Math.ceil(buildUpArea * 0.1 / (5.9 * 3 * 50));
+	                             helper.urinal += Math.ceil(buildUpArea * 0.1 * 1 / (5.9 * 50));
+	                             helper.commonWash += Math.ceil(buildUpArea * 0.1 * 1 / (5.9 * 100));
 	                        	 helper.ruleNo.add(RULE_34_3_1_TABLE_13_15__RULE_42);
 	                        	 helper.occupanciesType.add(type.getTypeHelper().getType().getName());
                         	 }
@@ -912,12 +913,12 @@ public class Sanitation extends FeatureProcess {
                         	 if (buildUpArea/1.8 <= 1000)
                                 helper.commonWc += 1d; //As per doc (4 x 0.1) rounded up to the next higher digit 
                             else
-                                helper.commonWc += 4d + (((buildUpArea/1.8) - 1000)/1000)*0.1; 
+                                helper.commonWc += 4d + Math.ceil((((buildUpArea/1.8) - 1000)/1000)*0.1); 
                         	 
                             if (buildUpArea/1.8 <= 1000)
                                 helper.urinal += 1d; //As per doc  (6 x 0.1) rounded up to the next higher digit 
                             else
-                                helper.urinal += 6d + (((buildUpArea/1.8) - 1000) / (1000)) * 0.1;
+                                helper.urinal += 6d + Math.ceil((((buildUpArea/1.8) - 1000) / (1000)) * 0.1);
                             
                             helper.maleWash += 1d;
                             helper.femaleWash += 1d; 
@@ -929,9 +930,9 @@ public class Sanitation extends FeatureProcess {
                             processSpecialWaterClosetForVisitorsl(b, helper, scrutinyDetail, requiredSpWcMap,
                                     providedSpWcMap, failedAreaSpWcMap, failedDimensionSpWcMap,RULE_34_3_3_TABLE_13_14);
                     
-                            helper.maleWc += ((buildUpArea * 2 / (5.9 * 3 * 25)) * 0.1);
-                            helper.femaleWc += (buildUpArea / (5.9 * 3 * 15) * 0.1);
-                            helper.urinal += buildUpArea * 1 / (5.9 * 25); 
+                            helper.maleWc += Math.ceil((buildUpArea * 2 / (5.9 * 3 * 25)) * 0.1);
+                            helper.femaleWc += Math.ceil((buildUpArea / (5.9 * 3 * 15) * 0.1));
+                            helper.urinal +=Math.ceil( buildUpArea * 1 / (5.9 * 25)); 
                             helper.maleWash += 1d;
                             helper.femaleWash += 1d; 
                             helper.ruleNo.add(RULE_34_3_3_TABLE_13_14);
@@ -955,14 +956,14 @@ public class Sanitation extends FeatureProcess {
                                        helper.maleWc += 1d;
                             	}
                             	else{
-                            		helper.maleWc += (1d+ ((buildUpArea/30)-50) * 2 / (3 * 70))  * 0.1;
-                            		helper.femaleWc +=(2d+ ((buildUpArea/30)-50) * 1 / (3 * 70)) * 0.1;
+                            		helper.maleWc += Math.ceil((1d+ ((buildUpArea/30)-50) * 2 / (3 * 70))  * 0.1);
+                            		helper.femaleWc +=Math.ceil((2d+ ((buildUpArea/30)-50) * 1 / (3 * 70)) * 0.1);
                                     
                             	}
                             }
                             helper.maleWash += 1d;
                             helper.femaleWash += 1d; 
-                            helper.urinal += (((buildUpArea/30) * 2 / (3 * 100)) * 0.1);
+                            helper.urinal += Math.ceil(((buildUpArea/30) * 2 / (3 * 100)) * 0.1);
                             helper.ruleNo.add(RULE_34_3_34_3_3);
                        	    helper.occupanciesType.add(type.getTypeHelper().getType().getName());
 
@@ -1449,7 +1450,9 @@ public class Sanitation extends FeatureProcess {
 		                    + sanityDetails.getCommonRoomsWithWaterCloset().size();
 		            Double specialWC = helper.providedSpecialWc;
 		
-		            Double totalWCActual = Math.ceil(maleWcActual + femaleWcActual + commonWcActual + specialWC );
+		            //Double totalWCActual = Math.ceil(maleWcActual + femaleWcActual + commonWcActual + specialWC );
+		            Double totalWCActual = Math.ceil(maleWcActual + femaleWcActual + commonWcActual);
+
 		            Double totalWCExpected = Math.ceil(helper.maleWc) + Math.ceil(helper.femaleWc)+ Math.ceil(helper.commonWc);//TODO irrespective of type, validations added. Not specifically like common water closet not considered.
 		            if (totalWCExpected > 0) {
 		                List<Measurement> wcList = new ArrayList<>();
@@ -1467,29 +1470,52 @@ public class Sanitation extends FeatureProcess {
 		                    expected.append("Common Water Closet ").append( Math.ceil(helper.commonWc)).append("\n");
 		                expected.append("Total Water Closet ").append(totalWCExpected);
 		            
-		                if(maleWcActual > 0)
-		                	actual.append("Male Water Closet ").append(maleWcActual).append("\n");
-		                if(femaleWcActual > 0)
+		                if(maleWcActual > 0){
+		                	//actual.append("Male Water Closet ").append(maleWcActual).append("\n");
+		                	
+		                	if(specialWC > 0 && helper.maleWc> 0 && helper.maleWc < maleWcActual)
+		                		actual.append("Male Water Closet(Considering Special Water Closet)").append( Math.ceil(maleWcActual)+ Math.ceil(specialWC)).append("\n");
+		                	else
+			                	actual.append("Male Water Closet ").append(maleWcActual).append("\n");
+		                }
+		                if(femaleWcActual > 0){
 		                	actual.append("Female Water Closet ").append(femaleWcActual).append("\n");
+
+		                	/*if(specialWC > 0 && helper.femaleWc < femaleWcActual)
+		                		actual.append("FeMale Water Closet(Including Special Water Closet)").append( Math.ceil(helper.femaleWc)+ Math.ceil(specialWC)).append("\n");
+		                	else
+			                	actual.append("Female Water Closet ").append(femaleWcActual).append("\n");*/
+		                }
 		                if(commonWcActual > 0)
 		                	actual.append("Common Water Closet ").append(commonWcActual).append("\n");
-		                if(specialWC > 0)
+		              /*  if(specialWC > 0)
 		                	actual.append("Special Water Closet ").append(specialWC).append("\n");
-		                actual.append("Total Water Closet ").append(totalWCActual);
+		              */  actual.append("Total Water Closet ").append(totalWCActual);
 		         
 		                
 		                //expected = "" + totalWCExpected.intValue();
 		                //actual = "" + totalWCActual.intValue();
+		                
+		                
 		                description = BLDG_PART_WATER_CLOSET + " - Count";
-		                if (totalWCExpected.intValue() > totalWCActual.intValue()) {
-		                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Not_Accepted.getResultVal(),
-		                            detail);
-		                } else {
-		                    addReportDetail(helper.ruleNo, description,expected.toString(), actual.toString(), Result.Accepted.getResultVal(),
-		                            detail);
-		
-		                } 
-		            }
+		                boolean accepted=true;
+						if (helper.maleWc > 0 && (specialWC+maleWcActual < helper.maleWc)) {
+							accepted = false;
+						}
+						if (helper.femaleWc > 0 && femaleWcActual < helper.femaleWc) {
+							accepted = false;
+						}
+						if (totalWCExpected.intValue() > totalWCActual.intValue()) {
+							accepted = false;
+						}
+						if (accepted) {
+							addReportDetail(helper.ruleNo, description, expected.toString(), actual.toString(),
+									Result.Accepted.getResultVal(), detail);
+						} else {
+							addReportDetail(helper.ruleNo, description, expected.toString(), actual.toString(),
+									Result.Not_Accepted.getResultVal(), detail);
+						}
+		           }
 	}
 
     private boolean checkDimension(Integer required, ScrutinyDetail scrutinyDetail, List<Measurement> list,
