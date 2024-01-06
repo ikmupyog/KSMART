@@ -184,6 +184,9 @@ public class RainWaterHarvesting extends FeatureProcess {
 			if (pl.getUtility() != null && !pl.getUtility().getRainWaterHarvest().isEmpty()
 					&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null) {
 				if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
+					BigDecimal existingCoveredArea = pl.getBlocks().stream().filter(b -> b.getCompletelyExisting())
+							.map(blk -> blk.getBuilding().getCoverageArea()).reduce(BigDecimal.ZERO, BigDecimal::add);
+					BigDecimal coveredArea = pl.getVirtualBuilding().getTotalCoverageArea().subtract(existingCoveredArea);
 					for (Occupancy occupancyType : pl.getOccupancies()) {
 						String occupCode = occupancyType.getTypeHelper().getType().getCode();
 						Map<String, Object> mapOfAllOccupancyAndTankCapacity = new HashMap<>();
@@ -192,7 +195,7 @@ public class RainWaterHarvesting extends FeatureProcess {
 								&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null
 								&& pl.getVirtualBuilding().getTotalCoverageArea() != null
 								&& pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0) {
-								expectedTankCapacity = TWENTYFIVE.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
+								expectedTankCapacity = TWENTYFIVE.multiply(coveredArea)
 										.setScale(2, RoundingMode.HALF_UP);
 								mapOfAllOccupancyAndTankCapacity.put("occupancy", occupancyType.getTypeHelper().getType().getName());
 								mapOfAllOccupancyAndTankCapacity.put("expectedTankCapacity", expectedTankCapacity);
@@ -204,11 +207,11 @@ public class RainWaterHarvesting extends FeatureProcess {
 							if (occupCode.equals(A2) || occupCode.equals(A3) || occupCode.equals(A4) || occupCode.equals(F)
 									|| occupCode.equals(F1) || occupCode.equals(F2) || occupCode.equals(F3)
 									|| occupCode.equals(J)) {
-								expectedTankCapacity = TWENTYFIVE.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
+								expectedTankCapacity = TWENTYFIVE.multiply(coveredArea)
 										.setScale(2, RoundingMode.HALF_UP);
 							} else {
 								expectedTankCapacity = BigDecimal.valueOf(50)
-										.multiply(pl.getVirtualBuilding().getTotalCoverageArea())
+										.multiply(coveredArea)
 										.setScale(2, RoundingMode.HALF_UP);
 							}
 							mapOfAllOccupancyAndTankCapacity.put("occupancy", occupancyType.getTypeHelper().getType().getName());

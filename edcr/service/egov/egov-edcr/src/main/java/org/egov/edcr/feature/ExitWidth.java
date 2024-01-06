@@ -278,7 +278,7 @@ public class ExitWidth extends FeatureProcess {
 								for (Occupancy occupancy : flr.getConvertedOccupancies()) {
 									Map<String, Object> occupancyTypeValueMap = new HashMap<>();
 									String occupancyCode = occupancy.getTypeHelper().getType().getCode();
-									if (occupancyCode.equals(A1) || occupancyCode.equals(A5)) {
+									if (occupancyCode.equals(A1) || occupancyCode.equals(A5) || occupancyCode.equals(A4)) {
 										value = VAL_0_75;
 									} else {
 										value = VAL_1_2;

@@ -792,7 +792,7 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
                 
                 AbstractColumn builtupArea = ColumnBuilder.getNew()
                         .setColumnProperty("totalCoveredArea", BigDecimal.class.getName())
-                        .setTitle("BUILT UP AREA (Sq M)").setWidth(340)
+                        .setTitle("COVERED AREA (Sq M)").setWidth(340)
                         .setStyle(reportService.getNewReportDetailStyle())
                         .build();
 

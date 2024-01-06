@@ -239,9 +239,13 @@ public class Parking extends FeatureProcess {
 					exempted = true;
 				} else if (occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(A5))) {
 					exempted = true;
-				} else if (occupancies.size() == 2 && (occupancies.containsKey(A1) && occupancies.containsKey(F))
-						&& (occupancies.get(A1).compareTo(BigDecimal.valueOf(200)) <= 0
-								&& occupancies.get(F).compareTo(BigDecimal.valueOf(200)) <= 0
+				} else if (occupancies.size() == 2 && (occupancies.containsKey(A1)
+						&& (occupancies.containsKey(F) && occupancies.get(F).compareTo(BigDecimal.valueOf(90)) <= 0))) {
+					exempted = true;
+				} else if (occupancies.size() == 2 && (occupancies.containsKey(A4) && occupancies.containsKey(F))
+						&& (occupancies.get(A4).compareTo(BigDecimal.valueOf(200)) <= 0
+								&& (occupancies.get(F).compareTo(BigDecimal.valueOf(200)) <= 0
+								|| occupancies.get(F).compareTo(BigDecimal.valueOf(90)) <= 0)
 								&& bldgHht.compareTo(BigDecimal.valueOf(10)) <= 0
 								&& floorCount.compareTo(BigDecimal.valueOf(3)) <= 0)
 						&& pl.getPlot().getSmallPlot()) {
