@@ -102,17 +102,17 @@ public class LpgGasPipe extends FeatureProcess {
 				scrutinyDetail.addColumnHeading(5, STATUS);
 				if(block.getLpgSystem().isEmpty())
 					setReportOutputDetails(pl, RULE_43_3, RULE_43_3_DESC, "", OBJECTNOTDEFINED_DESC,
-						Result.Not_Accepted.getResultVal());
+						Result.Not_Accepted.getResultVal(), scrutinyDetail);
 				else
 					setReportOutputDetails(pl, RULE_43_3, RULE_43_3_DESC, "", OBJECTDEFINED_DESC,
-							Result.Accepted.getResultVal());
+							Result.Accepted.getResultVal(), scrutinyDetail);
 			}
 		}
         return pl;
     }
 
 	private void setReportOutputDetails(Plan pl, String ruleNo, String ruleDesc, String expected,
-			String actual, String status) {
+			String actual, String status, ScrutinyDetail scrutinyDetail) {
 		Map<String, String> details = new HashMap<>();
 		details.put(RULE_NO, ruleNo);
 		details.put(DESCRIPTION, ruleDesc);
