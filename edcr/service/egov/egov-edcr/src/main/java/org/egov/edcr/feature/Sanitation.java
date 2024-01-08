@@ -1441,17 +1441,19 @@ public class Sanitation extends FeatureProcess {
 		String description = "";
         StringBuffer expected = new StringBuffer();
         StringBuffer actual = new StringBuffer();
+        boolean accepted=true;
+
         //TODO: VERIFY All SP_WC provided may be included in no of male WATER_CLOSET provided.
-		            int maleWcActual = sanityDetails.getMaleWaterClosets().size()
+		            int maleWcProvided = sanityDetails.getMaleWaterClosets().size()
 		                    + sanityDetails.getMaleRoomsWithWaterCloset().size();
-		            int femaleWcActual = sanityDetails.getFemaleWaterClosets().size()
+		            int femaleWcProvided = sanityDetails.getFemaleWaterClosets().size()
 		                    + sanityDetails.getFemaleRoomsWithWaterCloset().size();
-		            int commonWcActual = sanityDetails.getCommonWaterClosets().size()
+		            int commonWcProvided = sanityDetails.getCommonWaterClosets().size()
 		                    + sanityDetails.getCommonRoomsWithWaterCloset().size();
 		            Double specialWC = helper.providedSpecialWc;
 		
-		            //Double totalWCActual = Math.ceil(maleWcActual + femaleWcActual + commonWcActual + specialWC );
-		            Double totalWCActual = Math.ceil(maleWcActual + femaleWcActual + commonWcActual);
+		            Double totalWCActual = Math.ceil(maleWcProvided + femaleWcProvided + commonWcProvided + specialWC );
+		            //Double totalWCActual = Math.ceil(maleWcActual + femaleWcActual + commonWcActual);
 
 		            Double totalWCExpected = Math.ceil(helper.maleWc) + Math.ceil(helper.femaleWc)+ Math.ceil(helper.commonWc);//TODO irrespective of type, validations added. Not specifically like common water closet not considered.
 		            if (totalWCExpected > 0) {
@@ -1470,27 +1472,68 @@ public class Sanitation extends FeatureProcess {
 		                    expected.append("Common Water Closet ").append( Math.ceil(helper.commonWc)).append("\n");
 		                expected.append("Total Water Closet ").append(totalWCExpected);
 		            
-		                if(maleWcActual > 0){
-		                	//actual.append("Male Water Closet ").append(maleWcActual).append("\n");
-		                	
-		                	if(specialWC > 0 && helper.maleWc> 0 && helper.maleWc < maleWcActual)
-		                		actual.append("Male Water Closet(Considering Special Water Closet)").append( Math.ceil(maleWcActual)+ Math.ceil(specialWC)).append("\n");
-		                	else
-			                	actual.append("Male Water Closet ").append(maleWcActual).append("\n");
+		                if(maleWcProvided > 0){
+		                	actual.append("Male Water Closet ").append(maleWcProvided).append("\n");
 		                }
-		                if(femaleWcActual > 0){
-		                	actual.append("Female Water Closet ").append(femaleWcActual).append("\n");
+		                if(femaleWcProvided > 0){
+		                	actual.append("Female Water Closet ").append(femaleWcProvided).append("\n");
 
 		                	/*if(specialWC > 0 && helper.femaleWc < femaleWcActual)
 		                		actual.append("FeMale Water Closet(Including Special Water Closet)").append( Math.ceil(helper.femaleWc)+ Math.ceil(specialWC)).append("\n");
 		                	else
 			                	actual.append("Female Water Closet ").append(femaleWcActual).append("\n");*/
 		                }
-		                if(commonWcActual > 0)
-		                	actual.append("Common Water Closet ").append(commonWcActual).append("\n");
-		              /*  if(specialWC > 0)
+		                if(commonWcProvided > 0)
+		                	actual.append("Common Water Closet ").append(commonWcProvided).append("\n");
+		                
+		                if(specialWC > 0){
 		                	actual.append("Special Water Closet ").append(specialWC).append("\n");
-		              */  actual.append("Total Water Closet ").append(totalWCActual);
+		                
+		                	int adjustedMalewc=0,adjustedFeMalewc=0,balanceSpecialWc=specialWC.intValue();
+		                
+		                	if(helper.maleWc > 0 && helper.maleWc > maleWcProvided) //5 - 2 = 3   3>=2
+		                	{
+		                		if((helper.maleWc.intValue() - maleWcProvided)>specialWC)
+		                			{
+		                			 balanceSpecialWc=0;
+			                		 actual.append("(Special water closet adjusted with ").append(specialWC).append(" Male Water closets)\n");
+									 accepted = false;
+		                			}else if ((helper.maleWc.intValue() - maleWcProvided)<= specialWC)
+		                			{
+				                		 actual.append("(Special water closet adjusted with ").append(helper.maleWc.intValue() - maleWcProvided).append(" Male Water closets)\n");
+				                		 balanceSpecialWc=specialWC.intValue() - (helper.maleWc.intValue() - maleWcProvided);
+		                			}
+		                	}
+		                	if(helper.femaleWc > 0 && balanceSpecialWc>0 && helper.femaleWc > femaleWcProvided) //Adjust SPWC which are pending after adjust with male wc
+		                		{
+
+		                		if((helper.femaleWc.intValue() - femaleWcProvided)>balanceSpecialWc)
+		                			{
+		                			 balanceSpecialWc=0;
+			                		 actual.append("(Special water closet adjusted with ").append(balanceSpecialWc).append(" Female Water closets)\n");
+									 accepted = false;
+		                			}else if ((helper.femaleWc.intValue() - femaleWcProvided)<= balanceSpecialWc)
+		                			{
+				                		 actual.append("(Special water closet adjusted with ").append(helper.femaleWc.intValue() - femaleWcProvided).append(" Female Water closets)\n");
+		                			}
+		                	
+		                	}else if (helper.femaleWc > 0 && femaleWcProvided < helper.femaleWc) { //Water closets already adjusted in male wc.
+								accepted = false;
+							}
+		                	
+		                  /*	if(specialWC > 0 && helper.maleWc > 0 && helper.maleWc < maleWcProvided)
+		                		actual.append("Male Water Closet(Considering Special Water Closet)").append( Math.ceil(maleWcProvided)+ Math.ceil(specialWC)).append("\n");
+		              */
+		                }else
+		                {
+		                	if (helper.maleWc > 0 && (maleWcProvided < helper.maleWc)) {
+								accepted = false;
+							}
+							if (helper.femaleWc > 0 && femaleWcProvided < helper.femaleWc) {
+								accepted = false;
+							}	
+		                }
+		                actual.append("Total Water Closet ").append(totalWCActual);
 		         
 		                
 		                //expected = "" + totalWCExpected.intValue();
@@ -1498,13 +1541,12 @@ public class Sanitation extends FeatureProcess {
 		                
 		                
 		                description = BLDG_PART_WATER_CLOSET + " - Count";
-		                boolean accepted=true;
-						if (helper.maleWc > 0 && (specialWC+maleWcActual < helper.maleWc)) {
+						/*if (helper.maleWc > 0 && (specialWC+maleWcProvided < helper.maleWc)) {
 							accepted = false;
 						}
-						if (helper.femaleWc > 0 && femaleWcActual < helper.femaleWc) {
+						if (helper.femaleWc > 0 && femaleWcProvided < helper.femaleWc) {
 							accepted = false;
-						}
+						}*/
 						if (totalWCExpected.intValue() > totalWCActual.intValue()) {
 							accepted = false;
 						}
