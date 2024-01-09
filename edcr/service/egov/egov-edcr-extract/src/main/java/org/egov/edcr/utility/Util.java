@@ -1955,6 +1955,9 @@ public class Util {
 			return "SY1-MIN=";
 		if(dxfLayer.getName().contains("SIDE_YARD2_MIN"))
 			return "SY2-MIN=";
+		
+		if(dxfLayer.getName().contains("HEIGHT_OF_BLDG_CAL"))
+			return "HEIGHT OF BLDG = ";
     	
     	String	name = dxfLayer.getName();
         name = name.replaceAll("BLK_\\d", "");

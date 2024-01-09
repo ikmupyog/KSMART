@@ -19,9 +19,11 @@ import org.egov.common.entity.edcr.Block;
 import org.egov.edcr.entity.blackbox.BuildingDetail;
 import org.egov.edcr.entity.blackbox.PlanDetail;
 import org.egov.edcr.service.LayerNames;
+import org.egov.edcr.utility.PrintUtil;
 import org.egov.edcr.utility.Util;
 import org.kabeja.dxf.DXFDocument;
 import org.kabeja.dxf.DXFLine;
+import org.kabeja.dxf.helpers.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -131,8 +133,19 @@ public class BuildingHeightExtract extends FeatureExtract {
 								"Slope of  " + roofLvl + " and " + groundLvl + " should be 0.");
 
 					}
-					block.getBuilding().setBuildingHeightAsMeasured(BigDecimal.valueOf(
-							roofLevel.get(0).getStartPoint().getY() - avgGroundLevel.get(0).getStartPoint().getY()));
+				Double height=	roofLevel.get(0).getStartPoint().getY() - avgGroundLevel.get(0).getStartPoint().getY();
+				BigDecimal scaledHeight=BigDecimal.valueOf(height);	
+				BigDecimal  	newscaledHeight=scaledHeight.setScale(2, 0);
+				
+					block.getBuilding().setBuildingHeightAsMeasured(newscaledHeight);
+					Point ground=new Point();
+					ground.setX(avgGroundLevel.get(0).getStartPoint().getX());
+					ground.setY(avgGroundLevel.get(0).getStartPoint().getY());
+					Point roof=new Point();
+					roof.setX(avgGroundLevel.get(0).getStartPoint().getX());
+					roof.setY(roofLevel.get(0).getStartPoint().getY());
+					
+					PrintUtil.printForDXf(ground,roof,"BLK_"+block.getNumber()+"_HEIGHT_OF_BLDG_CAL",pl);
 					LOG.info("Distance is ------------  : "
 							+ (roofLevel.get(0).getStartPoint().getY() - avgGroundLevel.get(0).getStartPoint().getY()));
 

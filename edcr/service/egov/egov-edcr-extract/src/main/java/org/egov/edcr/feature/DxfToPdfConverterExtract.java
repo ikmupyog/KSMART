@@ -41,6 +41,7 @@ import org.egov.edcr.entity.PdfPageSize;
 import org.egov.edcr.entity.blackbox.PlanDetail;
 import org.egov.edcr.service.DcrSvgGenerator;
 import org.egov.edcr.utility.DcrConstants;
+import org.egov.edcr.utility.PrintUtil;
 import org.egov.edcr.utility.Util;
 import org.egov.infra.admin.master.entity.AppConfigValues;
 import org.egov.infra.admin.master.entity.City;
@@ -771,12 +772,15 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 	}
 	private void addLineMeasurement(DXFLayer dxfLayer, DXFEntity e, EdcrPdfDetail detail, PlanDetail pl,
 			Map<String, Integer> countMap,List<DXFEntity> mEntties) {
-	 	LOG.debug("Starting Line Measurement for ..... " +dxfLayer.getName());
+	 	LOG.info("Starting Line Measurement for ..... " +dxfLayer.getName());
 		DXFLine line = (DXFLine) e;
 		Point midPoint= Util.getMidPoint(line.getStartPoint(), line.getEndPoint());
 		BigDecimal valueOf = BigDecimal.valueOf(line.getLength());
-		BigDecimal scaledLength = valueOf.setScale(2, 0);
-				
+		
+		BigDecimal scaledLength = valueOf.setScale(2, 1);
+		
+		
+		
 	if (detail.getPrintNameLayers().contains(dxfLayer.getName())) {
 			DXFMText plineLayer = new DXFMText();
 			plineLayer.setHeight(0.5d);
@@ -784,8 +788,11 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		    if(centeredText==null)
 		    	centeredText="";
 		    if(dxfLayer.getName().contains("YARD"))
-		    	centeredText=centeredText+ scaledLength;		    		
-		    
+		    	centeredText=centeredText+ scaledLength;
+		    else if(detail.getMeasurementLayers().contains(dxfLayer.getName()))
+		    {
+		   		    	centeredText=centeredText+ scaledLength;
+		    }
 			 DXFLWPolyline pLine1=new DXFLWPolyline();
 			  BigDecimal totalChars= BigDecimal.valueOf(centeredText.toString().length());
 			 // totalChars.setScale(2, RoundingMode.UP);
@@ -1133,6 +1140,8 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		if (detail.getCountLayers().contains(dxfLayer.getName())) {
 
 			int plineCount = 1;
+			if(dxfLayer.getName().equalsIgnoreCase("BLK_1_FLR_0_BLT_UP_AREA"))
+				LOG.info(e.getLayerName().toString() +"eid"+e.getID());
 
 			if (countMap.get(dxfLayer.getName()) != null) {
 				plineCount = countMap.get(dxfLayer.getName()) + 1;
@@ -1144,6 +1153,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 					LOG.debug("dxfLayer.getName() else  :" + dxfLayer.getName() + " plineCount :" + plineCount);
 				countMap.put(dxfLayer.getName(), plineCount);
 			}
+			LOG.info(e.getLayerName().toString() +"eid"+e.getID()+"0000" +plineCount) ;
 			centeredText.append(" " + plineCount);
 		}
 		/*if (detail.getColorOverrides().get(dxfLayer.getName().toString()) != null) {
@@ -1164,7 +1174,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		LOG.debug("trxt len" +length +"  "+ (point22.getX() - point33.getX()) );
 		plineDimension.setText(centeredText.toString());
 		plineDimension.setAlign(5);
-	    plineDimension.setHeight(0.6d);
+	    plineDimension.setHeight(0.5d);
 	
 		plineDimension.setX(p.getX()-(oneSideSize-.10));
 		plineDimension.setY(p.getY() + 0.25);
@@ -1662,9 +1672,9 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		}
 		layers = new ArrayList<>();
 		sheetNameFinal = sheetName;
-		LOG.debug("Sheet Name "+sheetName);
+		LOG.info("Sheet Name "+sheetName);
 		if (sheetName.contains("_S_")) {
-			LOG.debug("inside heetName.contains(_S_) "+sheetName);
+			LOG.info("inside heetName.contains(_S_) "+sheetName);
 			for (Block b : planDetail.getBlocks()) {
 				pdfdetail = new EdcrPdfDetail();
 				pdfdetail.setPageSize(page);
@@ -1678,14 +1688,15 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 					s = s.replace("FLR_*", "FLR_-?\\d+");
 					s = s.replace("LVL_*", "LVL_-?\\d+");
 					s = s.replace("NO_*", "NO_-?\\d+");
+					s = s.replace("_*", "_-?\\d+");
 
 					getLayerColorConfigs(planDetail, pdfdetail, s);
 
-					s = s.substring(0, s.indexOf(":") != -1 ? s.indexOf(":") : s.length());
+					s =s.substring(0, s.indexOf(":") != -1 ? s.indexOf(":") : s.length());
 					List<String> layer = getLayerNameRegExForS(planDetail.getDxfDocument(), s, dxfLayerNamesInFile);
 					
-					if (LOG.isDebugEnabled())
-						LOG.debug("Blk related names found....." + layer);
+					if (LOG.isInfoEnabled())
+						LOG.info("Blk related names found....." + layer);
 					if (layer != null && !layer.isEmpty()) {
 						if (pdfdetail.getLayers() == null || pdfdetail.getLayers().isEmpty()) {
 							pdfdetail.setLayers(layer);
@@ -1697,7 +1708,7 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 
 				}
 				boolean found=false;
-				LOG.debug("validating _S_ layers" + pdfdetail.getLayers() +"for" + pdfdetail.getLayer());
+				LOG.info("validating _S_ layers" + pdfdetail.getLayers() +"for" + pdfdetail.getLayer());
 				if(pdfdetail.getLayers()!=null && !pdfdetail.getLayers().isEmpty())
 				{
 					for (String s: pdfdetail.getLayers())
@@ -1913,12 +1924,12 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 		 * pdfdetail.setLayers(layers); pdfLayers.add(pdfdetail); }
 		 */
 
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("pdf layers created are .....");
+		if (LOG.isInfoEnabled()) {
+			LOG.info("pdf layers created are .....");
 			for (EdcrPdfDetail pdfDetail : pdfLayers)
 
 			{
-				LOG.debug(pdfdetail.getLayer() + " :" + pdfDetail.getLayers());
+				LOG.info(pdfdetail.getLayer() + " :" + pdfDetail.getLayers());
 
 			}
 		}
@@ -2244,7 +2255,8 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 			
 		}
 		LOG.debug("getting from cache for   getLayerNameRegEx  .... " +dxfLayerNamesInFile.values());	
-		Pattern pat = Pattern.compile(regEx);
+		String regEx1="\\b"+regEx+"\\b";
+		Pattern pat = Pattern.compile(regEx1);
 		LOG.debug("Pattern in getLayerNamesLike " + pat);
 		for (String layerName : dxfLayerNamesInFile.values()) {
 			Matcher m = pat.matcher(layerName);
@@ -2269,12 +2281,13 @@ public class DxfToPdfConverterExtract extends FeatureExtract {
 
 			}
 			for (String layerName : dxfLayerNamesInFile.values()) {
-				LOG.debug("Full list layer from  cache for   ....  "+layerName);	
+				LOG.info("Full list layer from  cache for   ....  "+layerName);	
 			}
 		}
-		Pattern pat = Pattern.compile(regEx);
+		String regEx1="\\b"+regEx+"\\b";
+		Pattern pat = Pattern.compile(regEx1);
 		boolean found=false;
-		LOG.debug("Pattern in getLayerNamesLike " + pat);
+		LOG.info("Pattern in getLayerNamesLike " + pat);
 		for (String layerName : dxfLayerNamesInFile.values()) {
 
 			Matcher m = pat.matcher(layerName);
