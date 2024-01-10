@@ -367,8 +367,8 @@ public class Util {
                     if (dxfLine.getLineWeight() == 20) {
                         byWeight.add(dub1);
                     }
-                    if(LOG.isDebugEnabled())
-                    LOG.debug("line length=" + dxfLine.getLength() + " Layer Name : " + line.getLayerName() + "Style"
+                    if(LOG.isInfoEnabled())
+                    LOG.info("line length=" + dxfLine.getLength() + " Layer Name : " + line.getLayerName() + "Style"
                             + line.getDimensionStyleID() + " type:" + dxfLine.getType() + " Line Type "
                             + dxfLine.getLineType() + " " + dxfLine.getLineWeight());
 
@@ -403,7 +403,7 @@ public class Util {
 
             if (values.size() != 3) {
                 planDetail.getErrors().put(layerName + "-" + DcrConstants.DIMENSION_LINES_STANDARD, "Dimension " + text2
-                        + " marked in layer " + layerName + " is not as per DIGIT-DCR defined standard.");
+                        + " marked in layer " + layerName + " is not as per K_Smart defined standard.");
             }
 
             if (values.size() > 2) {
@@ -1881,7 +1881,12 @@ public class Util {
             LOG.debug("returning Occupancy " + occupancyName);
          
     }
-        return occupancyName;
+      /*  if(occupancyName.contains("family"))
+        {
+        	
+        	if(pl.getBlockByName("").getSingleFamilyBuilding())
+        }*/
+        return occupancyName;  
         
     }
     

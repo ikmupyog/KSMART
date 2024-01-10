@@ -133,11 +133,9 @@ public class BuildingHeightExtract extends FeatureExtract {
 								"Slope of  " + roofLvl + " and " + groundLvl + " should be 0.");
 
 					}
-				Double height=	roofLevel.get(0).getStartPoint().getY() - avgGroundLevel.get(0).getStartPoint().getY();
-				BigDecimal scaledHeight=BigDecimal.valueOf(height);	
-				BigDecimal  	newscaledHeight=scaledHeight.setScale(2, 0);
-				
-					block.getBuilding().setBuildingHeightAsMeasured(newscaledHeight);
+					block.getBuilding().setBuildingHeightAsMeasured(BigDecimal.valueOf(
+							roofLevel.get(0).getStartPoint().getY() - avgGroundLevel.get(0).getStartPoint().getY()));
+
 					Point ground=new Point();
 					ground.setX(avgGroundLevel.get(0).getStartPoint().getX());
 					ground.setY(avgGroundLevel.get(0).getStartPoint().getY());

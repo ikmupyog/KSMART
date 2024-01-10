@@ -74,18 +74,27 @@ public class ExtractService {
         Map<String, String> cityDetails = specificRuleService.getCityDetails();
 
         if (doc.getDXFHeader().getVariable("$INSUNITS") != null) {
-            String unitValue = doc.getDXFHeader().getVariable("$INSUNITS").getValue("70");
-            if ("1".equalsIgnoreCase(unitValue)) {
+        	/**
+        	 * if ("1".equalsIgnoreCase(unitValue)) {
                 planDetail.getDrawingPreference().setUom(DxfFileConstants.INCH_UOM);
             } else if ("2".equalsIgnoreCase(unitValue)) {
                 planDetail.getDrawingPreference().setUom(DxfFileConstants.FEET_UOM);
-            } else if ("6".equalsIgnoreCase(unitValue)) {
+            } else
+        	 */
+        	
+             String unitValue = doc.getDXFHeader().getVariable("$INSUNITS").getValue("70");
+             if ("6".equalsIgnoreCase(unitValue)) {
                 planDetail.getDrawingPreference().setUom(DxfFileConstants.METER_UOM);
             } else {
                 planDetail.getDrawingPreference().setInMeters(false);
-                planDetail.getErrors().put("units not in meters", "The 'Drawing Unit' is not as per standard. ");
+                planDetail.getErrors().put("units not in meters", "The 'Drawing Unit' is not as per standard.  It should be in Meters ");
             }
+        }else
+        {
+        	planDetail.getDrawingPreference().setInMeters(false);
+            planDetail.getErrors().put("units not in meters", "The 'Drawing Unit' is not as per standard. It should be in Meters ");
         }
+        	
 
         /*
          * // dimension length factor should be 1 if (doc.getDXFHeader() != null && doc.getDXFHeader().getVariable("$DIMLFAC") !=

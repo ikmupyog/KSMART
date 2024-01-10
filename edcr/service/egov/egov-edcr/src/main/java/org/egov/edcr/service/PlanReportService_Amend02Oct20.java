@@ -1140,14 +1140,14 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
         valuesMap.put("footerLogo", egovLogo); /// this to add new logo
        
         //noOfMechanicalParking ,alteredArea ,village ,desam
-        valuesMap.put("surveyNumber", plan.getPlanInfoProperties().get("RS_NO"));
+        valuesMap.put("surveyNumber", plan.getPlanInfoProperties().get("RS_NO")==null?"":plan.getPlanInfoProperties().get("RS_NO"));
         valuesMap.put("noOfMechanicalParking", plan.getPlanInformation().getNoOfMechanicalParking());
-        valuesMap.put("alteredArea", plan.getPlanInformation().getAlteredArea());
-        valuesMap.put("revenewWard", plan.getPlanInformation().getRevenueWard());
-        valuesMap.put("village", plan.getPlanInformation().getVillage());
-        valuesMap.put("desam", plan.getPlanInformation().getDesam());
+        valuesMap.put("alteredArea", plan.getPlanInformation().getAlteredArea()==null?BigDecimal.ZERO:plan.getPlanInformation().getAlteredArea());
+        valuesMap.put("revenewWard", plan.getPlanInformation().getRevenueWard()==null?"":plan.getPlanInformation().getRevenueWard());
+        valuesMap.put("village", plan.getPlanInformation().getVillage()==null?"":plan.getPlanInformation().getVillage());
+        valuesMap.put("desam", plan.getPlanInformation().getDesam()==null?"":plan.getPlanInformation().getDesam());
         valuesMap.put("planInfoPlotArea", plan.getPlanInformation().getPlotArea());
-        valuesMap.put("accWidth", plan.getPlanInformation().getAccessWidth());
+        valuesMap.put("accWidth", plan.getPlanInformation().getAccessWidth()==null?BigDecimal.ZERO:plan.getPlanInformation().getAccessWidth());
         valuesMap.put("demolitionArea",plan.getPlanInformation().getDemolitionArea());
 
         if (clientSpecificSubReport) {
@@ -1177,8 +1177,9 @@ public class PlanReportService_Amend02Oct20 extends PlanReportService {
             valuesMap.put(COMBINED_BLOCKS_SUMMARY_DETAILS, combinedSummary);
 
             // Add total area details
-            boolean isExistingBuildingPresent = false;
-            if(virtualBuildingReport.getTotalExistingBuiltUpArea().compareTo(BigDecimal.ZERO) > 0)
+            boolean isExistingBuildingPresent = false;   
+            
+            if(virtualBuildingReport.getTotalExistingBuiltUpArea()!=null && virtualBuildingReport.getTotalExistingBuiltUpArea().compareTo(BigDecimal.ZERO) > 0)
             	isExistingBuildingPresent = true;
             
 			if (isExistingBuildingPresent) {
