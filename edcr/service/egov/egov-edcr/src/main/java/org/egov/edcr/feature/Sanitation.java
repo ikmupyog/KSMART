@@ -1463,7 +1463,7 @@ public class Sanitation extends FeatureProcess {
 		            Double totalWCActual = Math.ceil(maleWcProvided + femaleWcProvided + commonWcProvided + specialWC );
 		            //Double totalWCActual = Math.ceil(maleWcActual + femaleWcActual + commonWcActual);
 
-		            Double totalWCExpected = Math.ceil(helper.maleWc) + Math.ceil(helper.femaleWc)+ Math.ceil(helper.commonWc)+Math.ceil(helper.requiredSpecialWc);//TODO irrespective of type, validations added. Not specifically like common water closet not considered.
+		            Double totalWCExpected = Math.ceil(helper.maleWc) + Math.ceil(helper.femaleWc)+ Math.ceil(helper.commonWc);//+Math.ceil(helper.requiredSpecialWc);//TODO irrespective of type, validations added. Not specifically like common water closet not considered.
 		            if (totalWCExpected > 0) {
 		                List<Measurement> wcList = new ArrayList<>();
 		                wcList.addAll(sanityDetails.getMaleWaterClosets());
@@ -1478,9 +1478,9 @@ public class Sanitation extends FeatureProcess {
 		                    expected.append("Female Water Closet ").append( Math.ceil(helper.femaleWc)).append("\n");
 		                if(helper.commonWc >0)
 		                    expected.append("Common Water Closet ").append( Math.ceil(helper.commonWc)).append("\n");
-		                if(helper.requiredSpecialWc>0)
+		             /*   if(helper.requiredSpecialWc>0)
 		                    expected.append("Special Water Closet ").append( Math.ceil(helper.requiredSpecialWc)).append("\n");
-
+*/
 		                expected.append("Total Water Closet ").append(totalWCExpected);
 		            
 		                if(maleWcProvided > 0){
