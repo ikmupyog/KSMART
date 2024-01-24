@@ -793,11 +793,7 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
 				|| mostRestrictiveOccupancy.getType().getCode().equals(A2)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(A3)
 				|| mostRestrictiveOccupancy.getType().getCode().equals(A4)
-				|| mostRestrictiveOccupancy.getType().getCode().equals(A5)
-				|| mostRestrictiveOccupancy.getType().getCode().equals(F)
-				|| mostRestrictiveOccupancy.getType().getCode().equals(F1)
-				|| mostRestrictiveOccupancy.getType().getCode().equals(F2)
-				|| mostRestrictiveOccupancy.getType().getCode().equals(F3)) {
+				|| mostRestrictiveOccupancy.getType().getCode().equals(A5)) {
 			//If no openings are provided for the Rear yard
 	        boolean openingOnRearBelow2mts = pl.getPlanInformation().getOpeningOnRearBelow2mtsDesc().equalsIgnoreCase(DcrConstants.NO);
 	        boolean openingOnRearAbove2mts = pl.getPlanInformation().getOpeningOnRearAbove2mtsDesc().equalsIgnoreCase(DcrConstants.NO);
@@ -989,7 +985,183 @@ public class SideYardService_Amend01Sep23 extends GeneralRule {
 			compareSideYard1Result(blockName, side1val, BigDecimal.valueOf(max), side1Meanval,
 					BigDecimal.valueOf(maxMeanLength), mostRestrictiveOccupancy, sideYard1Result, valid1, subRule, rule,
 					level);
-		} else
+		}else if (mostRestrictiveOccupancy.getType().getCode().equals(F)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(F1)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(F2)
+				|| mostRestrictiveOccupancy.getType().getCode().equals(F3))
+		{
+
+   		    //If no openings are provided for the Rear yard
+	        boolean openingOnRearBelow2mts = pl.getPlanInformation().getOpeningOnRearBelow2mtsDesc().equalsIgnoreCase(DcrConstants.NO);
+	        boolean openingOnRearAbove2mts = pl.getPlanInformation().getOpeningOnRearAbove2mtsDesc().equalsIgnoreCase(DcrConstants.NO);
+	        boolean nocToAbutRear = pl.getPlanInformation().getNocToAbutRearDesc().equalsIgnoreCase(DcrConstants.NO);
+
+	        if(pl.getPlanInformation().getPlotInCommercialZone().equalsIgnoreCase(DcrConstants.YES) && pl.getPlanInformation().getNocToAbutSideDesc()
+					.equalsIgnoreCase(DcrConstants.YES)) 
+			{
+				subRule = RULE_26_4_4A;
+				side2val = SIDEVALUE_ZERO;
+				side1val = SIDEVALUE_ZERO;
+
+			} else {
+
+				// Plot area less than or equal to 125
+				if (plot.getArea().compareTo(SITEAREA_125) <= 0) {
+
+					if (mostRestrictiveOccupancy.getType().getCode().equals(F1)
+							|| mostRestrictiveOccupancy.getType().getCode().equals(F2)
+							|| mostRestrictiveOccupancy.getType().getCode().equals(F3)
+							|| mostRestrictiveOccupancy.getType().getCode().equals(F)) {
+
+						if (building.getTotalBuitUpArea().compareTo(BUILDUPAREA_200) <= 0) {
+							// yes
+							subRule = RULE_26_4 + ", " + RULE_50_2;
+
+							if (building.getFloorsAboveGround().compareTo(BigDecimal.valueOf(3)) <= 0) {
+								if (pl.getPlanInformation().getOpeningOnSideBelow2mtsDesc()
+										.equalsIgnoreCase(DcrConstants.YES)
+										|| pl.getPlanInformation().getOpeningOnSideBelow2mtsDesc()
+												.equalsIgnoreCase(NA)) {
+									side2val = SIDEVALUE_SIXTY_CM;
+									side1val = SIDEVALUE_SIXTY_CM;
+								} else {
+									if (pl.getPlanInformation().getOpeningOnSideAbove2mtsDesc()
+											.equalsIgnoreCase(DcrConstants.YES)
+											|| pl.getPlanInformation().getOpeningOnSideAbove2mtsDesc()
+													.equalsIgnoreCase(NA)) {
+										side2val = SIDEVALUE_SIXTY_CM;
+										side1val = SIDEVALUE_SIXTY_CM;
+									} else {
+										if (buildingHeight.compareTo(BigDecimal.valueOf(7)) <= 0) {
+											if (pl.getPlanInformation().getNocToAbutSideDesc()
+													.equalsIgnoreCase(DcrConstants.YES)) {
+												subRule = RULE_26_4_PROVISO5 + ", " + RULE_50_2;
+												side2val = SIDEVALUE_ZERO;
+												side1val = SIDEVALUE_SIXTY_CM;
+											} else {
+												subRule = RULE_26_4_PROVISO2 + ", " + RULE_50_2;
+												if (openingOnRearBelow2mts && openingOnRearAbove2mts && nocToAbutRear) {
+													side1val = SIDEVALUE_SIXTY_CM;
+													if (side2Distance.compareTo(SIDEVALUE_FIFTY_CM) > 0)
+														side2val = SIDEVALUE_FIFTY_CM;
+													else
+														side2val = SIDEVALUE_SIXTY_CM;
+												} else if (rearyardMinDist.compareTo(SIDEVALUE_SIXTY_CM) >= 0) {
+													side2val = SIDEVALUE_FIFTY_CM;
+													side1val = SIDEVALUE_SIXTY_CM;
+												} else {
+													side2val = SIDEVALUE_SIXTY_CM;
+													side1val = SIDEVALUE_SIXTY_CM;
+												}
+											}
+										} else {
+											subRule = RULE_26_4_PROVISO2 + ", " + RULE_50_2;
+											if (openingOnRearBelow2mts && openingOnRearAbove2mts && nocToAbutRear) {
+												side1val = SIDEVALUE_SIXTY_CM;
+												if (side2Distance.compareTo(SIDEVALUE_FIFTY_CM) > 0)
+													side2val = SIDEVALUE_FIFTY_CM;
+												else
+													side2val = SIDEVALUE_SIXTY_CM;
+											} else if (rearyardMinDist.compareTo(SIDEVALUE_SIXTY_CM) >= 0) {
+												side2val = SIDEVALUE_FIFTY_CM;
+												side1val = SIDEVALUE_SIXTY_CM;
+											} else {
+												side2val = SIDEVALUE_SIXTY_CM;
+												side1val = SIDEVALUE_SIXTY_CM;
+											}
+										}
+									}
+								}
+							} else {
+								subRule = RULE_26_4 + ", " + RULE_26_4A;
+								side2val = SIDEVALUE_ONE;
+								side1val = SIDEVALUE_ONE;
+							}
+
+						} else {
+							subRule = RULE_26_4 + ", " + RULE_26_4A;
+							side2val = SIDEVALUE_ONE;
+							side1val = SIDEVALUE_ONE;
+						}
+					} else {
+						subRule = RULE_26_4 + ", " + RULE_26_4A;
+						side2val = SIDEVALUE_ONE;
+						side1val = SIDEVALUE_ONE;
+					}
+				} else {
+					subRule = RULE_26_4;
+					// Plot area greater than 125 mts
+					if (pl.getPlanInformation().getOpeningOnSideBelow2mtsDesc().equalsIgnoreCase(DcrConstants.YES)
+							|| pl.getPlanInformation().getOpeningOnSideBelow2mtsDesc().equalsIgnoreCase(NA)) {
+						side2val = SIDEVALUE_ONE;
+						side1val = SIDEVALUE_ONE;
+					} else {
+						if (pl.getPlanInformation().getOpeningOnSideAbove2mtsDesc().equalsIgnoreCase(DcrConstants.YES)
+								|| pl.getPlanInformation().getOpeningOnSideAbove2mtsDesc().equalsIgnoreCase(NA)) {
+							subRule = RULE_26_4 + ", " + RULE_26_10_PROVISO2;
+							side2val = SIDEVALUE_SIXTY_CM;
+							side1val = SIDEVALUE_ONE;
+						} else {
+							if (buildingHeight.compareTo(BigDecimal.valueOf(7)) <= 0) {
+								if (pl.getPlanInformation().getNocToAbutSideDesc().equalsIgnoreCase(DcrConstants.YES)) {
+									subRule = RULE_26_4_PROVISO5;
+									side2val = SIDEVALUE_ZERO;
+									side1val = SIDEVALUE_ONE;
+								} else {
+									subRule = RULE_26_4 + ", " + RULE_26_10_PROVISO2;
+									if (openingOnRearBelow2mts && openingOnRearAbove2mts && nocToAbutRear) {
+										if (side2Distance.compareTo(SIDEVALUE_FIFTY_CM) > 0)
+											side2val = SIDEVALUE_FIFTY_CM;
+										else
+											side2val = SIDEVALUE_SIXTY_CM;
+
+									} else if (rearyardMinDist.compareTo(SIDEVALUE_SIXTY_CM) >= 0) {
+										side2val = SIDEVALUE_FIFTY_CM;
+									} else
+										side2val = SIDEVALUE_SIXTY_CM;
+
+									side1val = SIDEVALUE_ONE;
+								}
+							} else {
+								if (openingOnRearBelow2mts && openingOnRearAbove2mts && nocToAbutRear) {
+									subRule = RULE_26_4_PROVISO2;
+									side1val = SIDEVALUE_ONE;
+									if (side2Distance.compareTo(SIDEVALUE_FIFTY_CM) > 0)
+										side2val = SIDEVALUE_FIFTY_CM;
+									else
+										side2val = SIDEVALUE_SIXTY_CM;
+								} else if (rearyardMinDist.compareTo(SIDEVALUE_ONE) >= 0) {
+									subRule = RULE_26_4_PROVISO2;
+									side2val = SIDEVALUE_FIFTY_CM;
+									side1val = SIDEVALUE_ONE;
+								} else {
+									subRule = RULE_26_4;
+									side2val = SIDEVALUE_ONE;
+									side1val = SIDEVALUE_ONE;
+								}
+							}
+						}
+					}
+				}
+			}
+			side2Meanval = side2val;
+			side1Meanval = side1val;
+			if (max >= side1val.doubleValue() && maxMeanLength >= side1Meanval.doubleValue())
+				valid1 = true;
+			if (min >= side2val.doubleValue() && minMeanlength >= side2Meanval.doubleValue())
+				valid2 = true;
+
+			if (-1 == level)
+				subRule = SUB_RULE_26_11;
+
+			compareSideYard2Result(blockName, side2val, BigDecimal.valueOf(min), side2Meanval,
+					BigDecimal.valueOf(minMeanlength), mostRestrictiveOccupancy, sideYard2Result, valid2, subRule, rule,
+					level);
+			compareSideYard1Result(blockName, side1val, BigDecimal.valueOf(max), side1Meanval,
+					BigDecimal.valueOf(maxMeanLength), mostRestrictiveOccupancy, sideYard1Result, valid1, subRule, rule,
+					level);
+			
+		}else
 			processSideYardForOccupanciesOtherThanA1A2F(pl, building, plot, blockName, level, min, max, minMeanlength,
 					maxMeanLength, mostRestrictiveOccupancy, buildingHeight, side2val, side1val, BigDecimal.ZERO, false,
 					sideYard1Result, sideYard2Result);
